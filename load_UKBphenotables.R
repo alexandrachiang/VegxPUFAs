@@ -1,6 +1,6 @@
 library(tidyverse)
 
-setwd("/scratch/ahc87874/Fall2021Practice/Project")
+setwd("/scratch/ahc87874/Fall2022")
 
 #Load UK Biobank datasets-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #/project/kylab/lab_shared/UKB/pheno/ukb34137_loaddata.r
@@ -40,4 +40,4 @@ rm(bd_join3)
 bd8<-read.table("48364/ukb48364.tab",
                 header=TRUE, sep="\t")
 
-withdrawn<-read.csv("w48818_20210809.csv", header = FALSE)
+#withdrawn<-read.csv("w48818_20210809.csv", header = FALSE)
