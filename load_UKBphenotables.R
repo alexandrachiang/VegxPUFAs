@@ -3,6 +3,7 @@ library(tidyverse)
 setwd("/scratch/ahc87874/Fall2021Practice/Project")
 
 #Load UK Biobank datasets-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+#/project/kylab/lab_shared/UKB/pheno/ukb34137_loaddata.r
 source('ukb34137_loaddata.r') #15 min
 bd_add<-read.table("updated_42606/ukb42606.tab",
                    header=TRUE, sep="\t")
