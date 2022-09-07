@@ -3,6 +3,7 @@
 # SSRV = true vegetarian, field 
 
 # SpecialDiet<-bd%>%select(f.eid, f.20086.0.0, f.20086.1.0, f.20086.2.0, f.20086.3.0, f.20086.4.0)
+# Remove withdrawn at the end
 
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
