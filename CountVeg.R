@@ -56,12 +56,9 @@ for (i in 1:4) {
 x2 <- x %>% select(starts_with("total"))
 x2 %>% filter(if_any(. %in% "Nonveg"))
 
-x2 <- x2[x2$total_0 != "Nonveg", ]
-x2 <- x2[x2$total_1 != "Nonveg", ]
-x2 <- x2[x2$total_2 != "Nonveg", ]
-x2 <- x2[x2$total_3 != "Nonveg", ]
-x2 <- x2[x2$total_4 != "Nonveg", ]
-x2[rowSums(is.na(x2)) != ncol(x2), ] # why are there full NA rows
+x2[x2$total_0 != "Nonveg", ] #3884 in initial
+x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
+#3192 CSRV
 #894 full veg across all surveys
 
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
