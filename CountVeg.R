@@ -27,7 +27,7 @@ withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
 #9454 rows
 
-x <- ukb %>% select((starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed"))))                   
+x <- ukb %>% select(starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed")))                 
 #apply(x, 2, table)
 
 #How to check for initial?
@@ -53,6 +53,14 @@ for (i in 1:4) {
   }
 }
 
+x2 <- x %>% select(starts_with("total"))
+x2 %>% filter(if_any(. %in% "Nonveg"))
+
+x2 <- x2[x2$total_0 != "Nonveg", ]
+x2 <- x2[x2$total_1 != "Nonveg", ]
+x2 <- x2[x2$total_2 != "Nonveg", ]
+x2 <- x2[x2$total_3 != "Nonveg", ]
+x2 <- x2[x2$total_4 != "Nonveg", ]
 #add up to find average of veg responses
 
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
