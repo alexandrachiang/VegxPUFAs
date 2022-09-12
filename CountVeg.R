@@ -54,7 +54,7 @@ for (i in 1:4) {
 }
 
 x2 <- x %>% select(starts_with("total"))
-x2 %>% filter(if_any(. %in% "Nonveg"))
+x2 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
 
 x2[x2$total_0 != "Nonveg", ] #3884 in initial
 x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
