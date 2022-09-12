@@ -22,7 +22,7 @@ ukb <- as_tibble(ukb)
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
-ukbveg <- ukb %>% filter(if_any(starts_with("f.20086."), ~ . %in% c("Vegetarian", "Vegan")))
+ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
 
 apply(ukbveg2, 2, table)
 
