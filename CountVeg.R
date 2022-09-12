@@ -61,4 +61,6 @@ x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
 #3192 CSRV
 #894 full veg across all surveys
 
+#Michael had 5733
+
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
