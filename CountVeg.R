@@ -31,6 +31,14 @@ x <- ukb %>% select((starts_with(c("invitation_to_complete_online_24hour_recall_
 #apply(x, 2, table)
 
 #How to check for initial?
+tot <- paste("total", 0, sep="_")
+x[[tot]] <- "Nonveg"
+  
+for (j in 0:5) {
+  inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
+  x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
+}
+
 for (i in 1:4) {
   rec <- paste("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance_f110001_", i, "_0", sep = "")
   tot <- paste("total", i, sep="_")
