@@ -19,6 +19,9 @@ setwd("/scratch/ahc87874/Fall2022")
 ukb <- ukb_df("ukb34137")
 ukb <- as_tibble(ukb)
 
-withdrawn<-read.csv("w48818_20210809.csv", header = FALSE)
+withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
+
+ukbveg <- ukb %>% filter(if_any(starts_with("f.20086."), ~ . %in% c("Vegetarian", "Vegan")))
+
 
 pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
