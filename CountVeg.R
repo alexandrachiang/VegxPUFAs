@@ -33,15 +33,15 @@ x <- ukb %>% select((starts_with(c("invitation_to_complete_online_24hour_recall_
 #How to check for initial?
 for (i in 1:4) {
   rec <- paste("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance_f110001_", i, "_0", sep = "")
-  varname <- paste("total", i, sep="_")
-  x[[varname]] <- NA
+  tot <- paste("total", i, sep="_")
+  x[[tot]] <- NA
   
   #new column for completed = "nonveg", else = NA
-  x[[varname]][x[, rec] == "Completed"] <- "Nonveg"
+  x[[tot]][x[, rec] == "Completed"] <- "Nonveg"
   
   for (j in 0:5) {
     inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
-    x[[total]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
+    x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
   }
 }
 
