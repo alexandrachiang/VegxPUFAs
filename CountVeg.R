@@ -61,6 +61,7 @@ x2 <- x2[x2$total_1 != "Nonveg", ]
 x2 <- x2[x2$total_2 != "Nonveg", ]
 x2 <- x2[x2$total_3 != "Nonveg", ]
 x2 <- x2[x2$total_4 != "Nonveg", ]
-#add up to find average of veg responses
+x2[rowSums(is.na(x2)) != ncol(x2), ] # why are there full NA rows
+#894 full veg across all surveys
 
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
