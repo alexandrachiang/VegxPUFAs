@@ -35,7 +35,7 @@ tot <- paste("total", 0, sep="_")
 x[[tot]] <- "Nonveg"
   
 for (j in 0:5) {
-  inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
+  inst <- paste("type_of_special_diet_followed_f20086_", 0, "_", j, sep = "")
   x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
 }
 
