@@ -20,54 +20,56 @@ ukb <- as_tibble(ukb)
 
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
+#Select 20080 and 20086
+ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
+#apply(ukb2, 2, table)
+#41 columns
+
+#Remove participants that never answered 20086/never did a dietary survey
+ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
+#nrow(ukb3)
+#211018 rows
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
+
+ukbCSRV <- ukb3
 
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
 #nrow(ukbveg)
 #9454 rows
 
-#Select 20080 and 20086
-ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
-#apply(ukb2, 2, table)
-#41 columns
-
-#Remove participants that never answered 20086
-ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
-#nrow(ukb3)
-#211018 rows
-
 #For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
   took <- paste("dayofweek_questionnaire_completed_f20080", i, "0", sep = "_")
   tot <- paste("is_vegetarian", i, sep = "_")
-  ukb3[, tot] <- NA #initialize NA columns
+  ukbCSRV[, tot] <- NA #initialize NA columns
   
-  ukb3[, tot][!is.na(ukb3[, took])] <- "NonVeg" #participant answered in that instance
+  ukbCSRV[, tot][!is.na(ukbCSRV[, took])] <- "NonVeg" #participant answered in that instance
   
   for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
-    ukb3[, tot][ukb3[, inst] == "Vegetarian" | ukb3[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
+    ukbCSRV[, tot][ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
   }
 }
 
 #Get CSRV
-ukb3[, "CSRV"] <- "Veg"
+ukbCSRV[, "CSRV"] <- "Veg"
 for (i in 0:4) { #instance
   tot <- paste("is_vegetarian", i, sep="_")
-  ukb3[, "CSRV"][ukb3[, tot] == "NonVeg"] <- "NonVeg"
+  ukbCSRV[, "CSRV"][ukbCSRV[, tot] == "NonVeg"] <- "NonVeg"
 }
 #print(n = 50, ukb3[36:41])
 
-table(ukb3$CSRV)
+table(ukbCSRV$CSRV)
 #204172 CSRV NonVeg
 #6846 CSRV Veg
 #Michael had 5733
 
-ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
+ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
 #or ukb3 %>% select(starts_with("is_vegetarian")) %>% filter(if_all(everything(), ~ grepl("", .)))
-ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
+ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
 #5766 answered all surveys
 #182 answered Veg across all surveys
 
@@ -91,7 +93,7 @@ idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible_f100026", 0:
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Withdrawn
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
-ukb3withdrawn <- ukb3[!(ukb3$eid %in% withdrawn$V1), ]
-table(ukb3withdrawn$CSRV)
+ukbCSRVwithdrawn <- ukbCSRV[!(ukbCSRV$eid %in% withdrawn$V1), ]
+table(ukbCSRVwithdrawn$CSRV)
 #204140 CSRV NonVeg (-32)
 #6844 CSRV Veg (-2)
