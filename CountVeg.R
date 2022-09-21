@@ -21,10 +21,9 @@ ukb <- as_tibble(ukb)
 
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
-#invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance
-
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
+nrow(ukbveg)
 #9454 rows
 
 x <- ukb %>% select(starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed")))                 
