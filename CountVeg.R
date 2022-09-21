@@ -86,6 +86,7 @@ ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
 idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
+#Removes ? participants
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Withdrawn
