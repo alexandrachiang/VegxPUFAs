@@ -28,12 +28,12 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 
 #Select 20080 and 20086
 #names(ukb[,c(618:622, 763:792)])
-ukb2 <- ukb %>% select(starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed")))                
+ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
 #apply(ukb2, 2, table)
 #35 columns
 
 #Remove participants that never answered 20086
-ukb3 <- ukb2[rowSums(is.na(ukb2[, 1:5])) != 5,]
+ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080_", 0:4, "_0", sep = "")])) != 5,]
 #nrow(ukb3)
 #211018 rows
 
@@ -59,6 +59,7 @@ for (i in 0:4) { #instance
 }
 #print(n = 50, ukb3[36:41])
 
+ukb3 <- ukb3 %>% select(everything(), starts_with("daily_dietary_data_credible"))
 table(ukb3$CSRV)
 #204172 CSRV NonVeg
 #6846 CSRV Veg
