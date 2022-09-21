@@ -22,14 +22,19 @@ withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
 
 #Select necessary columns
-#Need to add BMI, SSRV, and pheno columns
+#Need to add BMI and pheno columns
 #Change to contains?
 ukb2 <- ukb %>% select(eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, uk_biobank_assessment_centre_f54_0_0, 
                        genotype_measurement_batch_f22000_0_0, 
-                       starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))
+                       starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", 
+                                     "meat_consumers", "fish_consumer")),
+                       oily_fish_intake_f1329_0_0, nonoily_fish_intake_f1339_0_0, processed_meat_intake_f1349_0_0,
+                       poultry_intake_f1359_0_0, beef_intake_f1369_0_0, lambmutton_intake_f1379_0_0, pork_intake_f1389_0_0,
+                       age_when_last_ate_meat_f3680_0_0, major_dietary_changes_in_the_last_5_years_f1538_0_0,
+                       starts_with("daily_dietary_data_credible"))
 #apply(ukb2, 2, table)
 # columns
 
@@ -93,7 +98,7 @@ ukbSSRV <- ukbCSRV
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
-idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
+ukbSSRV <- ukbSSRV[rowSums(!is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
 #Removes ? participants
 
 table(ukbSSRV$SSRV)
