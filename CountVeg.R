@@ -23,40 +23,45 @@ withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
-nrow(ukbveg)
+#nrow(ukbveg)
 #9454 rows
 
 #Select 20080 and 20086
-ukb2 <- ukb %>% select(starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed")))                 
-#apply(x, 2, table)
+#names(ukb[,c(618:622, 763:792)])
+ukb2 <- ukb %>% select(starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed")))                
+#apply(ukb2, 2, table)
+
+#Remove participants that never answered 20086
+ukb3 <- ukb2[rowSums(is.na(ukb2[,1:5])) != 5,]
+#nrow(ukb3)
+#211018 rows
 
 #Check if participant took survey
-tot <- paste("total", 0, sep="_")
-x[[tot]] <- "Nonveg"
+# <- "Nonveg"
   
-for (j in 0:5) {
-  inst <- paste("type_of_special_diet_followed_f20086_", 0, "_", j, sep = "")
-  x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
-}
+#for (j in 0:5) {
+#  inst <- paste("type_of_special_diet_followed_f20086_", 0, "_", j, sep = "")
+#  x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
+#}
 
-for (i in 1:4) {
-  rec <- paste("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance_f110001_", i, "_0", sep = "")
-  tot <- paste("total", i, sep="_")
-  x[[tot]] <- NA
+for (i in 0:4) { #instance
+  took <- paste("dayofweek_questionnaire_completed_f20080_", i, "_0", sep = "")
+  tot <- paste("is_vegetarian", i, sep="_")
+  ukb3[[tot]] <- NA #initialize NA columns
   
   #new column for completed = "nonveg", else = NA
-  x[[tot]][x[, rec] == "Completed"] <- "Nonveg"
+  ukb3[[tot]][!is.na(ukb3[, took])] <- "Nonveg"
   
-  for (j in 0:5) {
+  for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
-    x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
+    ukb3[[tot]][ukb3[, inst] == "Vegetarian" | ukb3[, inst] == "Vegan"] <- "Veg"
   }
 }
 
-x2 <- x %>% select(starts_with("total"))
-x2 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
+ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
+ukb4 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
 
-x2[x2$total_0 != "Nonveg", ] #3884 in initial
+x2[x2$is_vegetarian_0 != "Nonveg", ] #3884 in initial
 x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
 #3192 CSRV
 #894 full veg across all surveys
