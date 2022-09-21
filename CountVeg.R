@@ -52,7 +52,7 @@ ukbCSRV <- ukb3
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
 #nrow(ukbveg)
-#9454 rows
+#9451 rows
 
 #For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
@@ -74,17 +74,16 @@ for (i in 0:4) { #instance
   tot <- paste("is_vegetarian", i, sep="_")
   ukbCSRV[, "CSRV"][ukbCSRV[, tot] == "NonVeg"] <- "NonVeg"
 }
-#print(n = 50, ukb3[36:41])
 
 table(ukbCSRV$CSRV)
-#204172 CSRV NonVeg pre-QC
-#6846 CSRV Veg pre-QC
+#204140 (204172 pre-withdraw) CSRV NonVeg pre-QC
+#6844 (6846 pre-withdraw) CSRV Veg pre-QC
 #Michael had 5733 post-QC
 
 ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
 #or ukb3 %>% select(starts_with("is_vegetarian")) %>% filter(if_all(everything(), ~ grepl("", .)))
 ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
-#5766 answered all surveys pre-QC
+#5765 answered all surveys pre-QC
 #182 answered Veg across all surveys pre-QC
 
 #names(ukb3)
