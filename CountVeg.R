@@ -19,7 +19,7 @@ ukb <- as_tibble(ukb)
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
-ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ]
+ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
 
 #Select necessary columns
 #Need to add BMI, SSRV, and pheno columns
@@ -39,7 +39,7 @@ ukb2 <- ukb2 %>% mutate(age_when_attended_assessment_centre_squared = age_when_a
 #Remove participants that never answered 20086/never did a dietary survey
 ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
 #nrow(ukb3)
-#211018 rows
+#210984 rows
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Pheno QC
