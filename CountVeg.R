@@ -35,20 +35,20 @@ ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed",
 #41 columns
 
 #Remove participants that never answered 20086
-ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080_", 0:4, "_0", sep = "")])) != 5,]
+ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
 #nrow(ukb3)
 #211018 rows
 
 #For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
-  took <- paste("dayofweek_questionnaire_completed_f20080_", i, "_0", sep = "")
-  tot <- paste("is_vegetarian", i, sep="_")
+  took <- paste("dayofweek_questionnaire_completed_f20080", i, "0", sep = "_")
+  tot <- paste("is_vegetarian", i, sep = "_")
   ukb3[, tot] <- NA #initialize NA columns
   
   ukb3[, tot][!is.na(ukb3[, took])] <- "NonVeg" #participant answered in that instance
   
   for (j in 0:5) { #instance array for 20086
-    inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
+    inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
     ukb3[, tot][ukb3[, inst] == "Vegetarian" | ukb3[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
   }
 }
@@ -74,8 +74,11 @@ ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
-#Remove non-credible diet data
+
+
+#Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
+idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible", 0:4, "0", sep = "_")])) > 0,]
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Withdrawn
