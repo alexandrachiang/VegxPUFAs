@@ -32,7 +32,7 @@ ukb2 <- ukb %>% select(starts_with(c("dayofweek_questionnaire_completed", "type_
 #apply(ukb2, 2, table)
 
 #Remove participants that never answered 20086
-ukb3 <- ukb2[rowSums(is.na(ukb2[,1:5])) != 5,]
+ukb3 <- ukb2[rowSums(is.na(ukb2[, 1:5])) != 5,]
 #nrow(ukb3)
 #211018 rows
 
@@ -47,7 +47,7 @@ ukb3 <- ukb2[rowSums(is.na(ukb2[,1:5])) != 5,]
 for (i in 0:4) { #instance
   took <- paste("dayofweek_questionnaire_completed_f20080_", i, "_0", sep = "")
   tot <- paste("is_vegetarian", i, sep="_")
-  ukb3[[tot]] <- NA #initialize NA columns
+  ukb3[, tot] <- NA #initialize NA columns
   
   #new column for completed = "nonveg", else = NA
   ukb3[[tot]][!is.na(ukb3[, took])] <- "Nonveg"
@@ -58,11 +58,15 @@ for (i in 0:4) { #instance
   }
 }
 
-ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
-ukb4 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
+ukb3[["CSRV"]] <- NA
+#ukb3[["CSRV"]][ukb3[] == "Vegetarian" | ]
 
-x2[x2$is_vegetarian_0 != "Nonveg", ] #3884 in initial
-x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
+#ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
+#ukb4 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
+#x2[x2$is_vegetarian_0 != "Nonveg", ] #3884 in initial
+#x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
+
+table(ukb3$CSRV)
 #3192 CSRV
 #894 full veg across all surveys
 
