@@ -23,6 +23,7 @@ ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
 
 #Select necessary columns
 #Need to add BMI, SSRV, and pheno columns
+#Change to contains?
 ukb2 <- ukb %>% select(eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
