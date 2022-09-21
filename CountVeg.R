@@ -86,14 +86,6 @@ ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "V
 #5765 answered all surveys pre-QC
 #182 answered Veg across all surveys pre-QC
 
-#names(ukb3)
-# [1] "eid"
-# [2] "dayofweek_questionnaire_completed_f20080_0_0"
-# [7] "type_of_special_diet_followed_f20086_0_0"
-# [37] "daily_dietary_data_credible_f100026_0_0"
-# [42] "is_vegetarian_0"
-# [47] "CSRV"
-
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
 ukbSSRV <- ukbCSRV
@@ -103,10 +95,9 @@ ukbSSRV <- ukbCSRV
 idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
 #Removes ? participants
 
+table(ukbSSRV$SSRV)
+#? SSRV NonVeg pre-QC
+#? SSRV Veg pre-QC
+#Michael had ? post-QC
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
-#Withdrawn
-#pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
-ukbCSRVwithdrawn <- ukbCSRV[!(ukbCSRV$eid %in% withdrawn$V1), ]
-table(ukbCSRVwithdrawn$CSRV) #OLD
-#204140 CSRV NonVeg (-32)
-#6844 CSRV Veg (-2)
