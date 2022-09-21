@@ -60,7 +60,7 @@ for (i in 0:4) { #instance
   tot <- paste("is_vegetarian", i, sep="_")
   ukb3[, "CSRV"][ukb3[, tot] == "NonVeg"] <- "NonVeg"
 }
-
+#print(n = 50, ukb3[36:41])
 #6 19 24 25
 
 #ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
