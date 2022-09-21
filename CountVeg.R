@@ -35,9 +35,6 @@ ukb2 <- ukb %>% select(starts_with(c("dayofweek_questionnaire_completed", "type_
 ukb3 <- ukb2[rowSums(is.na(ukb2[, 1:5])) != 5,]
 #nrow(ukb3)
 #211018 rows
-
-#Check if participant took survey
-# <- "Nonveg"
   
 #for (j in 0:5) {
 #  inst <- paste("type_of_special_diet_followed_f20086_", 0, "_", j, sep = "")
@@ -49,17 +46,22 @@ for (i in 0:4) { #instance
   tot <- paste("is_vegetarian", i, sep="_")
   ukb3[, tot] <- NA #initialize NA columns
   
-  #new column for completed = "nonveg", else = NA
-  ukb3[[tot]][!is.na(ukb3[, took])] <- "Nonveg"
+  ukb3[, tot][!is.na(ukb3[, took])] <- "NonVeg" #participant answered in that instance
   
   for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086_", i, "_", j, sep = "")
-    ukb3[[tot]][ukb3[, inst] == "Vegetarian" | ukb3[, inst] == "Vegan"] <- "Veg"
+    ukb3[, tot][ukb3[, inst] == "Vegetarian" | ukb3[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
   }
 }
 
-ukb3[["CSRV"]] <- NA
-#ukb3[["CSRV"]][ukb3[] == "Vegetarian" | ]
+#Get CSRV
+ukb3[, "CSRV"] <- "Veg"
+for (i in 0:4) { #instance
+  tot <- paste("is_vegetarian", i, sep="_")
+  ukb3[, "CSRV"][ukb3[, tot] == "NonVeg"] <- "NonVeg"
+}
+
+#6 19 24 25
 
 #ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
 #ukb4 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
