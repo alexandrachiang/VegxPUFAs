@@ -29,7 +29,6 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 #9454 rows
 
 #Select 20080 and 20086
-#names(ukb[,c(618:622, 763:792)])
 ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
 #apply(ukb2, 2, table)
 #41 columns
@@ -72,13 +71,21 @@ ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"
 #5766 answered all surveys
 #182 answered Veg across all surveys
 
+#names(ukb3)
+# [1] "eid"
+# [2] "dayofweek_questionnaire_completed_f20080_0_0"
+# [7] "type_of_special_diet_followed_f20086_0_0"
+# [37] "daily_dietary_data_credible_f100026_0_0"
+# [42] "is_vegetarian_0"
+# [47] "CSRV"
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
 
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
-idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible", 0:4, "0", sep = "_")])) > 0,]
+idk2 <- idk[rowSums(!is.na(idk[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Withdrawn
