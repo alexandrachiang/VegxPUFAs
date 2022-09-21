@@ -30,17 +30,14 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 #names(ukb[,c(618:622, 763:792)])
 ukb2 <- ukb %>% select(starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed")))                
 #apply(ukb2, 2, table)
+#35 columns
 
 #Remove participants that never answered 20086
 ukb3 <- ukb2[rowSums(is.na(ukb2[, 1:5])) != 5,]
 #nrow(ukb3)
 #211018 rows
-  
-#for (j in 0:5) {
-#  inst <- paste("type_of_special_diet_followed_f20086_", 0, "_", j, sep = "")
-#  x[[tot]][x[, inst] == "Vegetarian" | x[, inst] == "Vegan"] <- "Veg"
-#}
 
+#For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
   took <- paste("dayofweek_questionnaire_completed_f20080_", i, "_0", sep = "")
   tot <- paste("is_vegetarian", i, sep="_")
@@ -61,17 +58,16 @@ for (i in 0:4) { #instance
   ukb3[, "CSRV"][ukb3[, tot] == "NonVeg"] <- "NonVeg"
 }
 #print(n = 50, ukb3[36:41])
-#6 19 24 25
-
-#ukb4 <- ukb3 %>% select(starts_with("is_vegetarian"))
-#ukb4 %>% filter(!if_any(everything(), ~ . %in% "Nonveg")) #2463??
-#x2[x2$is_vegetarian_0 != "Nonveg", ] #3884 in initial
-#x2 %>% filter_all(all_vars(!grepl("Nonveg", .)))
 
 table(ukb3$CSRV)
-#3192 CSRV
-#894 full veg across all surveys
-
+#204172 CSRV NonVeg
+#6846 CSRV Veg
 #Michael had 5733
+
+ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
+#or ukb3 %>% select(starts_with("is_vegetarian")) %>% filter(if_all(everything(), ~ grepl("", .)))
+ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
+#5766 answered all surveys
+#182 answered Veg across all surveys
 
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
