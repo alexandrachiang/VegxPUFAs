@@ -26,10 +26,11 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 nrow(ukbveg)
 #9454 rows
 
-x <- ukb %>% select(starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed")))                 
+#Select 20080 and 20086
+ukb2 <- ukb %>% select(starts_with(c("invitation_to_complete_online_24hour_recall_dietary_questionnaire_acceptance", "type_of_special_diet_followed")))                 
 #apply(x, 2, table)
 
-#How to check for initial?
+#Check if participant took survey
 tot <- paste("total", 0, sep="_")
 x[[tot]] <- "Nonveg"
   
