@@ -2,8 +2,7 @@
 # CSRV = self-ID vegatarian, field 20086
 # SSRV = true vegetarian, field 
 
-# SpecialDiet<-bd%>%select(f.eid, f.20086.0.0, f.20086.1.0, f.20086.2.0, f.20086.3.0, f.20086.4.0)
-# Remove withdrawn at the end
+#Remove withdrawn at the end
 
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
@@ -21,6 +20,9 @@ ukb <- as_tibble(ukb)
 
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#CSRV
+
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
 #nrow(ukbveg)
@@ -30,7 +32,7 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 #names(ukb[,c(618:622, 763:792)])
 ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
 #apply(ukb2, 2, table)
-#35 columns
+#41 columns
 
 #Remove participants that never answered 20086
 ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080_", 0:4, "_0", sep = "")])) != 5,]
@@ -59,7 +61,6 @@ for (i in 0:4) { #instance
 }
 #print(n = 50, ukb3[36:41])
 
-ukb3 <- ukb3 %>% select(everything(), starts_with("daily_dietary_data_credible"))
 table(ukb3$CSRV)
 #204172 CSRV NonVeg
 #6846 CSRV Veg
@@ -71,4 +72,15 @@ ukb3 %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"
 #5766 answered all surveys
 #182 answered Veg across all surveys
 
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#SSRV
+#Remove non-credible diet data
+#select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#Withdrawn
 #pheno <- pheno[!(pheno$IID %in% withdrawn$V1), ]
+ukb3withdrawn <- ukb3[!(ukb3$eid %in% withdrawn$V1), ]
+table(ukb3withdrawn$CSRV)
+#204140 CSRV NonVeg (-32)
+#6844 CSRV Veg (-2)
