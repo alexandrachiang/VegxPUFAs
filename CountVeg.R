@@ -21,18 +21,6 @@ ukb <- as_tibble(ukb)
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ]
 
-select(f.eid, f.21003.0.0, f.31.0.0, f.22001.0.0, f.21000.0.0,
-                      f.22027.0.0, f.22019.0.0,
-                      f.22021.0.0, f.189.0.0,
-                      f.54.0.0, f.22000.0.0)
-
-colnames(bd_QC)<-c("IID", "Age", "Sex", "Genetic_Sex", 
-                   
-                   "Race",
-                   "Outliers_for_het_or_missing", "SexchrAneuploidy",
-                   "Genetic_kinship", "Townsend",
-                   "Assessment_center", "Geno_batch")
-
 #Select necessary columns
 #Need to add BMI, SSRV, and pheno columns
 ukb2 <- ukb %>% select(eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
