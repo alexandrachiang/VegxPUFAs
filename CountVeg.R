@@ -20,8 +20,17 @@ ukb <- as_tibble(ukb)
 
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 
-#Select 20080 and 20086
-ukb2 <- ukb %>% select(starts_with(c("eid", "dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))                
+select(f.eid, f.31.0.0, f.22001.0.0, f.21000.0.0,
+                      f.22027.0.0, f.22019.0.0,
+                      f.22021.0.0)
+
+colnames(bd_QC)<-c("IID", "Sex", "Genetic_Sex", "Race",
+                   "Outliers_for_het_or_missing", "SexchrAneuploidy",
+                   "Genetic_kinship")
+
+#Select necessary columns
+#Need to add covar, SSRV, and pheno columns
+ukb2 <- ukb %>% select(eid, starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", "daily_dietary_data_credible")))
 #apply(ukb2, 2, table)
 #41 columns
 
@@ -83,7 +92,7 @@ ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "V
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
-
+ukbSSRV <- ukbCSRV
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
