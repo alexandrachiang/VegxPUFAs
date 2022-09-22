@@ -140,10 +140,12 @@ table(ukbSSRV$SSRV)
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
-ukbSSRV <- ukbSSRV[-rowSums(!is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
-#Removes ? participants
+ukbSSRV2 <- ukbSSRV[rowSums(is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) = 5,]
+nrow(ukbSSRV2)
+#207813
+#Removes 3171 participants?? ukb website says 3170?
 
-table(ukbSSRV$SSRV)
+table(ukbSSRV2$SSRV)
 #? SSRV NonVeg pre-QC
 #? SSRV Veg pre-QC
 #Michael had ? post-QC
