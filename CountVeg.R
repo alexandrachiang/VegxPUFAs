@@ -63,22 +63,21 @@ ukbveg <- ukb %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ 
 #For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
   took <- paste("dayofweek_questionnaire_completed_f20080", i, "0", sep = "_")
-  tot <- paste("is_vegetarian", i, sep = "_")
-  ukbCSRV[, tot] <- NA #initialize NA columns
-  
-  ukbCSRV[, tot][!is.na(ukbCSRV[, took])] <- "NonVeg" #participant answered in that instance
+  check <- paste("is_CSRV_vegetarian", i, sep = "_")
+  ukbCSRV[, check] <- NA #initialize NA columns
+  ukbCSRV[, check][!is.na(ukbCSRV[, took])] <- "NonVeg" #participant answered in that instance
   
   for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
-    ukbCSRV[, tot][ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
+    ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
   }
 }
 
 #Get CSRV
 ukbCSRV[, "CSRV"] <- "Veg"
 for (i in 0:4) { #instance
-  tot <- paste("is_vegetarian", i, sep="_")
-  ukbCSRV[, "CSRV"][ukbCSRV[, tot] == "NonVeg"] <- "NonVeg"
+  check <- paste("is_CSRV_vegetarian", i, sep="_")
+  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
 }
 
 table(ukbCSRV$CSRV)
@@ -86,15 +85,37 @@ table(ukbCSRV$CSRV)
 #6844 (6846 pre-withdraw) CSRV Veg pre-QC
 #Michael had 5733 post-QC
 
-ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
+ukbCSRV %>% select(starts_with("is_CSRV_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
 #or ukb3 %>% select(starts_with("is_vegetarian")) %>% filter(if_all(everything(), ~ grepl("", .)))
-ukbCSRV %>% select(starts_with("is_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
+ukbCSRV %>% select(starts_with("is_CSRV_vegetarian")) %>% filter_all(all_vars(. == "Veg"))
 #5765 answered all surveys pre-QC
 #182 answered Veg across all surveys pre-QC
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
 ukbSSRV <- ukbCSRV
+
+#For each instance, get Veg status for meat/fish consumption
+for (i in 0:4) { #instance
+  check <- paste("is_SSRV_vegetarian", i, sep = "_")
+  ukbSSRV[, check] <- NA #initialize NA columns
+  
+  #Check if never ate meat/fish
+  meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
+  fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
+  ukbSSRV[, check][ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes"] <- "NonVeg" #participant is nonveg for that instance
+  ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"] <- "Veg" #participant is veg for that instance
+}
+
+#Initial has additional columns to filter for diet intake
+intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
+#There are like 84? 85? participants who are NA for these columns, I'm assumming they're nonveg
+ukbSSRV[, "meat_intake_0"] <- "Veg"
+for (i in 1:length(intake)) {
+  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
+}
+#print(n = 50, ukbSSRV %>% select(contains("intake")))
+#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == c(1013495))
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
