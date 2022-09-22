@@ -115,7 +115,7 @@ for (i in 1:length(intake)) {
   ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
 }
 #print(n = 50, ukbSSRV %>% select(contains("intake")))
-#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == c(1013495))
+#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
 
 #Get SSRV
 ukbSSRV[, "SSRV"] <- "Veg"
@@ -125,11 +125,22 @@ for (i in 0:4) { #instance
 }
 ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
 
+#print(n = 50, ukbSSRV %>% select(contains("is_SSRV_vegetarian"), meat_intake_0, SSRV))
+#ukbSSRV %>% select(eid, contains("is_SSRV_vegetarian"), meat_intake_0, SSRV)) %>% filter(eid == 1000072)
 table(ukbSSRV$SSRV)
+#206387 SSRV NonVeg pre-QC
+#4597 SSRV Veg pre-QC
+
+#Take CSRV into account for SSRV
+ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg"
+
+table(ukbSSRV$SSRV)
+#206678 SSRV NonVeg pre-QC
+#4306 SSRV Veg pre-QC
 
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
-ukbSSRV <- ukbSSRV[rowSums(!is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
+ukbSSRV <- ukbSSRV[-rowSums(!is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
 #Removes ? participants
 
 table(ukbSSRV$SSRV)
