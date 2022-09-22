@@ -117,6 +117,16 @@ for (i in 1:length(intake)) {
 #print(n = 50, ukbSSRV %>% select(contains("intake")))
 #ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == c(1013495))
 
+#Get SSRV
+ukbSSRV[, "SSRV"] <- "Veg"
+for (i in 0:4) { #instance
+  check <- paste("is_SSRV_vegetarian", i, sep="_")
+  ukbSSRV[, "SSRV"][ukbSSRV[, check] == "NonVeg"] <- "NonVeg"
+}
+ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
+
+table(ukbSSRV$SSRV)
+
 #Remove non-credible diet data if ever not credible in any answered survey
 #select(-starts_with("daily_dietary_data_credible"), starts_with("daily_dietary_data_credible"))
 ukbSSRV <- ukbSSRV[rowSums(!is.na(ukbSSRV[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) > 0,]
