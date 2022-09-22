@@ -146,8 +146,8 @@ nrow(ukbSSRV2)
 #Removes 3171 participants?? ukb website says 3170?
 
 table(ukbSSRV2$SSRV)
-#? SSRV NonVeg pre-QC
-#? SSRV Veg pre-QC
-#Michael had ? post-QC
+#203607 SSRV NonVeg pre-QC
+#4206 SSRV Veg pre-QC
+#Michael had 3784 post-QC
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
