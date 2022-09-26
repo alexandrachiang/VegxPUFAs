@@ -83,7 +83,7 @@ for (i in 0:4) { #instance
 table(ukbCSRV$CSRV)
 #204140 (204172 pre-withdraw) CSRV NonVeg pre-QC
 #6844 (6846 pre-withdraw) CSRV Veg pre-QC
-#Michael had 5733 post-QC
+#Michael had 5733 pre-QC
 
 ukbCSRV %>% select(starts_with("is_CSRV_vegetarian")) %>% filter_all(all_vars(!is.na(.))) 
 #or ukb3 %>% select(starts_with("is_vegetarian")) %>% filter(if_all(everything(), ~ grepl("", .)))
@@ -148,6 +148,6 @@ nrow(ukbSSRV2)
 table(ukbSSRV2$SSRV)
 #203607 SSRV NonVeg pre-QC
 #4206 SSRV Veg pre-QC
-#Michael had 3784 post-QC
+#Michael had 3784 pre-QC
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
