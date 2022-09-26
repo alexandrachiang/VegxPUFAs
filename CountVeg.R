@@ -6,7 +6,7 @@
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
 suppressMessages(library(tidyverse))
-suppressMessages(library(ggpubr))
+#suppressMessages(library(ggpubr))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
