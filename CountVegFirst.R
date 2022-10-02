@@ -58,7 +58,16 @@ ukbCSRV <- ukbCSRV %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_
   mutate(first_instance_1 = !is.na(dayofweek_questionnaire_completed_f20080_1_0) & !first_instance_0) %>% 
   mutate(first_instance_2 = !is.na(dayofweek_questionnaire_completed_f20080_2_0) & !first_instance_0 & !first_instance_1) %>% 
   mutate(first_instance_3 = !is.na(dayofweek_questionnaire_completed_f20080_3_0) & !first_instance_0 & !first_instance_1 & !first_instance_2) %>% 
-  mutate(first_instance_4 = !is.na(dayofweek_questionnaire_completed_f20080_4_0) & !first_instance_0 & !first_instance_1 & !first_instance_3) %>% 
+  mutate(first_instance_4 = !is.na(dayofweek_questionnaire_completed_f20080_4_0) & !first_instance_0 & !first_instance_1 & !first_instance_2 & !first_instance_3)
+
+ukbCSRV <- ukbCSRV %>% mutate(first_instance = ifelse(first_instance_0, 0, 
+                                                      ifelse(first_instance_1, 1, 
+                                                             ifelse(first_instance_2, 2, 
+                                                                    ifelse(first_instance_3, 3, 
+                                                                           ifelse(first_instance_4, 4, NA))))))
+
+#x <- ukbCSRV %>% select(contains(c("f20080", "first_instance")))
+#sapply(x, table)
 
 #For each instance, get Veg status if participant answered that survey
 for (i in 0:4) { #instance
