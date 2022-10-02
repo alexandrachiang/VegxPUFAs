@@ -85,11 +85,11 @@ for (i in 0:4) { #instance
 #sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
 
 #Get CSRV
-ukbSSRV[, "SSRV"] <- NA
+ukbCSRV[, "CSRV"] <- NA
 for (i in 0:4) { #instance
   check <- paste("is_CSRV_vegetarian", i, sep="_")
-  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
   ukbCSRV[, "CSRV"][ukbCSRV[, check] == "Veg"] <- "Veg"
+  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
 }
 
 table(ukbCSRV$CSRV)
@@ -119,9 +119,10 @@ for (i in 0:4) { #instance
 #Put this back?
 
 #Get SSRV
-ukbSSRV[, "SSRV"] <- "Veg"
+ukbSSRV[, "SSRV"] <- NA
 for (i in 0:4) { #instance
   check <- paste("is_SSRV_vegetarian", i, sep="_")
+  ukbSSRV[, "SSRV"][ukbSSRV[, check] == "Veg"] <- "Veg"
   ukbSSRV[, "SSRV"][ukbSSRV[, check] == "NonVeg"] <- "NonVeg"
 }
 ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
