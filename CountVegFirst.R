@@ -62,6 +62,9 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
                                                                            ifelse(first_instance_4, 4, NA))))))
 
 #sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
+#$first_instance
+#    0     1     2     3     4
+#70698 79604 27108 19639 13935
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Diet QC
