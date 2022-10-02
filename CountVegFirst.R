@@ -48,25 +48,24 @@ ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f2008
 #nrow(ukb3)
 #210984 rows
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
-#CSRV
-
-ukbCSRV <- ukb3
-
 #Get first answered recall survey
-ukbCSRV <- ukbCSRV %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
+ukb4 <- ukb3 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
   mutate(first_instance_1 = !is.na(dayofweek_questionnaire_completed_f20080_1_0) & !first_instance_0) %>% 
   mutate(first_instance_2 = !is.na(dayofweek_questionnaire_completed_f20080_2_0) & !first_instance_0 & !first_instance_1) %>% 
   mutate(first_instance_3 = !is.na(dayofweek_questionnaire_completed_f20080_3_0) & !first_instance_0 & !first_instance_1 & !first_instance_2) %>% 
   mutate(first_instance_4 = !is.na(dayofweek_questionnaire_completed_f20080_4_0) & !first_instance_0 & !first_instance_1 & !first_instance_2 & !first_instance_3)
 
-ukbCSRV <- ukbCSRV %>% mutate(first_instance = ifelse(first_instance_0, 0, 
+ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0, 
                                                       ifelse(first_instance_1, 1, 
                                                              ifelse(first_instance_2, 2, 
                                                                     ifelse(first_instance_3, 3, 
                                                                            ifelse(first_instance_4, 4, NA))))))
 
-#sapply(ukbCSRV %>% select(contains(c("f20080", "first_instance"))), table)
+#sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#CSRV
+ukbCSRV <- ukb4
 
 #For each first instance, get Veg status
 for (i in 0:4) { #instance
@@ -102,27 +101,21 @@ table(ukbCSRV$CSRV)
 #SSRV
 ukbSSRV <- ukbCSRV
 
-#For each instance, get Veg status for meat/fish consumption
+#For each first instance, get Veg status for meat/fish consumption
 for (i in 0:4) { #instance
+  took <- paste("first_instance", i, sep = "_")
   check <- paste("is_SSRV_vegetarian", i, sep = "_")
   ukbSSRV[, check] <- NA #initialize NA columns
   
   #Check if never ate meat/fish
   meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
   fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
-  ukbSSRV[, check][ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes"] <- "NonVeg" #participant is nonveg for that instance
-  ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"] <- "Veg" #participant is veg for that instance
+  ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
+  ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
 
 #Initial has additional columns to filter for diet intake
-intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
-#There are like 84? 85? participants who are NA for these columns, I'm assumming they're nonveg
-ukbSSRV[, "meat_intake_0"] <- "Veg"
-for (i in 1:length(intake)) {
-  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
-}
-#print(n = 50, ukbSSRV %>% select(contains("intake")))
-#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
+#Put this back?
 
 #Get SSRV
 ukbSSRV[, "SSRV"] <- "Veg"
