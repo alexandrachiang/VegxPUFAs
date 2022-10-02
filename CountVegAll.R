@@ -15,7 +15,7 @@ setwd("/scratch/ahc87874/Fall2022")
 
 #Load dataset
 #ukb <- ukb_df("ukb34137")
-ukb <- import(ukb34137)
+ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
 #Remove withdrawn participants from dataset
