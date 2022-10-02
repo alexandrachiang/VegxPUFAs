@@ -85,6 +85,7 @@ for (i in 0:4) { #instance
 #sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
 
 #Get CSRV
+ukbSSRV[, "SSRV"] <- NA
 for (i in 0:4) { #instance
   check <- paste("is_CSRV_vegetarian", i, sep="_")
   ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
