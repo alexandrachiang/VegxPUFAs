@@ -64,6 +64,11 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
+#Pheno QC
+
+#Should remove people who are NA for intake, not credible diet data
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
 ukbCSRV <- ukb4
 
@@ -115,8 +120,16 @@ for (i in 0:4) { #instance
   ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
 
-#Initial has additional columns to filter for diet intake
-#Put this back?
+#Additional columns to filter for diet intake taken at first instance
+intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
+#There are like 84? 85? participants who are NA for these columns, I'm assumming they're nonveg
+ukbSSRV[, "meat_intake_0"] <- NA
+for (i in 1:length(intake)) {
+  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never"] <- "NonVeg"
+  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] == "Never"] <- "Veg"
+}
+#print(n = 50, ukbSSRV %>% select(contains("intake")))
+#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
 
 #Get SSRV
 ukbSSRV[, "SSRV"] <- NA
@@ -131,3 +144,5 @@ ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
 ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg"
 
 table(ukbSSRV$SSRV)
+#NonVeg    Veg
+#203792   7192 without the intake columns
