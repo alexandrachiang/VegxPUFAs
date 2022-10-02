@@ -96,3 +96,43 @@ table(ukbCSRV$CSRV)
 #NonVeg    Veg
 #203241   7777 no withdraw, only vegetarian
 #202740   8244 withdraw, vegetarian and vegan
+#Michael had 7788??
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#SSRV
+ukbSSRV <- ukbCSRV
+
+#For each instance, get Veg status for meat/fish consumption
+for (i in 0:4) { #instance
+  check <- paste("is_SSRV_vegetarian", i, sep = "_")
+  ukbSSRV[, check] <- NA #initialize NA columns
+  
+  #Check if never ate meat/fish
+  meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
+  fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
+  ukbSSRV[, check][ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes"] <- "NonVeg" #participant is nonveg for that instance
+  ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"] <- "Veg" #participant is veg for that instance
+}
+
+#Initial has additional columns to filter for diet intake
+intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
+#There are like 84? 85? participants who are NA for these columns, I'm assumming they're nonveg
+ukbSSRV[, "meat_intake_0"] <- "Veg"
+for (i in 1:length(intake)) {
+  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
+}
+#print(n = 50, ukbSSRV %>% select(contains("intake")))
+#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
+
+#Get SSRV
+ukbSSRV[, "SSRV"] <- "Veg"
+for (i in 0:4) { #instance
+  check <- paste("is_SSRV_vegetarian", i, sep="_")
+  ukbSSRV[, "SSRV"][ukbSSRV[, check] == "NonVeg"] <- "NonVeg"
+}
+ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
+
+#Take CSRV into account for SSRV
+ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg"
+
+table(ukbSSRV$SSRV)
