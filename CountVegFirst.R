@@ -64,7 +64,7 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
-#Pheno QC
+#Diet QC
 #Should remove people who are NA for intake, not credible diet data
 
 #Remove non-credible diet data if ever not credible in any answered survey
@@ -79,7 +79,8 @@ ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish
 #nrow(ukb5)
 #207731 removes 82
 
-#NOTHING BELOW HAS THESE QC YET
+#Move to pheno qc?
+#NOTHING BELOW HAS THIS HAS QC YET
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
