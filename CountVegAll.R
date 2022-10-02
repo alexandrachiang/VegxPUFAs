@@ -14,7 +14,8 @@ setwd("/scratch/ahc87874/Fall2022")
 #source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
 
 #Load dataset
-ukb <- ukb_df("ukb34137")
+#ukb <- ukb_df("ukb34137")
+ukb <- import(ukb34137)
 ukb <- as_tibble(ukb)
 
 #Remove withdrawn participants from dataset
