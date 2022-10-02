@@ -66,19 +66,32 @@ ukbCSRV <- ukbCSRV %>% mutate(first_instance = ifelse(first_instance_0, 0,
                                                                     ifelse(first_instance_3, 3, 
                                                                            ifelse(first_instance_4, 4, NA))))))
 
-#x <- ukbCSRV %>% select(contains(c("f20080", "first_instance")))
-#sapply(x, table)
+#sapply(ukbCSRV %>% select(contains(c("f20080", "first_instance"))), table)
 
-#For each instance, get Veg status if participant answered that survey
+#For each first instance, get Veg status
 for (i in 0:4) { #instance
-  took <- paste("dayofweek_questionnaire_completed_f20080", i, "0", sep = "_")
+  took <- paste("first_instance", i, sep = "_")
   check <- paste("is_CSRV_vegetarian", i, sep = "_")
   ukbCSRV[, check] <- NA #initialize NA columns
-  ukbCSRV[, check][!is.na(ukbCSRV[, took])] <- "NonVeg" #participant answered in that instance
+  ukbCSRV[, check][ukbCSRV[, took] == TRUE] <- "NonVeg" #participant first answered in that instance
   
   for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
-    ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan"] <- "Veg" #participant is veg for that instance
+    #ukbCSRV[, check][(ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan") & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
+    ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
   }
 }
 
+#ukbCSRV %>% select(contains(c("first_instance", "is_CSRV_vegetarian")))
+sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
+
+#Get CSRV
+ukbCSRV[, "CSRV"] <- "Veg"
+for (i in 0:4) { #instance
+  check <- paste("is_CSRV_vegetarian", i, sep="_")
+  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
+}
+
+table(ukbCSRV$CSRV)
+#NonVeg    Veg
+#203241   7777
