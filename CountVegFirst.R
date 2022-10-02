@@ -103,6 +103,32 @@ table(ukbCSRV$CSRV)
 #202740   8244 withdraw, vegetarian and vegan
 #Michael had 7788??
 
+ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
+#                            CSRV
+#ethnic_background_f21000_0_0 NonVeg    Veg
+#  Prefer not to answer          580     45
+#  Do not know                    60      2
+#  White                         154     11
+#  Mixed                          13      1
+#  Asian or Asian British          9      2
+#  Black or Black British          4      1
+#  Chinese                       582     14
+#  Other ethnic group           1432    109
+#  British                    181117   6530
+#  Irish                        4947    228
+#  Any other white background   7879    396
+#  White and Black Caribbean     233     14
+#  White and Black African       138     10
+#  White and Asian               387     26
+#  Any other mixed background    404     27
+#  Indian                       1363    602
+#  Pakistani                     326     23
+#  Bangladeshi                    33      3
+#  Any other Asian background    510     74
+#  Caribbean                    1490     67
+#  African                       965     49
+#  Any other Black background     36      3
+
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #SSRV
 ukbSSRV <- ukbCSRV
@@ -140,9 +166,50 @@ for (i in 0:4) { #instance
 }
 ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
 
+#ukbSSRV %>% select(CSRV, SSRV) %>% table()
+#        SSRV
+#CSRV     NonVeg    Veg
+#  NonVeg 196768   5972
+#  Veg      1435   6809
+
 #Take CSRV into account for SSRV
-ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg"
+ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg" #Make CSRV NonVeg/SSRV Veg participants into SSRV NonVeg
+ukbSSRV <- ukbSSRV %>% filter(!(CSRV == "Veg" & SSRV == "NonVeg")) #Remove CSRV Veg/SSRV NonVeg participants
+
+#ukbSSRV %>% select(CSRV, SSRV) %>% table()
+#        SSRV
+#CSRV     NonVeg    Veg
+#  NonVeg 202740      0
+#  Veg         0   6809
 
 table(ukbSSRV$SSRV)
 #NonVeg    Veg
 #203792   7192 without the intake columns
+#204175   6809 with intake
+#202740   6809 with intake and removed participants who were CSRV veg/SSRV nonveg
+
+ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
+#                            SSRV
+#ethnic_background_f21000_0_0 NonVeg    Veg
+#  Prefer not to answer          580     35
+#  Do not know                    60      2
+#  White                         154     11
+#  Mixed                          13      1
+#  Asian or Asian British          9      2
+#  Black or Black British          4      0
+#  Chinese                       582      6
+#  Other ethnic group           1432     64
+#  British                    181117   5474
+#  Irish                        4947    199
+#  Any other white background   7879    313
+#  White and Black Caribbean     233     10
+#  White and Black African       138      7
+#  White and Asian               387     20
+#  Any other mixed background    404     21
+#  Indian                       1363    524
+#  Pakistani                     326     10
+#  Bangladeshi                    33      1
+#  Any other Asian background    510     46
+#  Caribbean                    1490     40
+#  African                       965     16
+#  Any other Black background     36      1
