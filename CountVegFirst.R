@@ -65,8 +65,21 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Pheno QC
-
 #Should remove people who are NA for intake, not credible diet data
+
+#Remove non-credible diet data if ever not credible in any answered survey
+ukb5 <- ukb4[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
+#nrow(ukb5)
+#207813 removes3171
+
+ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
+                           !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
+                           !is.na(beef_intake_f1369_0_0) & !is.na(lambmutton_intake_f1379_0_0) & 
+                           !is.na(pork_intake_f1389_0_0))
+#nrow(ukb5)
+#207731 removes 82
+
+#NOTHING BELOW HAS THESE QC YET
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
