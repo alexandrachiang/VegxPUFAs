@@ -14,8 +14,8 @@ setwd("/scratch/ahc87874/Fall2022")
 #source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
 
 #Load dataset
-#ukb <- ukb_df("ukb34137")
-ukb <- import("ukb34137.tsv")
+ukb <- ukb_df("ukb34137")
+#ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
 #Remove withdrawn participants from dataset
@@ -77,13 +77,13 @@ for (i in 0:4) { #instance
   
   for (j in 0:5) { #instance array for 20086
     inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
-    #ukbCSRV[, check][(ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan") & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
-    ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
+    ukbCSRV[, check][(ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan") & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
+    #ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
   }
 }
 
 #ukbCSRV %>% select(contains(c("first_instance", "is_CSRV_vegetarian")))
-sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
+#sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
 
 #Get CSRV
 ukbCSRV[, "CSRV"] <- "Veg"
@@ -94,4 +94,5 @@ for (i in 0:4) { #instance
 
 table(ukbCSRV$CSRV)
 #NonVeg    Veg
-#203241   7777
+#203241   7777 no withdraw, only vegetarian
+#202740   8244 withdraw, vegetarian and vegan
