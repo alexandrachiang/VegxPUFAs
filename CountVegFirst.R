@@ -10,7 +10,7 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
-setwd("/scratch/ahc87874/Fall2022")
+setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #Load dataset
 if (FALSE) {
@@ -197,7 +197,7 @@ ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
 
 #Take CSRV into account for SSRV
 ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg" #Make CSRV NonVeg/SSRV Veg participants into SSRV NonVeg
-ukbSSRV <- ukbSSRV %>% filter(!(CSRV == "Veg" & SSRV == "NonVeg")) #Remove CSRV Veg/SSRV NonVeg participants
+ukbSSRV$SSRV[(ukbSSRV$CSRV == "Veg" & ukbSSRV$SSRV == "NonVeg")] <- NA #Remove CSRV Veg/SSRV NonVeg participants
 
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
