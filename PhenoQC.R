@@ -55,28 +55,28 @@ colnames(bd_QC) <- c("IID", "Sex", "Genetic_Sex", "Race",
 
 #1. Genetic ethnicity = Caucasian VIA PAN UKBB
 #Join UKB cols with with Pan UKBB
-bd_QC <- as_tibble(bd_QC) #502,527
-bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448193
+bd_QC <- as_tibble(bd_QC) #502459
+bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448192
 
 #Filter by Genetic ethnicity = Caucasian VIA PAN UKBB
-bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426881
+bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426880
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
-    filter(is.na(Outliers_for_het_or_missing) | Outliers_for_het_or_missing != "Yes") #426433
+    filter(is.na(Outliers_for_het_or_missing) | Outliers_for_het_or_missing != "Yes") #426432
 
 #3. No Sex chromosome aneuploidy
 bd_QC <- bd_QC %>%
-    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #425854
+    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #425853
 
 #4. Self-reported sex matches genetic sex
 #If Sex does not equal genetic sex, exclude participant
-bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #425683
+bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #425682
 
 #5. Do not have high degree of genetic kinship (Ten or more third-degree relatives identified)
 bd_QC <- bd_QC %>%
     filter(is.na(Genetic_kinship) |
-               Genetic_kinship != "Ten or more third-degree relatives identified") #425510
+               Genetic_kinship != "Ten or more third-degree relatives identified") #425509
                
 #6. Does not appear in "maximum_set_of_unrelated_individuals.MF.pl"
 #Filter related file by those in QC
@@ -85,12 +85,12 @@ relatives <- read.table("ukb48818_rel_s488282.dat", header=T)
 #From maximum_set_of_unrelated_individuals.MF.pl output:
 max_unrelated <- read.table("ukb48818_rel_s488282_output.dat")
 max_unrelated <- as.integer(unlist(max_unrelated))
-bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356980
+bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356979
 
 QCkeepparticipants <- bd_QC %>% select(IID)
 
 write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/bd_QC-keep.txt",
             row.names = FALSE, quote = FALSE)
             
-#Start with 502527 participants
-#End with ? participants, removed ?
+#Start with 502459 participants
+#End with 356979 participants, removed 145480
