@@ -6,7 +6,7 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
-setwd("/scratch/ahc87874/Fall2022")
+setwd("/scratch/ahc87874/Fall2022/pheno")
 #source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
 
 #Load dataset
@@ -19,12 +19,12 @@ ukb <- as_tibble(ukb)
 withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
 
-pan <- read_tsv("/scratch/ahc87874/Fall2022/all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
+pan <- read_tsv("all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
 pan <- as_tibble(pan)
 pan$s <- as.integer(pan$s)
 table(pan$pop, useNA = "always")
 
-bridge <- read.table("/scratch/ahc87874/Fall2022/ukb48818bridge31063.txt")
+bridge <- read.table("ukb48818bridge31063.txt")
 bridge <- as_tibble(bridge)
 colnames(bridge) <- c("IID", "panID")
 
@@ -89,7 +89,7 @@ bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356979
 
 QCkeepparticipants <- bd_QC %>% select(IID)
 
-write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/bd_QC-keep.txt",
+write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.txt",
             row.names = FALSE, quote = FALSE)
             
 #Start with 502459 participants
