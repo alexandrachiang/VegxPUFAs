@@ -1,6 +1,6 @@
 library(tidyverse)
 
-setwd("/scratch/ahc87874/Fall2022")
+setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #Load UK Biobank datasets-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #/project/kylab/lab_shared/UKB/pheno/ukb34137_loaddata.r
