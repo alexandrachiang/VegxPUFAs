@@ -10,7 +10,7 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
-setwd("/scratch/ahc87874/Fall2022")
+setwd("/scratch/ahc87874/Fall2022/pheno")
 #source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
 
 #Load dataset
