@@ -16,6 +16,7 @@ setwd("/scratch/ahc87874/Fall2022")
 if (FALSE) {
   source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
   ukbnames <- read.csv("ukbnames.csv")$value
+  bd <- as_tibble(bd)
   names(bd) <- as.vector(ukbnames$value)
 } else {
   ukb <- ukb_df("ukb34137")
