@@ -41,11 +41,13 @@ pan2 <- pan %>% select(s, pop) %>% left_join(bridge, by = c("s" = "panID"))
 #5. Do not have high degree of genetic kinship (Ten or more third-degree relatives identified)
 #6. Does not appear in "maximum_set_of_unrelated_individuals.MF.pl"
 
-bd_QC<- bd %>% select(f.eid, f.31.0.0, f.22001.0.0, f.21000.0.0,
-                      f.22027.0.0, f.22019.0.0,
-                      f.22021.0.0)
+#bd_QC<- bd %>% select(f.eid, f.31.0.0, f.22001.0.0, f.21000.0.0,
+#                      f.22027.0.0, f.22019.0.0,
+#                      f.22021.0.0)
 
-bd_QC <- ukb %>% select(eid, sex_f31_0_0, genetic_sex_f22001_0_0, ethnic_background_f21000_0_0)
+bd_QC <- ukb %>% select(eid, sex_f31_0_0, genetic_sex_f22001_0_0, ethnic_background_f21000_0_0,
+                        outliers_for_heterozygosity_or_missing_rate_f22027_0_0, sex_chromosome_aneuploidy_f22019_0_0,
+                        genetic_kinship_to_other_participants_f22021_0_0)
 
 colnames(bd_QC) <- c("IID", "Sex", "Genetic_Sex", "Race",
                      "Outliers_for_het_or_missing", "SexchrAneuploidy",
