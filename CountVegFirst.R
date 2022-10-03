@@ -14,6 +14,8 @@ setwd("/scratch/ahc87874/Fall2022")
 
 #Load dataset
 #source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
+#ukbnames <- read.csv("ukbnames.csv")$value
+#names(bd) <- ukbnames
 ukb <- ukb_df("ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
