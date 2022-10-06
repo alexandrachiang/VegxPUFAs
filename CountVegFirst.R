@@ -26,7 +26,7 @@ if (FALSE) {
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
-ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
+ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 114
 
 #Select necessary columns
 #Need to add BMI and pheno columns
