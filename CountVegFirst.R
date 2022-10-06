@@ -52,7 +52,7 @@ ukb2 <- ukb2 %>% mutate(age_when_attended_assessment_centre_squared = age_when_a
 #Remove participants that never answered 20086/never did a dietary survey
 ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
 #nrow(ukb3)
-#210984 rows
+#210967 rows
 
 #Get first answered recall survey
 ukb4 <- ukb3 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
@@ -70,7 +70,7 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
 #$first_instance
 #    0     1     2     3     4
-#70698 79604 27108 19639 13935
+#70692 79599 27105 19639 13932
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Diet QC
@@ -79,7 +79,7 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #Remove non-credible diet data if ever not credible in any answered survey
 ukb5 <- ukb4[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
 #nrow(ukb5)
-#207813 removes3171
+#207813 removes 3171
 
 ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
                            !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
