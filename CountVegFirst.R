@@ -171,12 +171,16 @@ for (i in 0:4) { #instance
 
 #Additional columns to filter for diet intake taken at first instance
 intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
-#There are like 84? 85? participants who are NA for these columns, I'm assumming they're nonveg
-ukbSSRV[, "meat_intake_0"] <- NA
-for (i in 1:length(intake)) {
-  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never"] <- "NonVeg"
-  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] == "Never"] <- "Veg"
-}
+#There are like 84? 85? participants who are NA for these columns
+ukbSSRV[, "meat_intake_0"] <- "NonVeg"
+ukbSSRV[, "meat_intake_0"][rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7] <- "Veg"
+
+x <- as_tibble(ukbSSRV[, intake] == rep("Never", length(intake))) %>% rowSums() %>% table()
+
+
+#for (i in 1:length(intake)) {
+#  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
+#}
 #print(n = 50, ukbSSRV %>% select(contains("intake")))
 #ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
 
