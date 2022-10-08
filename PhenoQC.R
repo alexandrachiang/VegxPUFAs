@@ -16,7 +16,7 @@ ukb <- as_tibble(ukb)
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("w48818_20210809.csv", header = FALSE)
+withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 34
 
 pan <- read_tsv("all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
