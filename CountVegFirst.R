@@ -95,6 +95,10 @@ ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish
 #CSRV
 ukbCSRV <- ukb4
 
+#Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
+ukbCSRV %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
+#9450 rows
+
 #For each first instance, get Veg status
 for (i in 0:4) { #instance
   took <- paste("first_instance", i, sep = "_")
@@ -122,8 +126,7 @@ for (i in 0:4) { #instance
 
 table(ukbCSRV$CSRV)
 #NonVeg    Veg
-#203241   7777 no withdraw, only vegetarian
-#202740   8244 withdraw, vegetarian and vegan
+#202724   8243 withdraw, vegetarian and vegan
 #Michael had 7788??
 
 ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
@@ -137,15 +140,15 @@ ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
 #  Black or Black British          4      1
 #  Chinese                       582     14
 #  Other ethnic group           1432    109
-#  British                    181117   6530
-#  Irish                        4947    228
-#  Any other white background   7879    396
+#  British                    181108   6530
+#  Irish                        4943    228
+#  Any other white background   7877    396
 #  White and Black Caribbean     233     14
 #  White and Black African       138     10
 #  White and Asian               387     26
-#  Any other mixed background    404     27
+#  Any other mixed background    404     26
 #  Indian                       1363    602
-#  Pakistani                     326     23
+#  Pakistani                     325     23
 #  Bangladeshi                    33      3
 #  Any other Asian background    510     74
 #  Caribbean                    1490     67
@@ -156,7 +159,7 @@ ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
 #SSRV
 ukbSSRV <- ukbCSRV
 
-#For each first instance, get Veg status for meat/fish consumption
+#For each first instance, get Veg status for meat/fish consumption yesterday
 for (i in 0:4) { #instance
   took <- paste("first_instance", i, sep = "_")
   check <- paste("is_SSRV_vegetarian", i, sep = "_")
@@ -168,15 +171,16 @@ for (i in 0:4) { #instance
   ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
   ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
+#sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
 
 #Additional columns to filter for diet intake taken at first instance
 intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
 #There are like 84? 85? participants who are NA for these columns
 ukbSSRV[, "meat_intake_0"] <- "NonVeg"
-ukbSSRV[, "meat_intake_0"][rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7] <- "Veg"
-
-x <- as_tibble(ukbSSRV[, intake] == rep("Never", length(intake))) %>% rowSums() %>% table()
-
+ukbSSRV[, "meat_intake_0"][(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7) & 
+                           (!is.na(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))))), ] <- "Veg"
+ukbSSRV[, "meat_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
+#ukbSSRV[rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7,] %>% select(contains("intake"))
 
 #for (i in 1:length(intake)) {
 #  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
@@ -196,8 +200,8 @@ ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
 #CSRV     NonVeg    Veg
-#  NonVeg 196768   5972
-#  Veg      1435   6809
+#  NonVeg 202534    190
+#  Veg      3751   4492
 
 #Take CSRV into account for SSRV
 ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg" #Make CSRV NonVeg/SSRV Veg participants into SSRV NonVeg
@@ -206,14 +210,20 @@ ukbSSRV$SSRV[(ukbSSRV$CSRV == "Veg" & ukbSSRV$SSRV == "NonVeg")] <- NA #Remove C
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
 #CSRV     NonVeg    Veg
-#  NonVeg 202740      0
-#  Veg         0   6809
+#  NonVeg 202724      0
+#  Veg         0   4492
 
 table(ukbSSRV$SSRV)
 #NonVeg    Veg
-#203792   7192 without the intake columns
-#204175   6809 with intake
-#202740   6809 with intake and removed participants who were CSRV veg/SSRV nonveg
+#202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
+
+#Nonveg if any major dietary changes in the last 5 years
+ukbSSRV$SSRV[ukbSSRV$SSRV == "Veg" & !is.na(ukbSSRV$SSRV) &
+             ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
+             !is.na( ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- "NonVeg"
+
+table(ukbSSRV$SSRV)
+#NonVeg    Veg
 
 ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
@@ -240,3 +250,6 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #  Caribbean                    1490     40
 #  African                       965     16
 #  Any other Black background     36      1
+
+write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
+            row.names = FALSE, quote = FALSE)
