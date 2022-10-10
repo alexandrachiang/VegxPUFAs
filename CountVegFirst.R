@@ -217,13 +217,16 @@ table(ukbSSRV$SSRV)
 #NonVeg    Veg
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
-#Nonveg if any major dietary changes in the last 5 years
-ukbSSRV$SSRV[ukbSSRV$SSRV == "Veg" & !is.na(ukbSSRV$SSRV) &
-             ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
-             !is.na( ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- "NonVeg"
+#NA if any major dietary changes in the last 5 years
+ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
+             !is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
+
+ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
+             is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 
 table(ukbSSRV$SSRV)
 #NonVeg    Veg
+#125456   3271
 
 ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
