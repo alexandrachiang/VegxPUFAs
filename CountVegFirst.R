@@ -168,7 +168,7 @@ for (i in 0:4) { #instance
   #Check if never ate meat/fish
   meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
   fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
-  ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
+  #ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
   ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
 #sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
@@ -218,8 +218,8 @@ table(ukbSSRV$SSRV)
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
 #NA if any major dietary changes in the last 5 years
-ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
-             !is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
+#ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
+#             !is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 
 ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
              is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
@@ -256,3 +256,5 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 
 write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
             row.names = FALSE, quote = FALSE)
+
+#cd .. twice iob_storage/kylab/
