@@ -11,13 +11,13 @@
 i=$SLURM_ARRAY_TASK_ID
 
 #Set working directory
-cd /work/kylab/alex/Fall2021Practice/INFOscore
+cd /work/kylab/alex/Fall2022
 
 #Load modules & packages
 ml PLINK/2.00-alpha2.3-x86_64-20210920-dev
 
 #Chunk steps
-step1=false
+step1=true
 step2=true
 
 if [ $step1=true ]; then
@@ -25,7 +25,7 @@ if [ $step1=true ]; then
 #STEP 1: Filter UKB Imputation SNPs by 0.5 quality score
 
 #Set in/out directories
-mfidir=("/scratch/ahc87874/Fall2021Practice/UKBpgen/mfi")
+mfidir=("/scratch/ahc87874/Fall2022/mfi")
 outdir=$mfidir/info0.5
 
 mkdir -p $outdir
@@ -45,9 +45,9 @@ fi
 if [ $step2=true ]; then
 #STEP 2: Make new genotype files with only INFO >= 0.5
 
-genodir=("/scratch/ahc87874/Fall2021Practice/UKBpgen")
-infodir=("/scratch/ahc87874/Fall2021Practice/UKBpgen/mfi/info0.5")
-outdir=("/scratch/ahc87874/Fall2021Practice/genotypeQC")
+genodir=("/scratch/ahc87874/Fall2022/bgen_v1.2_UKBsource")
+infodir=("/scratch/ahc87874/Fall2022/mfi/info0.5")
+outdir=("/scratch/ahc87874/Fall2022/geno")
 
 mkdir -p $outdir
 
@@ -58,10 +58,3 @@ plink2 \
 --out $outdir/chr"$i"
 
 fi
-
-
-
-Error: Failed to open /scratch/ahc87874/Fall2021Practice/UKBpgen/chr1.pgen :
-Cannot send after transport endpoint shutdown.
-Error: /scratch/ahc87874/Fall2021Practice/UKBpgen/chr5.pvar read failure:
-Input/output error.
