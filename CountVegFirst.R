@@ -213,7 +213,7 @@ ukbSSRV$SSRV[(ukbSSRV$CSRV == "Veg" & ukbSSRV$SSRV == "NonVeg")] <- NA #Remove C
 #  NonVeg 202724      0
 #  Veg         0   4492
 
-table(ukbSSRV$SSRV)
+table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
@@ -224,7 +224,7 @@ table(ukbSSRV$SSRV)
 ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
              is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 
-table(ukbSSRV$SSRV)
+table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg
 #125456   3271
 
