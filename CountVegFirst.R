@@ -176,10 +176,10 @@ for (i in 0:4) { #instance
 #Additional columns to filter for diet intake taken at first instance
 intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
 #There are like 84? 85? participants who are NA for these columns
-ukbSSRV[, "meat_intake_0"] <- "NonVeg"
-ukbSSRV[, "meat_intake_0"][(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7) & 
+ukbSSRV[, "specific_intake_0"] <- "NonVeg"
+ukbSSRV[, "specific_intake_0"][(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7) & 
                            (!is.na(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))))), ] <- "Veg"
-ukbSSRV[, "meat_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
+ukbSSRV[, "specific_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
 #ukbSSRV[rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7,] %>% select(contains("intake"))
 
 #for (i in 1:length(intake)) {
@@ -195,7 +195,7 @@ for (i in 0:4) { #instance
   ukbSSRV[, "SSRV"][ukbSSRV[, check] == "Veg"] <- "Veg"
   ukbSSRV[, "SSRV"][ukbSSRV[, check] == "NonVeg"] <- "NonVeg"
 }
-ukbSSRV[, "SSRV"][ukbSSRV[, "meat_intake_0"] == "NonVeg"] <- "NonVeg"
+ukbSSRV[, "SSRV"][ukbSSRV[, "specific_intake_0"] == "NonVeg"] <- "NonVeg"
 
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
