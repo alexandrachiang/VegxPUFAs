@@ -168,7 +168,7 @@ for (i in 0:4) { #instance
   #Check if never ate meat/fish
   meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
   fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
-  #ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
+  ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
   ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
 #sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
@@ -225,36 +225,35 @@ ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No"
              is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 
 table(ukbSSRV$SSRV, useNA = "always")
-#NonVeg    Veg
-#125456   3271
+#NonVeg    Veg   <NA>
+#125456   3271  82240
 
 ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
 #ethnic_background_f21000_0_0 NonVeg    Veg
-#  Prefer not to answer          580     35
-#  Do not know                    60      2
-#  White                         154     11
-#  Mixed                          13      1
-#  Asian or Asian British          9      2
-#  Black or Black British          4      0
-#  Chinese                       582      6
-#  Other ethnic group           1432     64
-#  British                    181117   5474
-#  Irish                        4947    199
-#  Any other white background   7879    313
-#  White and Black Caribbean     233     10
-#  White and Black African       138      7
-#  White and Asian               387     20
-#  Any other mixed background    404     21
-#  Indian                       1363    524
-#  Pakistani                     326     10
-#  Bangladeshi                    33      1
-#  Any other Asian background    510     46
-#  Caribbean                    1490     40
-#  African                       965     16
-#  Any other Black background     36      1
+#  Prefer not to answer          331     17
+#  Do not know                    38      1
+#  White                          82      5
+#  Mixed                           5      1
+#  Asian or Asian British          4      1
+#  Black or Black British          2      0
+#  Chinese                       389      4
+#  Other ethnic group            716     22
+#  British                    113214   2735
+#  Irish                        2989     87
+#  Any other white background   4825    127
+#  White and Black Caribbean     142      6
+#  White and Black African        72      1
+#  White and Asian               219     13
+#  Any other mixed background    222      5
+#  Indian                        712    221
+#  Pakistani                     147      0
+#  Bangladeshi                    16      0
+#  Any other Asian background    260     14
+#  Caribbean                     615      7
+#  African                       443      4
+#  Any other Black background     13      0
+
 
 write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
             row.names = FALSE, quote = FALSE)
-
-#cd .. twice iob_storage/kylab/
