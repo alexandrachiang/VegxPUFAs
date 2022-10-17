@@ -77,14 +77,50 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #Should remove people who are NA for intake, not credible diet data
 
 #Remove non-credible diet data if ever not credible in any answered survey
-ukb5 <- ukb4[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
-#nrow(ukb5)
-#207813 removes 3171
+#ukb5 <- ukb4[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
+#removes 3171
 
-ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
-                           !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
-                           !is.na(beef_intake_f1369_0_0) & !is.na(lambmutton_intake_f1379_0_0) & 
-                           !is.na(pork_intake_f1389_0_0))
+#Remove if not credible in first answered survey
+ukb5 <- ukb4 
+for (i in 0:4) { #instance
+  took <- paste("first_instance", i, sep = "_")
+  check <- paste("is_not_credible", i, sep = "_")
+  cred <- paste("daily_dietary_data_credible_f100026", i, "0", sep = "_")
+  
+  ukb5[, check] <- NA
+  ukb5[, check][ukb5[, cred] == "No" & ukb5[, took] == TRUE] <- "NotCredible"
+}
+#ukb5 %>% select(contains("daily_dietary_data_credible_f100026")) %>% sapply(table)
+#    daily_dietary_data_credible_f100026_0_0
+#No                                      677
+#    daily_dietary_data_credible_f100026_1_0
+#No                                      710
+#    daily_dietary_data_credible_f100026_2_0
+#No                                      633
+#    daily_dietary_data_credible_f100026_3_0
+#No                                      670
+#    daily_dietary_data_credible_f100026_4_0
+#No                                      804
+#ukb5 %>% select(contains("is_not_credible")) %>% sapply(table)
+#is_not_credible_0.NotCredible is_not_credible_1.NotCredible
+#                          676                           570
+#is_not_credible_2.NotCredible is_not_credible_3.NotCredible
+#                          201                           154
+#is_not_credible_4.NotCredible
+#                          145
+
+ukb5[, "is_not_credible"] <- NA
+for (i in 0:4) { #instance
+  check <- paste("is_not_credible", i, sep="_")
+  ukb5[, "is_not_credible"][ukb5[, check] == "NotCredible"] <- "NotCredible"
+}
+#ukb5 <- ukb5[ukb5$is_not_credible != "NotCredible", ]
+#removes 1746 not credible
+
+#ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
+#                           !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
+#                           !is.na(beef_intake_f1369_0_0) & !is.na(lambmutton_intake_f1379_0_0) & 
+#                           !is.na(pork_intake_f1389_0_0))
 #nrow(ukb5)
 #207731 removes 82
 
@@ -93,7 +129,7 @@ ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
-ukbCSRV <- ukb4
+ukbCSRV <- ukb5
 
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbCSRV %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
@@ -180,6 +216,8 @@ ukbSSRV[, "specific_intake_0"] <- "NonVeg"
 ukbSSRV[, "specific_intake_0"][(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7) & 
                            (!is.na(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))))), ] <- "Veg"
 ukbSSRV[, "specific_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
+#table(ukbSSRV$specific_intake_0, useNA = "always")
+
 #ukbSSRV[rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7,] %>% select(contains("intake"))
 
 #for (i in 1:length(intake)) {
@@ -218,15 +256,24 @@ table(ukbSSRV$SSRV, useNA = "always")
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
 #NA if any major dietary changes in the last 5 years
-#ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" & 
-#             !is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
-
 ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
              is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 
-table(ukbSSRV$SSRV, useNA = "always")
+#table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
 #125456   3271  82240
+
+#NA if not credible in first answered survey
+#ukbSSRV %>% select(SSRV, is_not_credible) %>% table(useNA = "always")
+#        is_not_credible
+#SSRV     NotCredible   <NA>
+#  NonVeg         930 124526
+#  Veg             41   3230
+#  <NA>           775  81465
+ukbSSRV$SSRV[ukbSSRV$is_not_credible == "NotCredible"] <- NA
+#table(ukbSSRV$SSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+#124526   3230  83211
 
 ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
