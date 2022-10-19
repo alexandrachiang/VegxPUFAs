@@ -45,7 +45,7 @@ fi
 if [ $step2=true ]; then
 #STEP 2: Make new genotype files with only INFO >= 0.5
 
-genodir=("/scratch/ahc87874/Fall2022/bgen_v1.2_UKBsource")
+genodir=("/scratch/ahc87874/Fall2022/pgen")
 infodir=("/scratch/ahc87874/Fall2022/mfi/info0.5")
 outdir=("/scratch/ahc87874/Fall2022/geno")
 
