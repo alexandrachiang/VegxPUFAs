@@ -22,6 +22,7 @@ if (FALSE) {
   ukb <- ukb_df("ukb34137")
   #ukb <- import("ukb34137.tsv")
   ukb <- as_tibble(ukb)
+  ukb <- ukb %>% mutate(FID = eid)
 }
 
 #Remove withdrawn participants from dataset
@@ -31,7 +32,7 @@ ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 114
 #Select necessary columns
 #Need to add BMI and pheno columns
 #Change to contains?
-ukb2 <- ukb %>% select(eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
+ukb2 <- ukb %>% select(FID, eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, uk_biobank_assessment_centre_f54_0_0, 
@@ -47,7 +48,7 @@ ukb2 <- ukb %>% select(eid, age_when_attended_assessment_centre_f21003_0_0, sex_
 
 #Add Age^2 column
 ukb2 <- ukb2 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
-                 select(eid, starts_with("age_when_attended_assessment_centre"), everything())
+                 select(FID, eid, starts_with("age_when_attended_assessment_centre"), everything())
 
 #Remove participants that never answered 20086/never did a dietary survey
 ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
