@@ -6,7 +6,8 @@
 #SBATCH --time=50:00:00               # Time limit hrs:min:sec
 #SBATCH --output=convertpgen.%j.out    # Standard output log
 #SBATCH --error=convertpgen.%j.err     # Standard error log
-
+#SBATCH --mail-user=ahc87874@uga.edu
+#SBATCH --mail-type=ALL
 
 #Load PLINK
 ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
