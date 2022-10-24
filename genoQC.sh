@@ -30,7 +30,7 @@ mkdir -p $outdir
 plink2 \
 --bgen $genoindir/ukb_imp_chr"$i"_v3.bgen ref-first \
 --sample $genoindir/ukb_imp_v3.sample \
---extract $mfiscoredir/ukb_mfi_chr"$i"_v3_0.5.txt \
+#--extract $mfiscoredir/ukb_mfi_chr"$i"_v3_0.5.txt \
 --mind 0.05 \
 --geno 0.02 \
 --hwe 1e-06 \
