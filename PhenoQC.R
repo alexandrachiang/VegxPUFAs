@@ -7,12 +7,17 @@ suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
 setwd("/scratch/ahc87874/Fall2022/pheno")
-#source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
+#source('/scratch/ahc87874/Fall2022/pheno/load_UKBphenotables.R')
 
 #Load dataset
 ukb <- ukb_df("ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
+
+setwd("/scratch/ahc87874/Fall2022/pheno/48364")
+ukbNMR <- as_tibble(ukb_df("ukb48364"))
+
+setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Remove withdrawn participants from dataset
