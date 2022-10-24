@@ -6,6 +6,8 @@
 #SBATCH --time=167:00:00               # Time limit hrs:min:sec
 #SBATCH --output=infoscore.%j.out      # Standard output log
 #SBATCH --error=infoscore.%j.err       # Standard error log
+#SBATCH --mail-user=ahc87874@uga.edu
+#SBATCH --mail-type=ALL
 #SBATCH --array=1-22            #Run as array job
 
 i=$SLURM_ARRAY_TASK_ID
