@@ -35,7 +35,7 @@ plink2 \
 --maf 0.01 \
 --autosome \
 --maj-ref \
---keep /scratch/ahc87874/Check/GWAS_phenoQC_IDS_M1_Veg.txt \ #EDIT
+--keep /scratch/ahc87874/Fall2022/phenoQC_keep.txt \ #EDIT?
 --max-alleles 2 \
 --freq
 --export bgen-1.2 bits=8 \
