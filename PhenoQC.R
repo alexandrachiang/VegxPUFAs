@@ -87,7 +87,7 @@ max_unrelated <- read.table("ukb48818_rel_s488282_output.dat")
 max_unrelated <- as.integer(unlist(max_unrelated))
 bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356950
 
-QCkeepparticipants <- bd_QC %>% select(IID)
+QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
 write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.txt",
             row.names = FALSE, quote = FALSE)
