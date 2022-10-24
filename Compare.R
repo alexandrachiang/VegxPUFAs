@@ -8,12 +8,14 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
+setwd("/scratch/ahc87874/Fall2022/pheno")
+
 #Load Michael's dataset
 source('/scratch/ahc87874/Fall2022/pheno/load_UKBphenotables.R')
-ukbnames <- read.csv("ukbnames.csv")
-
-names(bd) <- ukbnames
 ukb <- as_tibble(bd)
+
+ukbnames <- read.csv("ukbnames.csv")
+names(ukb) <- ukbnames$value
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
