@@ -7,6 +7,8 @@
 #SBATCH --mem=180000
 #SBATCH --output=genoQC.%j.out
 #SBATCH --error=genoQC.%j.err
+#SBATCH --mail-user=ahc87874@uga.edu
+#SBATCH --mail-type=ALL
 #SBATCH --array=1-22
 
 i=$SLURM_ARRAY_TASK_ID
