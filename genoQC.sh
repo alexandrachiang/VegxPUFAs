@@ -15,7 +15,8 @@ i=$SLURM_ARRAY_TASK_ID
 
 cd /scratch/ahc87874/Fall2022
 
-ml PLINK/2.00-alpha2.3-x86_64-20200124
+#ml PLINK/2.00-alpha2.3-x86_64-20200124
+ml PLINK/2.00-alpha2.3-x86_64-20210920-dev
 
 ###-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ###STEP 1. GENOTYPE QC PLINK-=-=-=-=-=-=-=-=
@@ -38,7 +39,7 @@ plink2 \
 --autosome \
 --maj-ref \
 --max-alleles 2 \
---freq
---keep /scratch/ahc87874/Fall2022/phenoQC_keep.txt
+--freq \
+--keep /scratch/ahc87874/Fall2022/phenoQC_keep.txt \
 --export bgen-1.2 bits=8 \
 --out "$outdir"/chr"$i"
