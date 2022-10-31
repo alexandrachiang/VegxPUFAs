@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=144:00:00
-#SBATCH --mem=180000
+#SBATCH --mem=300000
 #SBATCH --output=genoQC.%j.out
 #SBATCH --error=genoQC.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
