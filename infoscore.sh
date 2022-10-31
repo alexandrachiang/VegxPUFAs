@@ -47,11 +47,16 @@ fi
 if [ $step2=true ]; then
 #STEP 2: Make new genotype files with only INFO >= 0.5
 
+chr=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22)
+
 genodir=("/scratch/ahc87874/Fall2022/pgen")
 infodir=("/scratch/ahc87874/Fall2022/mfi/info0.5")
 outdir=("/scratch/ahc87874/Fall2022/geno")
 
 mkdir -p $outdir
+
+for i in ${chr[@]}
+do
 
 plink2 \
 --pfile $genodir/chr"$i" \
@@ -59,4 +64,5 @@ plink2 \
 --make-pgen \
 --out $outdir/chr"$i"
 
+done
 fi
