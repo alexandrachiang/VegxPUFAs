@@ -38,6 +38,6 @@ plink2 \
 --autosome \
 --maj-ref \
 --max-alleles 2 \
---keep /scratch/ahc87874/Fall2022/phenoQC_keep.txt \
+--keep /scratch/ahc87874/Fall2022/pheno/phenoQC_keep.txt \
 --export bgen-1.2 bits=8 \
 --out "$outdir"/chr"$i"
