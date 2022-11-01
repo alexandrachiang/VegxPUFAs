@@ -25,6 +25,9 @@ if (FALSE) {
   ukb <- ukb %>% mutate(FID = eid)
 }
 
+NMR <- read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")
+BodyMeasures <- read.table("/ukb.tab", header = TRUE, sep = "\t")
+
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 114
