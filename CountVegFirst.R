@@ -5,6 +5,7 @@
 #Load packages and set up wd
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
+suppressMessages(library(data.table))
 suppressMessages(library(tidyverse))
 #suppressMessages(library(ggpubr))
 suppressMessages(library(ukbtools)) #<3
@@ -18,24 +19,51 @@ if (FALSE) {
   ukbnames <- read.csv("ukbnames.csv")$value
   bd <- as_tibble(bd)
   names(bd) <- as.vector(ukbnames$value)
+  ukb <- as_tibble(bd)
 } else {
   ukb <- ukb_df("ukb34137")
   #ukb <- import("ukb34137.tsv")
   ukb <- as_tibble(ukb)
-  ukb <- ukb %>% mutate(FID = eid)
 }
 
-NMR <- read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")
-BodyMeasures <- read.table("/ukb.tab", header = TRUE, sep = "\t")
+colnames(ukb)[1] <- "IID"
+ukb <- ukb %>% mutate(FID = IID)
 
-#Remove withdrawn participants from dataset
-withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
-ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #Removes 114
+if (FALSE) {
+  NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
+  BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
+
+  BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
+
+  colnames(BMI) <- c("IID", "BMI")
+                 
+  PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
+                          f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
+                          f.23446.0.0, f.23453.0.0, f.23447.0.0,f.23454.0.0, f.23458.0.0, 
+                          f.23744.0.0, f.23751.0.0, f.23745.0.0, f.23752.0.0, f.23759.0.0, 
+                          f.23750.0.0, f.23757.0.0, f.23749.0.0, f.23756.0.0, f.23746.0.0, 
+                          f.23753.0.0, f.23747.0.0, f.23754.0.0, f.23758.0.0) %>% as_tibble() 
+
+  colnames(PUFAs) <- c("IID", "w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP",	
+                       "w6_w3_ratio_NMR", "DHA_NMR", "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP",
+                       "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR", 
+                       "w3FA_NMR_QCflag", "w3FA_NMR_TFAP_QCflag", "w6FA_NMR_QCflag", "w6FA_NMR_TFAP_QCflag", "w6_w3_ratio_NMR_QCflag",
+                       "DHA_NMR_QCflag", "DHA_NMR_TFAP_QCflag",	"LA_NMR_QCflag", "LA_NMR_TFAP_QCflag", "PUFA_NMR_QCflag",
+                       "PUFA_NMR_TFAP_QCflag", "MUFA_NMR_QCflag", "MUFA_NMR_TFAP_QCflag",	"PUFA_MUFA_ratio_NMR_QCflag")
+  
+  write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
+              row.names = FALSE, quote = FALSE)
+  write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.txt",
+              row.names = FALSE, quote = FALSE)
+} else {
+  BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
+  PUFAs <- as_tibble(read.table("PUFAs.txt", header = TRUE))
+}
 
 #Select necessary columns
 #Need to add BMI and pheno columns
 #Change to contains?
-ukb2 <- ukb %>% select(FID, eid, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
+ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, uk_biobank_assessment_centre_f54_0_0, 
@@ -46,32 +74,38 @@ ukb2 <- ukb %>% select(FID, eid, age_when_attended_assessment_centre_f21003_0_0,
                        poultry_intake_f1359_0_0, beef_intake_f1369_0_0, lambmutton_intake_f1379_0_0, pork_intake_f1389_0_0,
                        age_when_last_ate_meat_f3680_0_0, major_dietary_changes_in_the_last_5_years_f1538_0_0,
                        starts_with("daily_dietary_data_credible"))
-#apply(ukb2, 2, table)
-# columns
+
+#Join baskets to main data set
+ukb3 <- left_join(ukb2, BMI)
+ukb3 <- left_join(ukb3, PUFAs)
+
+#Remove withdrawn participants from dataset
+withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
+ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 
 #Add Age^2 column
-ukb2 <- ukb2 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
-                 select(FID, eid, starts_with("age_when_attended_assessment_centre"), everything())
+ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
+                 select(FID, IID, starts_with("age_when_attended_assessment_centre"), everything())
 
 #Remove participants that never answered 20086/never did a dietary survey
-ukb3 <- ukb2[rowSums(is.na(ukb2[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
+ukb4 <- ukb3[rowSums(is.na(ukb3[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
 #nrow(ukb3)
 #210967 rows
 
 #Get first answered recall survey
-ukb4 <- ukb3 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
+ukb5 <- ukb4 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
   mutate(first_instance_1 = !is.na(dayofweek_questionnaire_completed_f20080_1_0) & !first_instance_0) %>% 
   mutate(first_instance_2 = !is.na(dayofweek_questionnaire_completed_f20080_2_0) & !first_instance_0 & !first_instance_1) %>% 
   mutate(first_instance_3 = !is.na(dayofweek_questionnaire_completed_f20080_3_0) & !first_instance_0 & !first_instance_1 & !first_instance_2) %>% 
   mutate(first_instance_4 = !is.na(dayofweek_questionnaire_completed_f20080_4_0) & !first_instance_0 & !first_instance_1 & !first_instance_2 & !first_instance_3)
 
-ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0, 
+ukb5 <- ukb5 %>% mutate(first_instance = ifelse(first_instance_0, 0, 
                                                       ifelse(first_instance_1, 1, 
                                                              ifelse(first_instance_2, 2, 
                                                                     ifelse(first_instance_3, 3, 
                                                                            ifelse(first_instance_4, 4, NA))))))
 
-#sapply(ukb4 %>% select(contains(c("f20080", "first_instance"))), table)
+#sapply(ukb5 %>% select(contains(c("f20080", "first_instance"))), table)
 #$first_instance
 #    0     1     2     3     4
 #70692 79599 27105 19639 13932
@@ -81,18 +115,18 @@ ukb4 <- ukb4 %>% mutate(first_instance = ifelse(first_instance_0, 0,
 #Should remove people who are NA for intake, not credible diet data
 
 #Remove non-credible diet data if ever not credible in any answered survey
-#ukb5 <- ukb4[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
+#ukb6 <- ukb5[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
 #removes 3171
 
 #Remove if not credible in first answered survey
-ukb5 <- ukb4 
+ukb6 <- ukb5
 for (i in 0:4) { #instance
   took <- paste("first_instance", i, sep = "_")
   check <- paste("is_not_credible", i, sep = "_")
   cred <- paste("daily_dietary_data_credible_f100026", i, "0", sep = "_")
   
-  ukb5[, check] <- NA
-  ukb5[, check][ukb5[, cred] == "No" & ukb5[, took] == TRUE] <- "NotCredible"
+  ukb6[, check] <- NA
+  ukb6[, check][ukb5[, cred] == "No" & ukb6[, took] == TRUE] <- "NotCredible"
 }
 #ukb5 %>% select(contains("daily_dietary_data_credible_f100026")) %>% sapply(table)
 #    daily_dietary_data_credible_f100026_0_0
@@ -113,15 +147,15 @@ for (i in 0:4) { #instance
 #is_not_credible_4.NotCredible
 #                          145
 
-ukb5[, "is_not_credible"] <- NA
+ukb6[, "is_not_credible"] <- NA
 for (i in 0:4) { #instance
   check <- paste("is_not_credible", i, sep="_")
-  ukb5[, "is_not_credible"][ukb5[, check] == "NotCredible"] <- "NotCredible"
-}
+  ukb6[, "is_not_credible"][ukb6[, check] == "NotCredible"] <- "NotCredible"
+} #Does not remove anyone
 #ukb5 <- ukb5[ukb5$is_not_credible != "NotCredible", ]
 #removes 1746 not credible
 
-#ukb5 <- ukb5 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
+#ukb6 <- ukb6 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
 #                           !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
 #                           !is.na(beef_intake_f1369_0_0) & !is.na(lambmutton_intake_f1379_0_0) & 
 #                           !is.na(pork_intake_f1389_0_0))
@@ -129,11 +163,10 @@ for (i in 0:4) { #instance
 #207731 removes 82
 
 #Move to pheno qc?
-#NOTHING BELOW HAS THIS HAS QC YET
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #CSRV
-ukbCSRV <- ukb5
+ukbCSRV <- ukb6
 
 #Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
 ukbCSRV %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
@@ -228,7 +261,7 @@ ukbSSRV[, "specific_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
 #  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
 #}
 #print(n = 50, ukbSSRV %>% select(contains("intake")))
-#ukbSSRV %>% select(eid, contains("intake")) %>% filter(eid == 1013495)
+#ukbSSRV %>% select(IID, contains("intake")) %>% filter(IID == 1013495)
 
 #Get SSRV
 ukbSSRV[, "SSRV"] <- NA
