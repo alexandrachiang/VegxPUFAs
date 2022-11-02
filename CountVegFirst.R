@@ -49,7 +49,7 @@ if (FALSE) {
                        "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR", 
                        "w3FA_NMR_QCflag", "w3FA_NMR_TFAP_QCflag", "w6FA_NMR_QCflag", "w6FA_NMR_TFAP_QCflag", "w6_w3_ratio_NMR_QCflag",
                        "DHA_NMR_QCflag", "DHA_NMR_TFAP_QCflag",	"LA_NMR_QCflag", "LA_NMR_TFAP_QCflag", "PUFA_NMR_QCflag",
-                       "PUFA_NMR_TFAP_QCflag", "MUFA_NMR_QCflag", "MUFA_NMR_TFAP_QCflag",	"PUFA_MUFA_ratio_NMR_QCflag")
+                       "PUFA_NMR_TFAP_QCflag", "MUFA_NMR_QCflag", "MUFA_NMR_TFAP_QCflag", "PUFA_MUFA_ratio_NMR_QCflag")
   
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
