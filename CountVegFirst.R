@@ -78,6 +78,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
 #Join baskets to main data set
 ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
+#100 cols
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
