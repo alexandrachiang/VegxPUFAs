@@ -59,7 +59,7 @@ if (FALSE) {
                            paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_", 0:3, sep = ""))
   
   
-  for (i in 0:3) {
+  for (i in 0:2) {
     combined <- paste("medication_combined_f6153_f6177_0", i, sep = "_")
     f6153 <- paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0", i, sep = "_")
     f6177 <- paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0", i, sep = "_")
@@ -73,6 +73,8 @@ if (FALSE) {
       }
     }
   }
+  LipidMeds$medication_combined_f6153_f6177_0_3 <- LipidMeds$medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_3
+  
   
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
@@ -106,7 +108,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
 ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
 ukb3 <- left_join(ukb3, LipidMeds)
-#118 cols
+#122 cols
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
