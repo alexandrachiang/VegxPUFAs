@@ -58,6 +58,22 @@ if (FALSE) {
   colnames(LipidMeds) <- c("IID", paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_", 0:2, sep = ""), 
                            paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_", 0:3, sep = ""))
   
+  
+  for (i in 0:3) {
+    combined <- paste("medication_combined_f6153_f6177_0", i, sep = "_")
+    f6153 <- paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0", i, sep = "_")
+    f6177 <- paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0", i, sep = "_")
+    LipidMeds[, combined] <- NA
+
+    for (j in 1:nrow(LipidMeds)) {
+      if (!is.na(LipidMeds[j, f6153])) {
+        LipidMeds[j, combined] <- LipidMeds[j, f6153]
+      } else {
+        LipidMeds[j, combined] <- LipidMeds[j, f6177]
+      }
+    }
+  }
+  
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
   write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.txt",
