@@ -32,7 +32,8 @@ ukb <- ukb %>% mutate(FID = IID)
 if (FALSE) {
   NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
-
+  Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
+  
   BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
 
   colnames(BMI) <- c("IID", "body_mass_index_f21001_0_0")
@@ -51,13 +52,22 @@ if (FALSE) {
                        "DHA_NMR_QCflag", "DHA_NMR_TFAP_QCflag",	"LA_NMR_QCflag", "LA_NMR_TFAP_QCflag", "PUFA_NMR_QCflag",
                        "PUFA_NMR_TFAP_QCflag", "MUFA_NMR_QCflag", "MUFA_NMR_TFAP_QCflag", "PUFA_MUFA_ratio_NMR_QCflag")
   
+  LipidMeds <- Meds %>% select(f.eid, f.6177.0.0, f.6177.0.1, f.6177.0.2, 
+                               f.6153.0.0, f.6153.0.1, f.6153.0.2, f.6153.0.3) %>% as_tibble()
+  
+  colnames(LipidMeds) <- c("IID", paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_", 0:2, sep = ""), 
+                           paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_", 0:3, sep = ""))
+  
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
   write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.txt",
               row.names = FALSE, quote = FALSE)
+  write.table(LipidMeds, file = "/scratch/ahc87874/Fall2022/pheno/LipidMeds.txt",
+              row.names = FALSE, quote = FALSE)
 } else {
   BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
   PUFAs <- as_tibble(read.table("PUFAs.txt", header = TRUE))
+  LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
 }
 
 #Select necessary columns
@@ -79,6 +89,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
 #Join baskets to main data set
 ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
+ukb3 <- left_join(ukb3, LipidMeds)
 #100 cols
 
 #Remove withdrawn participants from dataset
