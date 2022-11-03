@@ -5,9 +5,7 @@ sex, age, age2, genotyping array, and assessment center, Townsend deprivation in
 
 Model 2: Model 1 + body mass index (BMI), lipid medication usage
 
-sex_f31_0_0
-age_when_attended_assessment_centre_f21003_0_0
-age_when_attended_assessment_centre_squared
+covarsCSRV <- onlyCSRV %>% select(sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, age_when_attended_assessment_centre_squared
 genotype_measurement_batch_f22000_0_0
 uk_biobank_assessment_centre_f54_0_0
 townsend_deprivation_index_at_recruitment_f189_0_0
