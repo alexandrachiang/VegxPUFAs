@@ -35,7 +35,7 @@ if (FALSE) {
 
   BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
 
-  colnames(BMI) <- c("IID", "BMI")
+  colnames(BMI) <- c("IID", "body_mass_index_f21001_0_0")
                  
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
@@ -67,7 +67,8 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, uk_biobank_assessment_centre_f54_0_0, 
-                       genotype_measurement_batch_f22000_0_0, 
+                       genotype_measurement_batch_f22000_0_0, used_in_genetic_principal_components_f22020_0_0,
+                       select(paste("genetic_principal_components_f22009_0_", 1:10, sep = "")),
                        starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", 
                                      "meat_consumers", "fish_consumer")),
                        oily_fish_intake_f1329_0_0, nonoily_fish_intake_f1339_0_0, processed_meat_intake_f1349_0_0,
