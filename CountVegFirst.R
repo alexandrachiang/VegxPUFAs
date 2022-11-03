@@ -317,29 +317,28 @@ ukbSSRV$SSRV[ukbSSRV$is_not_credible == "NotCredible"] <- NA
 ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
 #ethnic_background_f21000_0_0 NonVeg    Veg
-#  Prefer not to answer          331     17
+#  Prefer not to answer          323     17
 #  Do not know                    38      1
-#  White                          82      5
-#  Mixed                           5      1
+#  White                          80      5
+#  Mixed                           4      1
 #  Asian or Asian British          4      1
 #  Black or Black British          2      0
-#  Chinese                       389      4
-#  Other ethnic group            716     22
-#  British                    113214   2735
-#  Irish                        2989     87
-#  Any other white background   4825    127
-#  White and Black Caribbean     142      6
-#  White and Black African        72      1
-#  White and Asian               219     13
-#  Any other mixed background    222      5
-#  Indian                        712    221
-#  Pakistani                     147      0
+#  Chinese                       383      4
+#  Other ethnic group            701     22
+#  British                    112454   2704
+#  Irish                        2962     86
+#  Any other white background   4775    124
+#  White and Black Caribbean     140      6
+#  White and Black African        71      1
+#  White and Asian               217     12
+#  Any other mixed background    219      5
+#  Indian                        702    217
+#  Pakistani                     144      0
 #  Bangladeshi                    16      0
-#  Any other Asian background    260     14
-#  Caribbean                     615      7
-#  African                       443      4
+#  Any other Asian background    254     14
+#  Caribbean                     601      7
+#  African                       423      3
 #  Any other Black background     13      0
-
 
 write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
             row.names = FALSE, quote = FALSE)
