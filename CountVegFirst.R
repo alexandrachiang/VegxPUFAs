@@ -78,7 +78,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        genotype_measurement_batch_f22000_0_0, uk_biobank_assessment_centre_f54_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, used_in_genetic_principal_components_f22020_0_0,
-                       select(paste("genetic_principal_components_f22009_0_", 1:10, sep = "")),
+                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""),
                        starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", 
                                      "meat_consumers", "fish_consumer")),
                        oily_fish_intake_f1329_0_0, nonoily_fish_intake_f1339_0_0, processed_meat_intake_f1349_0_0,
@@ -90,7 +90,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
 ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
 ukb3 <- left_join(ukb3, LipidMeds)
-#107 cols
+#118 cols
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
