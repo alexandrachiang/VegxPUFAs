@@ -22,7 +22,7 @@ phenodir=("/scratch/ahc87874/Fall2022/pheno")
 outdir=("/scratch/ahc87874/Fall2022/GEM")
 mkdir -p $outdir
 
-phenotypes=("") #CHANGE
+phenotypes=("w3FA_NMR") #CHANGE
 
 exposures=("CSRV" "SSRV")
 
