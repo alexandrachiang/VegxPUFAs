@@ -8,15 +8,13 @@ covarsCSRV <- onlyCSRV %>% select(sex_f31_0_0, age_when_attended_assessment_cent
                                   age_when_attended_assessment_centre_squared, genotype_measurement_batch_f22000_0_0,
                                   uk_biobank_assessment_centre_f54_0_0, townsend_deprivation_index_at_recruitment_f189_0_0,
                                   paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), body_mass_index_f21001_0_0,
-                                  medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_0,
-                                  medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_0, CSRV)
+                                  medication_combined_f6153_f6177_0_0, CSRV)
 
 covarsSSRV <- onlySSRV %>% select(sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, 
                                   age_when_attended_assessment_centre_squared, genotype_measurement_batch_f22000_0_0,
                                   uk_biobank_assessment_centre_f54_0_0, townsend_deprivation_index_at_recruitment_f189_0_0,
                                   paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), body_mass_index_f21001_0_0,
-                                  medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_0,
-                                  medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_0, SSRV)
+                                  medication_combined_f6153_f6177_0_0, SSRV)
 
 colSums(is.na(covarsCSRV))
 #sex_f31_0_0
@@ -53,10 +51,8 @@ colSums(is.na(covarsCSRV))
 #4072
 #body_mass_index_f21001_0_0
 #595
-#medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_0
-#116253
-#medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_0
-#94808
+#medication_combined_f6153_f6177_0_0
+#94
 #CSRV
 #0
 
@@ -95,10 +91,8 @@ colSums(is.na(covarsSSRV))
 #2311
 #body_mass_index_f21001_0_0
 #317
-#medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_0
-#68157
-#medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_0
-#59604
+#medication_combined_f6153_f6177_0_0
+#5
 #SSRV
 #0
 
@@ -107,7 +101,7 @@ onlyCSRVVeg <- covarsCSRV %>% filter(CSRV == "Veg") %>% select(-CSRV) #8243 rows
 onlySSRVNonVeg <- covarsSSRV %>% filter(SSRV == "NonVeg") %>% select(-SSRV) #124526 rows
 onlySSRVVeg <- covarsSSRV %>% filter(SSRV == "Veg") %>% select(-SSRV) #3230 rows
 
-sum(complete.cases(onlyCSRVNonVeg))
-sum(complete.cases(onlyCSRVVeg))
-sum(complete.cases(onlySSRVNonVeg))
-sum(complete.cases(onlySSRVVeg))
+sum(complete.cases(onlyCSRVNonVeg)) #198001, removed 4723 CSRV NonVeg
+sum(complete.cases(onlyCSRVVeg)) #8039, removed 204 CSRV Veg
+sum(complete.cases(onlySSRVNonVeg)) #121848, removed 2678 SSRV NonVeg
+sum(complete.cases(onlySSRVVeg)) #3168, removed 62 SSRV Veg
