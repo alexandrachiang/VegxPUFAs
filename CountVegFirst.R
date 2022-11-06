@@ -33,6 +33,7 @@ if (FALSE) {
   NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
   Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
+  Meds2 <- as_tibble(read.table("updated_42606/ukb42606.tab", header = TRUE, sep = "\t")) #For Statins
   
   BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
 
@@ -75,6 +76,12 @@ if (FALSE) {
   }
   LipidMeds$medication_combined_f6153_f6177_0_3 <- LipidMeds$medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_3
   
+  Statins <- Meds2 %>% select(contains("20003.0"))
+  StatinCodes <- c(1141146234,1141192414,1140910632,1140888594,1140864592, 1141146138,1140861970,1140888648,1141192410, 
+                   1141188146,1140861958,1140881748,1141200040)
+  for (i in 1:ncol(Statins)) {
+    
+  }
   
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
