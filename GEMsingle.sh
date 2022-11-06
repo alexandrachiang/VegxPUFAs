@@ -41,7 +41,7 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GWAS_pheno_M1_Veg_eigen"$i".csv \ #CHANGE
+--pheno-file $phenodir/GEMpheno.csv \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age Age2 Geno_batch \
