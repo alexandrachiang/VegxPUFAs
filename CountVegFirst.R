@@ -76,12 +76,11 @@ if (FALSE) {
   }
   LipidMeds$medication_combined_f6153_f6177_0_3 <- LipidMeds$medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_3
   
-  Statins <- Meds2 %>% select(contains("20003.0"))
+  Statins <- Meds2 %>% select(f.eid, contains("20003.0"))
   StatinCodes <- c(1141146234,1141192414,1140910632,1140888594,1140864592, 1141146138,1140861970,1140888648,1141192410, 
                    1141188146,1140861958,1140881748,1141200040)
-  for (i in 1:ncol(Statins)) {
-    
-  }
+  
+  Statins <- Statins %>% mutate(treatment_medication_code_f20003_0 = ifelse(apply(Statins, 1, function(r) any(r %in% StatinCodes)) == TRUE, 1, 0)) %>% select(f.eid, treatment_medication_code_f20003_0)
   
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
@@ -89,10 +88,13 @@ if (FALSE) {
               row.names = FALSE, quote = FALSE)
   write.table(LipidMeds, file = "/scratch/ahc87874/Fall2022/pheno/LipidMeds.txt",
               row.names = FALSE, quote = FALSE)
+  write.table(Statins, file = "/scratch/ahc87874/Fall2022/pheno/Statins.txt",
+              row.names = FALSE, quote = FALSE)
 } else {
   BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
   PUFAs <- as_tibble(read.table("PUFAs.txt", header = TRUE))
   LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
+  Statins <- as_tibble(read.table("Statins.txt", header = TRUE))
 }
 
 #Select necessary columns
@@ -115,7 +117,8 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
 ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
 ukb3 <- left_join(ukb3, LipidMeds)
-#122 cols
+ukb3 <- left_join(ukb3, Statins)
+#123 cols
 
 #Remove withdrawn participants from dataset
 withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
