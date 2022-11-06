@@ -369,5 +369,5 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #  African                       423      3
 #  Any other Black background     13      0
 
-write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
-            row.names = FALSE, quote = FALSE)
+#write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/CSRVSSRV.txt",
+#            row.names = FALSE, quote = FALSE)
