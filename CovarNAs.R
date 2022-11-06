@@ -105,3 +105,6 @@ sum(complete.cases(onlyCSRVNonVeg)) #198001, removed 4723 CSRV NonVeg
 sum(complete.cases(onlyCSRVVeg)) #8039, removed 204 CSRV Veg
 sum(complete.cases(onlySSRVNonVeg)) #121848, removed 2678 SSRV NonVeg
 sum(complete.cases(onlySSRVVeg)) #3168, removed 62 SSRV Veg
+
+#Removes 4927 total
+#206040 left
