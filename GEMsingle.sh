@@ -44,12 +44,13 @@ GEM \
 --pheno-file $phenodir/GWAS_pheno_M1_Veg_eigen"$i".csv \ #CHANGE
 --sampleid-name IID \
 --pheno-name $j \
---covar-names Age Age2 Sex Geno_batch BMI statins \
-center1 center2 center3 center4 center5 \
-center6 center7 center8 center9 center10 \
-center11 center12 center13 center14 center15 \
-center16 center17 center18 center20 \
+--covar-names Sex Age Age2 Geno_batch \
+Center1 Center2 Center3 Center4 Center5 \
+Center6 Center7 Center8 Center9 Center10 \
+Center11 Center12 Center13 Center14 Center15 \
+Center16 Center17 Center18 Center20 Townsend \
 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 \
+Statins BMI Lipid_meds \
 --robust 1 \
 --exposure-names "$e" \
 --thread 16 \
