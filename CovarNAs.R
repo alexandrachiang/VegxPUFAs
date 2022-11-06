@@ -53,6 +53,8 @@ colSums(is.na(covarsCSRV))
 #595
 #medication_combined_f6153_f6177_0_0
 #94
+#treatment_medication_code_f20003_0
+#0
 #CSRV
 #0
 
@@ -93,6 +95,8 @@ colSums(is.na(covarsSSRV))
 #317
 #medication_combined_f6153_f6177_0_0
 #5
+#treatment_medication_code_f20003_0
+#0
 #SSRV
 #0
 
