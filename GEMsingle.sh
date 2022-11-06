@@ -13,9 +13,9 @@
 
 i=$SLURM_ARRAY_TASK_ID
 
-cd /scratch/ahc87874/Check
+cd /scratch/ahc87874/Fall2022
 
-ml GEM/1.4.1-foss-2019b
+ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
@@ -36,7 +36,6 @@ for e in ${exposures[@]}
 mkdir -p $outdir/$j
 
 echo running "$j" and "$e"
-
 
 GEM \
 --bgen $genodir/chr"$i".bgen \
