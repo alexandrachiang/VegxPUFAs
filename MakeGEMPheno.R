@@ -31,6 +31,6 @@ names(GEMpheno3)[(ncol(GEMpheno3) - 20):ncol(GEMpheno3)] <- paste("Center", c(1:
 GEMpheno3 <- GEMpheno3 %>% select(FID, IID, Sex, Age, Age2, Geno_batch, contains("Center"), everything()) %>% 
                            select(-Center)
 
-#write.table(GEMpheno3, file = "/scratch/ahc87874/Fall2022/GEMpheno.txt", row.names = FALSE, quote = FALSE)
+#write.table(GEMpheno3, file = "/scratch/ahc87874/Fall2022/pheno/GEMpheno.txt", row.names = FALSE, quote = FALSE)
 
-#write.csv(GEMpheno3, file = "/scratch/ahc87874/Fall2022/GEMpheno.csv", row.names = FALSE, quote = FALSE)
+#write.csv(GEMpheno3, file = "/scratch/ahc87874/Fall2022/pheno/GEMpheno.csv", row.names = FALSE, quote = FALSE)
