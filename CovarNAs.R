@@ -8,13 +8,13 @@ covarsCSRV <- onlyCSRV %>% select(sex_f31_0_0, age_when_attended_assessment_cent
                                   age_when_attended_assessment_centre_squared, genotype_measurement_batch_f22000_0_0,
                                   uk_biobank_assessment_centre_f54_0_0, townsend_deprivation_index_at_recruitment_f189_0_0,
                                   paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), body_mass_index_f21001_0_0,
-                                  medication_combined_f6153_f6177_0_0, CSRV)
+                                  medication_combined_f6153_f6177_0_0, treatment_medication_code_f20003_0, CSRV)
 
 covarsSSRV <- onlySSRV %>% select(sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, 
                                   age_when_attended_assessment_centre_squared, genotype_measurement_batch_f22000_0_0,
                                   uk_biobank_assessment_centre_f54_0_0, townsend_deprivation_index_at_recruitment_f189_0_0,
                                   paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), body_mass_index_f21001_0_0,
-                                  medication_combined_f6153_f6177_0_0, SSRV)
+                                  medication_combined_f6153_f6177_0_0, treatment_medication_code_f20003_0, SSRV)
 
 colSums(is.na(covarsCSRV))
 #sex_f31_0_0
