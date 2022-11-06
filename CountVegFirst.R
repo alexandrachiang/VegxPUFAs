@@ -26,9 +26,6 @@ if (FALSE) {
   ukb <- as_tibble(ukb)
 }
 
-colnames(ukb)[1] <- "IID"
-ukb <- ukb %>% mutate(FID = IID)
-
 if (FALSE) {
   NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
@@ -81,6 +78,7 @@ if (FALSE) {
                    1141188146,1140861958,1140881748,1141200040)
   
   Statins <- Statins %>% mutate(treatment_medication_code_f20003_0 = ifelse(apply(Statins, 1, function(r) any(r %in% StatinCodes)) == TRUE, 1, 0)) %>% select(f.eid, treatment_medication_code_f20003_0)
+  colnames(Statins) <- c("IID", "treatment_medication_code_f20003_0")
   
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
@@ -100,6 +98,9 @@ if (FALSE) {
 #Select necessary columns
 #Need to add BMI and pheno columns
 #Change to contains?
+colnames(ukb)[1] <- "IID"
+ukb <- ukb %>% mutate(FID = IID)
+
 ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
