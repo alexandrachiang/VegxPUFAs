@@ -19,14 +19,14 @@ GEMpheno <- ukbSSRV %>% select(FID, IID,
 #Rename columns and change order
 covars <- c("Sex", "Age", "Age2", "Geno_batch", "Center", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", 
             "PC8", "PC9", "PC10", "Statins", "BMI", "Lipid_meds")
-names(GEMpheno)[3:20] <- covars
+names(GEMpheno)[3:(2 + length(covars))] <- covars
 
 #Remove if NA for covars
 GEMpheno2 <- GEMpheno[complete.cases(GEMpheno[, covars]), ]
 
 #Dummy columns for assessment center
 GEMpheno3 <- dummy_cols(GEMpheno2, select_columns = "Center")
-names(GEMpheno3)[51:71] <- paste("Center", c(1:14, 16:18, 20:23), sep = "")
+names(GEMpheno3)[(ncol(GEMpheno3) - 20):ncol(GEMpheno3)] <- paste("Center", c(1:14, 16:18, 20:23), sep = "")
 
 GEMpheno3 <- GEMpheno3 %>% select(FID, IID, Sex, Age, Age2, Geno_batch, contains("Center"), everything()) %>% 
                            select(-Center)
