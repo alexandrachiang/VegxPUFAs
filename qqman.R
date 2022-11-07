@@ -5,8 +5,27 @@ phenos <- "w3FA_NMR"
 exposures <- c("CSRV", "SSRV")
 
 for (i in phenos) {
-  indir = paste("/scratch/ahc87874/Fall2022/GEM/", i, sep = "")
+  GEMdir <- "/scratch/ahc87874/Fall2022/GEM"
+  
+  for (j in exposures) {
+    for (k in 1:22) {
+      infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
+				     header = TRUE, stringsAsFactors = FALSE))
 
+	#Subset data
+	infile1 <- infile %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
+
+	#Get qqman format
+	colnames(infile1) <- c("CHR", "BP", "P", "SNP")
+
+	#Add to input
+	if (i == 1) {
+	  infileall <- infile1
+	} else {
+	  infileall <- rbind(infileall, infile1)
+	}
+    }
+  }
 }
 
 for (i in 1:22) {
