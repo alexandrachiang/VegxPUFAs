@@ -1,7 +1,7 @@
 library(tidyverse)
 library(qqman)
 
-phenos <- "w3FA_NMR"
+phenos <- c("w3FA_NMR")
 exposures <- c("CSRV", "SSRV")
 
 for (i in phenos) {
