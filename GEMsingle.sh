@@ -44,12 +44,6 @@ GEM \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age Townsend \
-#Age2 Geno_batch \
-#Center1 Center2 Center3 Center4 Center5 \
-#Center6 Center7 Center8 Center9 Center10 \
-#Center11 Center12 Center13 Center14 Center16 \
-#Center17 Center18 Center20 Center21 Center22 \
-#Center23 Statins BMI Lipid_meds \
 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 \
 --robust 1 \
 --exposure-names "$e" \
@@ -60,3 +54,9 @@ done
 done
 
 #centers 15 & 19 dont exist, center ?? is all 0, which messes up the results
+#Age2 Geno_batch \
+#Center1 Center2 Center3 Center4 Center5 \
+#Center6 Center7 Center8 Center9 Center10 \
+#Center11 Center12 Center13 Center14 Center16 \
+#Center17 Center18 Center20 Center21 Center22 \
+#Center23 Statins BMI Lipid_meds \
