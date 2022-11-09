@@ -50,7 +50,7 @@ for (i in phenos) {
     write.table(newdata, paste(outdirSNPs, i, "x", j, "topSNPs.txt", sep = ""),
                 row.names = FALSE, quote = FALSE)
 
-    pvalue <- newdata$P[10, ]
+    pvalue <- newdata$P[10]
     
     #Make manhattan plot
     outdirman = "/scratch/ahc87874/Fall2022/manplots/"
