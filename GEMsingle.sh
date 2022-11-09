@@ -54,6 +54,8 @@ done
 done
 
 #centers 15 & 19 dont exist, center ?? is all 0, which messes up the results
+#variables must be numeric to work
+
 #Age2 Geno_batch \
 #Center1 Center2 Center3 Center4 Center5 \
 #Center6 Center7 Center8 Center9 Center10 \
