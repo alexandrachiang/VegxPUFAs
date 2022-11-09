@@ -13,7 +13,7 @@ for (i in phenos) {
   
   for (j in exposures) {
     print(paste("exposure:", j))
-    if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+    if (FALSE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
       for (k in 1:22) {
         print(paste("chr:", k))
         infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
@@ -65,7 +65,7 @@ for (i in phenos) {
     }
     png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", 
         width = 600, height = 300)
-    manhattan(infileall, col = c(exposurecol, "black"), suggestiveline = T, genomewideline = T, #ylim = c(0, 8.15), 
+    manhattan(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
               main = paste("Manhattan Plot of ", i, "x", j, " GWIS", sep = ""), annotatePval = 1e-5)
     #highlight = newdata
     dev.off()
