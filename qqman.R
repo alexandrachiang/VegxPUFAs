@@ -1,3 +1,4 @@
+#source("/work/kylab/alex/Fall2022/qqman.R")
 library(tidyverse)
 library(qqman)
 
