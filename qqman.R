@@ -7,11 +7,14 @@ phenos <- c("w3FA_NMR")
 exposures <- c("CSRV", "SSRV")
 
 for (i in phenos) {
-	GEMdir <- "/scratch/ahc87874/Fall2022/GEM"
+  GEMdir <- "/scratch/ahc87874/Fall2022/GEM"
+  print(i)
   
   for (j in exposures) {
+    print(j)
     if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
       for (k in 1:22) {
+        print(i)
         infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
                                        header = TRUE, stringsAsFactors = FALSE))
 
