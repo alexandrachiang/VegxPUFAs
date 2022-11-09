@@ -65,10 +65,14 @@ for (i in phenos) {
     } else if (j == "SSRV") {
       exposurecol <- "deepskyblue1"
     }
+    maxy <- -log10(5e-08)
+	  if (newdata$P[1] < 5e-08) {
+      maxy <- -log10(newdata$P[1])
+    }
     png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", 
         width = 600, height = 300)
     manhattan(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
-              main = paste("Manhattan Plot of ", i, "x", j, " GWIS", sep = ""), annotatePval = 1e-5)
+              main = paste("Manhattan Plot of ", i, "x", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.1))
     #highlight = newdata
     dev.off()
     
