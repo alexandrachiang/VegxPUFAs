@@ -1,6 +1,8 @@
 library(tidyverse)
 library(qqman)
 
+setwd("/scratch/ahc87874/Fall2022/")
+
 phenos <- c("w3FA_NMR")
 exposures <- c("CSRV", "SSRV")
 
