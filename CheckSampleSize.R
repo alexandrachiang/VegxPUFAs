@@ -23,8 +23,8 @@ covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", 
 
 names(bothQC2)[3:(2 + length(covars))] <- covars
 
-covars <- c("Sex", "Age", "Townsend")
-bothQC3 <- bothQC2[complete.cases(bothQC2[, covars]), ] #210,702
+covars2 <- c("Sex", "Age", "Townsend")
+bothQC3 <- bothQC2[complete.cases(bothQC2[, covars2]), ] #210,702
 
 bothQC4 <- bothQC3 %>% select(hasPCA, hasGenoData)
 bothQC4 %>% mutate(hasGenoData = !is.na(hasGenoData)) %>% table()
@@ -32,3 +32,24 @@ bothQC4 %>% mutate(hasGenoData = !is.na(hasGenoData)) %>% table()
 #hasPCA   FALSE   TRUE
 #  FALSE   4063      0
 #  TRUE     428 206211
+
+bothQC5 <- bothQC3 %>% filter(hasGenoData == TRUE) %>% select(CSRV, SSRV)
+
+table(bothQC$CSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+#202724   8243      0
+table(bothQC$SSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+#124526   3230  83211
+table(bothQC5$CSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+#198150   8061      0
+table(bothQC5$SSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+#121862   3172  81177
+
+#Difference
+#CSRV NonVeg = 4574
+#CSRV Veg = 182
+#SSRV NonVeg = 2664
+#SSRV Veg = 58
