@@ -18,7 +18,17 @@ bothQC2 <- bothQC %>% select(FID, IID,
                              LA_NMR, LA_NMR_TFAP, PUFA_NMR, PUFA_NMR_TFAP, MUFA_NMR, MUFA_NMR_TFAP, PUFA_MUFA_ratio_NMR,
                              hasPCA, hasGenoData)
 
-  #Rename columns and change order
-  covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
+#Rename columns and change order
+covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
 
-  names(GEMpheno)[3:(2 + length(covars))] <- covars
+names(bothQC2)[3:(2 + length(covars))] <- covars
+
+covars <- c("Sex", "Age", "Townsend")
+bothQC3 <- bothQC2[complete.cases(bothQC2[, covars]), ] #210,702
+
+bothQC4 <- bothQC3 %>% select(hasPCA, hasGenoData)
+bothQC4 %>% mutate(hasGenoData = !is.na(hasGenoData)) %>% table()
+#       hasGenoData
+#hasPCA   FALSE   TRUE
+#  FALSE   4063      0
+#  TRUE     428 206211
