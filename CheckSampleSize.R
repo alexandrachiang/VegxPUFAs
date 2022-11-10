@@ -22,12 +22,13 @@ bothQC2 <- bothQC %>% select(FID, IID,
 covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
 
 names(bothQC2)[3:(2 + length(covars))] <- covars
+bothQC2 <- bothQC2 %>% mutate(hasGenoData = !is.na(hasGenoData))
 
 covars2 <- c("Sex", "Age", "Townsend")
 bothQC3 <- bothQC2[complete.cases(bothQC2[, covars2]), ] #210,702
 
 bothQC4 <- bothQC3 %>% select(hasPCA, hasGenoData)
-bothQC4 %>% mutate(hasGenoData = !is.na(hasGenoData)) %>% table()
+table(bothQC4, useNA = "always")
 #       hasGenoData
 #hasPCA   FALSE   TRUE
 #  FALSE   4063      0
@@ -53,3 +54,55 @@ table(bothQC5$SSRV, useNA = "always")
 #CSRV Veg = 182
 #SSRV NonVeg = 2664
 #SSRV Veg = 58
+
+colSums(is.na(bothQC2)) %>% as.data.frame()
+#FID                      0
+#IID                      0
+#Sex                      0
+#Age                      0
+#Townsend               265
+#PC1                   4072
+#PC2                   4072
+#PC3                   4072
+#PC4                   4072
+#PC5                   4072
+#PC6                   4072
+#PC7                   4072
+#PC8                   4072
+#PC9                   4072
+#PC10                  4072
+#CSRV                     0
+#SSRV                 83211
+#w3FA_NMR            161136
+#w3FA_NMR_TFAP       161136
+#w6FA_NMR            161136
+#w6FA_NMR_TFAP       161136
+#w6_w3_ratio_NMR     161136
+#DHA_NMR             161136
+#DHA_NMR_TFAP        161136
+#LA_NMR              161136
+#LA_NMR_TFAP         161136
+#PUFA_NMR            161136
+#PUFA_NMR_TFAP       161136
+#MUFA_NMR            161136
+#MUFA_NMR_TFAP       161136
+#PUFA_MUFA_ratio_NMR 161136
+#hasPCA                   0
+#hasGenoData              0
+
+cc <- c("IID", "Sex", "Age", "Townsend", "PC1", "w3FA_NMR")
+bothQC6 <- bothQC2[complete.cases(bothQC2[, cc]), ] #49,528
+#colSums(is.na(bothQC6)) %>% as.data.frame() #onlt SSRV should have NA
+
+table(bothQC6$CSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+# 47627   1901      0
+table(bothQC6$SSRV, useNA = "always")
+#NonVeg    Veg   <NA>
+# 29217    755  19556
+
+#Difference
+#CSRV NonVeg = 155097
+#CSRV Veg = 6342
+#SSRV NonVeg = 95309
+#SSRV Veg = 2475
