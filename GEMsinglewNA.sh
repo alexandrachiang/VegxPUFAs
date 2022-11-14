@@ -19,7 +19,7 @@ ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
-outdir=("/scratch/ahc87874/Fall2022/GEM")
+outdir=("/scratch/ahc87874/Fall2022/GEMwNA")
 mkdir -p $outdir
 
 phenotypes=("w3FA_NMR") #CHANGE
