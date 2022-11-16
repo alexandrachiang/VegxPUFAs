@@ -70,7 +70,7 @@ for (i in phenos) {
       maxy <- -log10(newdata$P[1])
     }
     png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", 
-        width = 2000, height = 1000)
+        width = 1200, height = 600)
     manhattan(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
               main = paste("Manhattan Plot of ", i, "x", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15))
     #highlight = newdata
@@ -80,7 +80,7 @@ for (i in phenos) {
     #Make qq plot
     outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
     png(filename = paste(outdirqq, i, "x", j, "qq.png", sep = ""), type = "cairo", 
-        width = 1000, height = 1000)
+        width = 600, height = 600)
     qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, " GWIS p-values", sep = ""))
     dev.off()
   } #j exposures
