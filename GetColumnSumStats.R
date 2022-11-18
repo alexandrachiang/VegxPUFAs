@@ -6,6 +6,7 @@ SumStats <- function(df) {
   
   sumstats <- data.frame(pheno = row.names(means), means, NAs)
   names(sumstats) <- c("phenos", "means", "NAs")
+  rownames(sumstats) <- NULL
   
-  print(sumstats, n = nrow(sumstats))
+  print(sumstats)
 }
