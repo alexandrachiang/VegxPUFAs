@@ -7,5 +7,5 @@ SumStats <- function(df) {
   sumstats <- as_tibble(data.frame(pheno = row.names(means), means, NAs))
   names(sumstats) <- c("phenos", "means", "NAs")
   
-  print(sumstats)
+  print(sumstats, n = nrow(sumstats))
 }
