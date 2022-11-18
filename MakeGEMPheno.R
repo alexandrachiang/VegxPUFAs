@@ -55,13 +55,16 @@ if (FALSE) {
   GEMpheno2$Sex <- as.character(GEMpheno2$Sex)
   GEMpheno2$Sex <- replace(GEMpheno2$Sex, GEMpheno2$Sex == "Female", 0)
   GEMpheno2$Sex <- replace(GEMpheno2$Sex, GEMpheno2$Sex == "Male", 1)
+  GEMpheno2$Sex <- as.numeric(GEMpheno2$Sex)
   GEMpheno2$CSRV <- replace(GEMpheno2$CSRV, GEMpheno2$CSRV == "NonVeg", 0)
   GEMpheno2$CSRV <- replace(GEMpheno2$CSRV, GEMpheno2$CSRV == "Veg", 1)
+  GEMpheno2$CSRV <- as.numeric(GEMpheno2$CSRV)
   GEMpheno2$SSRV <- replace(GEMpheno2$SSRV, GEMpheno2$SSRV == "NonVeg", 0)
   GEMpheno2$SSRV <- replace(GEMpheno2$SSRV, GEMpheno2$SSRV == "Veg", 1)
+  GEMpheno2$SSRV <- as.numeric(GEMpheno2$SSRV)
 
   #Remove if NA for covars
-  GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
+  #GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
 }
 #write.table(GEMpheno3, file = "/scratch/ahc87874/Fall2022/pheno/GEMpheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
 
