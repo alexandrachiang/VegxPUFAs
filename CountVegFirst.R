@@ -335,8 +335,13 @@ table(ukbSSRV$SSRV, useNA = "always")
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
 #NA if any major dietary changes in the last 5 years
-ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
+if (TRUE) {
+  ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
              is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
+} else {
+  ukbSSRV$SSRV[(ukbSSRV$SSRV == "Veg" & ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No") |
+             (ukbSSRV$SSRV == "Veg" & is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0))] <- NA
+}
 
 #table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
