@@ -22,10 +22,11 @@ phenodir=("/scratch/ahc87874/Fall2022/pheno")
 outdir=("/scratch/ahc87874/Fall2022/GEM")
 mkdir -p $outdir
 
-phenotypes=("w3FA_NMR") #CHANGE
+phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_NMR" 
+"DHA_NMR" "DHA_NMR_TFAP" "LA_NMR" "LA_NMR_TFAP" "PUFA_NMR" "PUFA_NMR_TFAP" "MUFA_NMR" 
+"MUFA_NMR_TFAP" "PUFA_MUFA_ratio_NMR")
 
 exposures=("CSRV" "SSRV")
-
 
 for j in ${phenotypes[@]} 
         do
