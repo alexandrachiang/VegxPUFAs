@@ -75,8 +75,8 @@ for (i in phenos) {
     png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", 
         width = 1200, height = 600)
     manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
-              main = paste("Manhattan Plot of ", i, "x", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
-	      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 2)
+              main = paste("Manhattan Plot of ", i, " x ", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
+	      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
     #highlight = newdata
     dev.off()
     
