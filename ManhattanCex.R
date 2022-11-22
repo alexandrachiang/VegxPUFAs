@@ -204,7 +204,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
         # annotate these SNPs
         if (annotateTop == FALSE) {
             with(subset(d, P <= annotatePval), 
-                 textxy(pos, -log10(P), offset = 0.625, labs = topHits$SNP, cex = annofontsize), ...)
+                 textxy(pos, -log10(P), offset = 0.625, labs = topHits$SNP), ...)
         }
         else {
             # could try alternative, annotate top SNP of each sig chr
@@ -217,7 +217,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                 topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 
             }
-            textxy(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
+            textxy(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, ...)
         }
     }  
     par(xpd = FALSE)
