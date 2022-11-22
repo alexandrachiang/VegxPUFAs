@@ -6,9 +6,10 @@ source("ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
 
-phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
+phenos <- c("w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
 	    "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
 	    "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
+#"w3FA_NMR", 
 
 exposures <- c("CSRV", "SSRV")
 
@@ -18,7 +19,7 @@ for (i in phenos) {
   
   for (j in exposures) {
     print(paste("exposure:", j))
-    if (FALSE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+    if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
       for (k in 1:22) {
         print(paste("chr:", k))
         infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
