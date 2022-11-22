@@ -41,6 +41,26 @@
 #'   
 #' @export
 
+textxycex <- function (X, Y, labs, m = c(0, 0), cex = 0.5, offset = 0.8, ...) {
+    posXposY <- ((X >= m[1]) & ((Y >= m[2])))
+    posXnegY <- ((X >= m[1]) & ((Y < m[2])))
+    negXposY <- ((X < m[1]) & ((Y >= m[2])))
+    negXnegY <- ((X < m[1]) & ((Y < m[2])))
+    if (sum(posXposY) > 0)
+        text(X[posXposY], Y[posXposY], labs[posXposY], adj = c(0.5 -
+            offset, 0.5 - offset), cex = cex, ...)
+    if (sum(posXnegY) > 0)
+        text(X[posXnegY], Y[posXnegY], labs[posXnegY], adj = c(0.5 -
+            offset, 0.5 + offset), cex = cex, ...)
+    if (sum(negXposY) > 0)
+        text(X[negXposY], Y[negXposY], labs[negXposY], adj = c(0.5 +
+            offset, 0.5 - offset), cex = cex, ...)
+    if (sum(negXnegY) > 0)
+        text(X[negXnegY], Y[negXnegY], labs[negXnegY], adj = c(0.5 +
+            offset, 0.5 + offset), cex = cex, ...)
+}
+
+
 manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP", 
                       col=c("gray10", "gray60"), chrlabs=NULL,
                       suggestiveline=-log10(1e-5), genomewideline=-log10(5e-8), 
@@ -204,7 +224,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
         # annotate these SNPs
         if (annotateTop == FALSE) {
             with(subset(d, P <= annotatePval), 
-                 textxy(pos, -log10(P), offset = 0.625, labs = topHits$SNP), cex = annofontsize, ...)
+                 textxycex(pos, -log10(P), offset = 0.625, labs = topHits$SNP), cex = annofontsize, ...)
         }
         else {
             # could try alternative, annotate top SNP of each sig chr
@@ -217,7 +237,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                 topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 
             }
-            textxy(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
+            textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
         }
     }  
     par(xpd = FALSE)
