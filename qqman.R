@@ -1,6 +1,9 @@
 #source("/work/kylab/alex/Fall2022/qqman.R")
 library(tidyverse)
 library(qqman)
+library(calibrate)
+
+source("ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
 
