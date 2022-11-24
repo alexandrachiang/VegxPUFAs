@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=GEMwoCred
+#SBATCH --job-name=GEMwKeep
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=70:00:00
 #SBATCH --mem=30000
-#SBATCH --output=GEMwoCred.%j.out
-#SBATCH --error=GEMwoCred.%j.err
+#SBATCH --output=GEMwKeep.%j.out
+#SBATCH --error=GEMwKeep.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
@@ -19,7 +19,7 @@ ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
-outdir=("/scratch/ahc87874/Fall2022/GEMwoCred")
+outdir=("/scratch/ahc87874/Fall2022/GEMwKeep")
 mkdir -p $outdir
 
 phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_NMR" 
@@ -41,7 +41,7 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GEMphenowoCred.csv \
+--pheno-file $phenodir/GEMphenowKeep.csv \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age Townsend \
