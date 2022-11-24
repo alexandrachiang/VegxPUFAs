@@ -14,7 +14,7 @@ suppressMessages(library(rio))
 setwd("/scratch/ahc87874/Fall2022/pheno")
 
 isCredible <- FALSE
-keepNonVeg <- FALSE
+keepNonVeg <- TRUE
 
 #Load dataset
 if (FALSE) {
@@ -391,8 +391,8 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #  Any other Black background     13      0
 
 if (FALSE) {
-  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.txt",
+  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt",
             sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.csv", row.names = FALSE, quote = FALSE)
+  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.csv", row.names = FALSE, quote = FALSE)
 }                                                           
