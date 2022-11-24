@@ -13,6 +13,9 @@ suppressMessages(library(rio))
 
 setwd("/scratch/ahc87874/Fall2022/pheno")
 
+isCredible <- FALSE
+keepNonVeg <- FALSE
+
 #Load dataset
 if (FALSE) {
   source('/scratch/ahc87874/Fall2022/load_UKBphenotables.R')
@@ -335,12 +338,12 @@ table(ukbSSRV$SSRV, useNA = "always")
 #202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
 
 #NA if any major dietary changes in the last 5 years
-if (TRUE) {
-  ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
-             is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
-} else {
+if (keepNonVeg) {
   ukbSSRV$SSRV[(ukbSSRV$SSRV == "Veg" & ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No") |
              (ukbSSRV$SSRV == "Veg" & is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0))] <- NA
+} else {
+  ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
+             is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
 }
 
 #table(ukbSSRV$SSRV, useNA = "always")
@@ -354,7 +357,9 @@ if (TRUE) {
 #  NonVeg         930 124526
 #  Veg             41   3230
 #  <NA>           775  81465
-ukbSSRV$SSRV[ukbSSRV$is_not_credible == "NotCredible"] <- NA
+if (isCredible) {
+  ukbSSRV$SSRV[ukbSSRV$is_not_credible == "NotCredible"] <- NA
+}
 #table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
 #124526   3230  83211
@@ -385,7 +390,9 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #  African                       423      3
 #  Any other Black background     13      0
 
-#write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.txt",
-#            sep = "\t", row.names = FALSE, quote = FALSE)
+if (FALSE) {
+  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-#write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.csv", row.names = FALSE, quote = FALSE)
+  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.csv", row.names = FALSE, quote = FALSE)
+}                                                           
