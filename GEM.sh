@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=GEM
+#SBATCH --job-name=GEMwoCred
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=70:00:00
 #SBATCH --mem=30000
-#SBATCH --output=GEM.%j.out
-#SBATCH --error=GEM.%j.err
+#SBATCH --output=GEMwoCred.%j.out
+#SBATCH --error=GEMwoCred.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
