@@ -19,7 +19,7 @@ ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
-outdir=("/scratch/ahc87874/Fall2022/GEM")
+outdir=("/scratch/ahc87874/Fall2022/GEMwoCred")
 mkdir -p $outdir
 
 phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_NMR" 
@@ -41,7 +41,7 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GEMpheno.csv \
+--pheno-file $phenodir/GEMphenowoCred.csv \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age Townsend \
