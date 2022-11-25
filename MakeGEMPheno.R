@@ -1,7 +1,11 @@
 library(tidyverse)
 library(fastDummies)
 #source("/work/kylab/alex/Fall2022/CountVegFirst.R")
-ukbSSRV <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.txt", sep = "\t", 
+
+suffix <- "wKeep"
+#"" "woCred" "wKeep"
+
+ukbSSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".txt", sep = ""), sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
 
 if (FALSE) {
@@ -66,6 +70,6 @@ if (FALSE) {
   #Remove if NA for covars
   #GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
 }
-#write.table(GEMpheno3, file = "/scratch/ahc87874/Fall2022/pheno/GEMpheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+#write.table(GEMpheno3, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
 
-#write.csv(GEMpheno3, file = "/scratch/ahc87874/Fall2022/pheno/GEMpheno.csv", row.names = FALSE, quote = FALSE)
+#write.csv(GEMpheno3, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno.csv", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
