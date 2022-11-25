@@ -391,8 +391,16 @@ ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #  Any other Black background     13      0
 
 if (FALSE) {
-  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt",
+  
+  if (!isCredible) {
+    suffix <- "woCred"
+  } else if (keepNonVeg) {
+    suffic <- "wKeep"
+  } else {
+    suffix <- ""
+  }
+  write.table(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".txt", sep = ""),
             sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.csv", row.names = FALSE, quote = FALSE)
+  write.csv(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 }                                                           
