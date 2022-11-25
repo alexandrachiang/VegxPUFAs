@@ -402,5 +402,5 @@ if (FALSE) {
   write.table(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".txt", sep = ""),
             sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-  write.csv(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+  write.csv(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 }                                                           
