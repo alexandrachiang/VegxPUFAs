@@ -67,6 +67,7 @@ if (FALSE) {
   GEMpheno2$SSRV <- replace(GEMpheno2$SSRV, GEMpheno2$SSRV == "Veg", 1)
   GEMpheno2$SSRV <- as.numeric(GEMpheno2$SSRV)
 
+  GEMpheno3 <- GEMpheno2
   #Remove if NA for covars
   #GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
 }
