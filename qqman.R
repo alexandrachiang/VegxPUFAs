@@ -93,9 +93,9 @@ for (i in phenos) {
     print("QQ")
     #Make qq plot
     outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
-    png(filename = paste(outdirqq, i, "x", j, "qq.png", sep = ""), type = "cairo", 
+    png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", 
         width = 600, height = 600)
-    qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, suffix, " GWIS p-values", sep = ""))
+    qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, " GWIS p-values", sep = ""))
     dev.off()
   } #j exposures
 } #i phenos
