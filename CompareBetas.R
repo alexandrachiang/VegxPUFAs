@@ -1,9 +1,6 @@
 library(tidyverse)
-library(qqman)
 
-source("ManhattanCex.R")
-
-setwd("/scratch/ahc87874/Fall2022/")
+setwd("/scratch/ahc87874/Fall2022/Betaplots")
 
 allsuffix <- c("", "woCred", "wKeep")
 	
@@ -53,3 +50,5 @@ for (suffix in allsuffix) {
     } #exposures
   } #phenos
 } #suffix
+
+
