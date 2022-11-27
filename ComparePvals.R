@@ -22,15 +22,15 @@ for (suffix in allsuffix) {
 
     Both <- inner_join(CSRV, SSRV, by = c("SNP", "CHR")) %>% arrange(desc(SSRVP))
 
-    outdirqq = "/scratch/ahc87874/Fall2022/Pvalplots/"
-    png(filename = paste(outdirqq, "ComparePvals", i, suffix, ".png", sep = "_"), type = "cairo", 
+    outdir = "/scratch/ahc87874/Fall2022/Pvalplots/"
+    png(filename = paste(outdir, "ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", 
         width = 600, height = 600)
 
     ggplot(Both) + 
       geom_point(aes(x = CSRVP, y = SSRVP), alpha = 0.1) +
       geom_hline(yintercept = -log10(5e-08), linetype = "dashed", color = "red") +
       geom_vline(xintercept = -log10(5e-08), linetype = "dashed", color = "red") + 
-      labs(title = paste("Compare p-values of ", i, sep = ""), 
+      labs(title = paste("Compare p-values of ", i, " ", suffix, sep = ""), 
            xlab = "CSRV",
            ylab = "SSRV") 
 
