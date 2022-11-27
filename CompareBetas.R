@@ -1,6 +1,6 @@
 library(tidyverse)
 
-setwd("/scratch/ahc87874/Fall2022/Betaplots")
+setwd("/scratch/ahc87874/Fall2022/")
 
 allsuffix <- c("", "woCred", "wKeep")
 	
@@ -35,8 +35,8 @@ for (suffix in allsuffix) {
            x = "CSRV",
            y = "SSRV") 
 	  
-    png(filename = paste("ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
-    pvalplot
+    png(filename = paste("Pvalplots/ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
+    print(pvalplot)
     dev.off()
     
     print("betas")
@@ -46,8 +46,8 @@ for (suffix in allsuffix) {
            x = "CSRV",
            y = "SSRV") 
 	  
-    png(filename = paste("CompareBetas_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
-    betaplot
+    png(filename = paste("Betaplots/CompareBetas_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
+    print(betaplot)
     dev.off()
   } #i phenos
 } #suffix
