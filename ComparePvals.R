@@ -11,7 +11,9 @@ allsuffix <- c("", "woCred", "wKeep")
 phenos <- c("w3FA_NMR_TFAP", "w6_w3_ratio_NMR", "LA_NMR_TFAP")
 
 for (suffix in allsuffix) {
+  print(suffix)
   for (i in phenos) {
+    print(i)
     CSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "xCSRV", "all.txt", sep = ""), 
                                             header = TRUE, stringsAsFactors = FALSE))
     SSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "xSSRV", suffix, "all.txt", sep = ""), 
