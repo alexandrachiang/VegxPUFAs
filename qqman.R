@@ -6,98 +6,98 @@ source("ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
 
-suffix <- "woCred"
-#"" "woCred" "wKeep"
-
+allsuffix <- c("", "woCred", "wKeep")
+	
 phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
-	    "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
-	    "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
+            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
+            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 
-if (suffix == "") {
-  exposures <- c("CSRV", "SSRV")
-} else {
-  exposures <- c("SSRV")
-}
-
-for (i in phenos) {
-  GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
+for (suffix in allsuffix) {
+  if (suffix == "") {
+    exposures <- c("CSRV", "SSRV")
+  } else {
+    exposures <- c("SSRV")
+  }
   
-  print(paste("pheno:", i))
-  
-  for (j in exposures) {
-    print(paste("exposure:", j))
-    if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
-      for (k in 1:22) {
-        print(paste("chr:", k))
-        infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
-                                       header = TRUE, stringsAsFactors = FALSE))
+  for (i in phenos) {
+    GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
 
-        #Subset data
-        infilesub <- infile %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
+    print(paste("pheno:", i))
 
-        #Get qqman format
-        colnames(infilesub) <- c("CHR", "BP", "P", "SNP")
+    for (j in exposures) {
+      print(paste("exposure:", j))
+      if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+        for (k in 1:22) {
+          print(paste("chr:", k))
+          infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
+                                         header = TRUE, stringsAsFactors = FALSE))
 
-        #Add to input
-        if (k == 1) {
-          infileall <- infilesub
-        } else {
-          infileall <- rbind(infileall, infilesub)
-        } #ifelse
-      } #k chr number
+          #Subset data
+          infilesub <- infile %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 
-      #Save data table of all chr for pheno x exposure
-      outdirFUMA = "/scratch/ahc87874/Fall2022/FUMA/"
-      write.table(infileall, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
+          #Get qqman format
+          colnames(infilesub) <- c("CHR", "BP", "P", "SNP")
+
+          #Add to input
+          if (k == 1) {
+            infileall <- infilesub
+          } else {
+            infileall <- rbind(infileall, infilesub)
+          } #ifelse
+        } #k chr number
+
+        #Save data table of all chr for pheno x exposure
+        outdirFUMA = "/scratch/ahc87874/Fall2022/FUMA/"
+        write.table(infileall, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
+                    row.names = FALSE, quote = FALSE)
+      } else {
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "x", j, suffix, "all.txt", sep = ""), 
+                                          header = TRUE, stringsAsFactors = FALSE))
+      }
+
+      print("SNPs")
+      #Make table of sig SNPs (P < 1e-5)
+      outdirSNPs = "/scratch/ahc87874/Fall2022/SNPs/"
+      sigSNPs <- infileall %>% filter(P <= 1e-5)
+      write.table(sigSNPs, paste(outdirSNPs, i, "x", j, suffix, "sigSNPs.txt", sep = ""),
                   row.names = FALSE, quote = FALSE)
-    } else {
-      infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "x", j, suffix, "all.txt", sep = ""), 
-                                        header = TRUE, stringsAsFactors = FALSE))
-    }
-    
-	  print("SNPs")
-    #Make table of sig SNPs (P < 1e-5)
-    outdirSNPs = "/scratch/ahc87874/Fall2022/SNPs/"
-    sigSNPs <- infileall %>% filter(P <= 1e-5)
-    write.table(sigSNPs, paste(outdirSNPs, i, "x", j, suffix, "sigSNPs.txt", sep = ""),
-                row.names = FALSE, quote = FALSE)
-    
-    #Make table of top 10 SNPs
-    newdata <- infileall[order(infileall$P), ]
-    newdata <- newdata[1:10, ]
-    write.table(newdata, paste(outdirSNPs, i, "x", j, suffix, "topSNPs.txt", sep = ""),
-                row.names = FALSE, quote = FALSE)
 
-    pvalue <- newdata$P[10]
-    
-    print("Manhattan")
-    #Make manhattan plot
-    outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-    if (j == "CSRV") {
-      exposurecol <- "firebrick1"
-    } else if (j == "SSRV") {
-      exposurecol <- "deepskyblue1"
-    }
-    maxy <- -log10(5e-08)
-    if (newdata$P[1] < 5e-08) {
-      maxy <- -log10(newdata$P[1])
-    }
-    png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", 
-        width = 1200, height = 600)
-    manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
-              main = paste("Manhattan Plot of ", i, " x ", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
-	      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
-    #highlight = newdata
-    dev.off()
-    
-    print("QQ")
-    #Make qq plot
-    outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
-    png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", 
-        width = 600, height = 600)
-    qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, " GWIS p-values", sep = ""))
-    dev.off()
-  } #j exposures
-} #i phenos
+      #Make table of top 10 SNPs
+      newdata <- infileall[order(infileall$P), ]
+      newdata <- newdata[1:10, ]
+      write.table(newdata, paste(outdirSNPs, i, "x", j, suffix, "topSNPs.txt", sep = ""),
+                  row.names = FALSE, quote = FALSE)
 
+      pvalue <- newdata$P[10]
+
+      print("Manhattan")
+      #Make manhattan plot
+      outdirman = "/scratch/ahc87874/Fall2022/manplots/"
+      if (j == "CSRV") {
+        exposurecol <- "firebrick1"
+      } else if (j == "SSRV") {
+        exposurecol <- "deepskyblue1"
+      }
+      maxy <- -log10(5e-08)
+      if (newdata$P[1] < 5e-08) {
+        maxy <- -log10(newdata$P[1])
+      }
+      png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", 
+          width = 1200, height = 600)
+      manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
+                main = paste("Manhattan Plot of ", i, " x ", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
+          annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
+      #highlight = newdata
+      dev.off()
+
+      print("QQ")
+      #Make qq plot
+      outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
+      png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", 
+          width = 600, height = 600)
+      qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, " GWIS p-values", sep = ""))
+      dev.off()
+    } #j exposures
+  } #i phenos
+} #suffix
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
