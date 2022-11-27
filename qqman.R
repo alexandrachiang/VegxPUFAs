@@ -50,11 +50,16 @@ for (suffix in allsuffix) {
         outdirFUMA = "/scratch/ahc87874/Fall2022/FUMA/"
         write.table(infileall, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
-      } else {
+      } else if (FALSE) {
         infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "x", j, suffix, "all.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
-      }
+      } #DONT USE
 
+	    infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, suffix, "all.txt", sep = ""), 
+                                          header = TRUE, stringsAsFactors = FALSE))
+	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
+	    colnames(infilesub) <- c("CHR", "BP", "P", "SNP")
+      
       print("SNPs")
       #Make table of sig SNPs (P < 1e-5)
       outdirSNPs = "/scratch/ahc87874/Fall2022/SNPs/"
