@@ -1,6 +1,6 @@
 library(tidyverse)
 
-setwd("/scratch/ahc87874/Fall2022/")
+setwd("/scratch/ahc87874/Fall2022/Pvalplots/")
 
 allsuffix <- c("", "woCred", "wKeep")
 	
@@ -24,16 +24,17 @@ for (suffix in allsuffix) {
 
     Both <- inner_join(CSRV, SSRV, by = c("SNP", "CHR")) %>% arrange(desc(SSRVP))
 
-    outdir = "/scratch/ahc87874/Fall2022/Pvalplots/"
-    png(filename = paste(outdir, "ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", 
-        width = 600, height = 600)
-    ggplot(Both) + 
+    Bothplot <- ggplot(Both) + 
       geom_point(aes(x = CSRVP, y = SSRVP), alpha = 0.1) +
       geom_hline(yintercept = -log10(5e-08), linetype = "dashed", color = "red") +
       geom_vline(xintercept = -log10(5e-08), linetype = "dashed", color = "red") + 
       labs(title = paste("Compare p-values of ", i, " ", suffix, sep = ""), 
            x = "CSRV",
            y = "SSRV") 
+	  
+    png(filename = paste("ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", 
+        width = 600, height = 600)
+    Bothplot
     dev.off()
   } #i phenos
 } #suffix
