@@ -13,9 +13,9 @@ for (suffix in allsuffix) {
   print(suffix)
   for (i in phenos) {
     print(i)
-    CSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "xCSRV", "all.txt", sep = ""), 
+    CSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "xCSRV", "all.txt", sep = ""), 
                                             header = TRUE, stringsAsFactors = FALSE))
-    SSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "xSSRV", suffix, "all.txt", sep = ""), 
+    SSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "xSSRV", suffix, "all.txt", sep = ""), 
                                             header = TRUE, stringsAsFactors = FALSE))
 
     names(CSRV) <- c("CHR", "BP", "P", "CSRVBeta", "SNP")
@@ -27,18 +27,18 @@ for (suffix in allsuffix) {
     Both <- inner_join(CSRV, SSRV, by = c("SNP", "CHR")) %>% arrange(desc(SSRVP))
 
 	  if (FALSE) {
-    print("p-values")
-    pvalplot <- ggplot(Both) + 
-      geom_point(aes(x = CSRVP, y = SSRVP), alpha = 0.1) +
-      geom_hline(yintercept = -log10(5e-08), linetype = "dashed", color = "red") +
-      geom_vline(xintercept = -log10(5e-08), linetype = "dashed", color = "red") + 
-      labs(title = paste("Compare p-values of ", i, " ", suffix, sep = ""), 
-           x = "CSRV",
-           y = "SSRV") 
-	  
-    png(filename = paste("Pvalplots/ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
-    print(pvalplot)
-    dev.off()
+      print("p-values")
+      pvalplot <- ggplot(Both) + 
+        geom_point(aes(x = CSRVP, y = SSRVP), alpha = 0.1) +
+        geom_hline(yintercept = -log10(5e-08), linetype = "dashed", color = "red") +
+        geom_vline(xintercept = -log10(5e-08), linetype = "dashed", color = "red") + 
+        labs(title = paste("Compare p-values of ", i, " ", suffix, sep = ""), 
+             x = "CSRV",
+             y = "SSRV") 
+
+      png(filename = paste("Pvalplots/ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
+      print(pvalplot)
+      dev.off()
     }
     
     print("betas")
