@@ -290,6 +290,9 @@ for (i in 0:4) { #instance
   ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
 }
 #sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
+#ukbSSRV %>% mutate(TestSSRV = coalesce(is_SSRV_vegetarian_0, is_SSRV_vegetarian_1, is_SSRV_vegetarian_2, is_SSRV_vegetarian_3, is_SSRV_vegetarian_4)) %>% 
+#             select(TestSSRV, CSRV) %>% table()
+
 
 #Additional columns to filter for diet intake taken at first instance
 intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
