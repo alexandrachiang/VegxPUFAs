@@ -45,6 +45,7 @@ for (i in 1:length(phenos)) {
 
 SNPsSum
 SigSNPs <- SigSNPs[-1, ]
+SigSNPs <- SigSNPs %>% arrange(P)
 SigSNPs$P <- scientific(SigSNPs$P, digits = 6)
 SigSNPs
 
