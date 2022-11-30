@@ -1,6 +1,6 @@
 library(tidyverse)
 
-phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV.txt", sep = "\t", 
+phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
 genoQC <- as_tibble(read.delim("/scratch/ahc87874/Fall2022/pgen/chr22.psam"))
 
@@ -99,7 +99,7 @@ table(bothQC6$CSRV, useNA = "always")
 # 47627   1901      0
 table(bothQC6$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-# 29217    755  19556
+# 47627    769   1132
 
 #Difference
 #CSRV NonVeg = 155097
