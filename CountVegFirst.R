@@ -247,7 +247,7 @@ table(ukbCSRV$CSRV)
 #202724   8243 withdraw, vegetarian and vegan
 #Michael had 7788??
 
-ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
+#ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
 #                            CSRV
 #ethnic_background_f21000_0_0 NonVeg    Veg
 #  Prefer not to answer          580     45
@@ -367,7 +367,7 @@ if (isCredible) {
 #NonVeg    Veg   <NA>
 #124526   3230  83211
 
-ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
+#ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
 #                            SSRV
 #ethnic_background_f21000_0_0 NonVeg    Veg
 #  Prefer not to answer          323     17
