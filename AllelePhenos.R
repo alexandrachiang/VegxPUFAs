@@ -17,3 +17,5 @@ pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "0", "NonVeg")
 pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
 
 bgen.load("/scratch/ahc87874/Fall2022/geno/chr13.bgen", rsids = "rs67393898")
+"/scratch/ahc87874/Fall2022/geno/chr11.bgen", rsids = c("rs72880701", "rs1817457")
+"/scratch/ahc87874/Fall2022/geno/chr9.bgen", rsids = "9:140508031_A_G"
