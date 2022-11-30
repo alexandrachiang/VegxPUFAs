@@ -26,8 +26,8 @@ for (i in 1:length(phenos)) {
   SigSNPs$p1eneg5[2 + 2 * (i - 1)] <- SSRV %>% filter(P <= 1e-5) %>% nrow()
   SigSNPs$p5eneg8[1 + 2 * (i - 1)] <- CSRV %>% filter(P <= 5e-8) %>% nrow()
   SigSNPs$p5eneg8[2 + 2 * (i - 1)] <- SSRV %>% filter(P <= 5e-8) %>% nrow()
-  SigSNPs$Smallestp[1 + 2 * (i - 1)] <- scientific(min(CSRV$P, na.rm = TRUE), digits = 5)
-  SigSNPs$Smallestp[2 + 2 * (i - 1)] <- scientific(min(SSRV$P, na.rm = TRUE), digits = 5)
+  SigSNPs$Smallestp[1 + 2 * (i - 1)] <- scientific(min(CSRV$P, na.rm = TRUE), digits = 6)
+  SigSNPs$Smallestp[2 + 2 * (i - 1)] <- scientific(min(SSRV$P, na.rm = TRUE), digits = 6)
 }
 
 SigSNPs
