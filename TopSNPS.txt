@@ -1,3 +1,7 @@
+#Google
+#https://www.ebi.ac.uk/gwas/home
+#https://www.ncbi.nlm.nih.gov/snp/
+
 cat w6_w3_ratio_NMRxCSRVtopSNPs.txt
 CHR BP P SNP
 13 98799253 3.5263e-08 rs67393898
@@ -10,13 +14,15 @@ CHR BP P SNP
 3 24218982 1.08867e-07 rs56825180
 3 24239676 1.11342e-07 rs73037670
 3 24231988 1.13649e-07 rs140123595
+#All chr3 SNPs google = triiodothyronine
+#No results on GWAS catalog or NCBI
 
 cat w6_w3_ratio_NMRxSSRVwKeeptopSNPs.txt
 CHR BP P SNP
 11 24685414 1.99882e-08 rs72880701
-8 19246998 6.05308e-07 rs10090580
-8 70753039 1.02439e-06 rs4236977
-11 61609750 1.44842e-06 rs174583
+8 19246998 6.05308e-07 rs10090580 #lots of google hits, come back to this
+8 70753039 1.02439e-06 rs4236977 #lots of google hits, come back to this
+11 61609750 1.44842e-06 rs174583 #FADS2, cholesterols, omega 3, and omega 6
 3 157210398 2.18729e-06 rs73158539
 3 157212749 2.20569e-06 rs35973239
 3 38209896 2.80074e-06 rs13318848
