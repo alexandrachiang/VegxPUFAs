@@ -33,12 +33,12 @@ for (i in 1:length(phenos)) {
   SNPsSum$Smallestp[2 + 2 * (i - 1)] <- scientific(min(SSRV$P, na.rm = TRUE), digits = 6)
 
   if (SNPsSum$p5eneg8[1 + 2 * (i - 1)] != 0) {
-    x <- CSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "CSRV")
+    x <- CSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "CSRV") %>% select(Pheno, Exposure, everything())
     SigSNPs <- rbind(SigSNPs, x)
   }
   
   if (SNPsSum$p5eneg8[2 + 2 * (i - 1)] != 0) {
-    x <- SSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "SSRV")
+    x <- SSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "SSRV") %>% select(Pheno, Exposure, everything())
     SigSNPs <- rbind(SigSNPs, x)
   }
 }
