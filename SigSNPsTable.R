@@ -31,3 +31,6 @@ for (i in 1:length(phenos)) {
 }
 
 SigSNPs
+
+write.table(SigSNPs, file = paste("/scratch/ahc87874/Fall2022/SNPs/SNPsTable.txt", sep = ""),
+            sep = "\t", row.names = FALSE, quote = FALSE)
