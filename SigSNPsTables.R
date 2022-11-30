@@ -44,6 +44,11 @@ for (i in 1:length(phenos)) {
 }
 
 SNPsSum
+SigSNPs <- SigSNPs[-1, ]
+SigSNPs$P <- scientific(SigSNPs$P, digits = 6)
+SigSNPs
 
 #write.table(SNPsSum, file = paste("/scratch/ahc87874/Fall2022/SNPs/SNPsTable.txt", sep = ""),
+#            sep = "\t", row.names = FALSE, quote = FALSE)
+#write.table(SigSNPs, file = paste("/scratch/ahc87874/Fall2022/SNPs/VerySigSNPs.txt", sep = ""),
 #            sep = "\t", row.names = FALSE, quote = FALSE)
