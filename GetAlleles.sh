@@ -23,6 +23,6 @@ plink2 \
 --sample $genoindir/chr"$i".sample \
 --snp rs67393898 \
 --export A \
---out "$outdir"/chr"i"SNP
+--out "$outdir"/chr"$i"SNP
 
 #--snps rs72880701, rs1817457, rs149996902 \
