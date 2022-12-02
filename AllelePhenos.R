@@ -26,6 +26,7 @@ if (FALSE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load geno
   alleledir <- "/scratch/ahc87874/Fall2022/alleles/"
+  pgendir <- "/scratch/ahc87874/Fall2022/pgen/"
   chrs <- c(3, 9, 11, 13)
 
   for (i in chrs) {
@@ -44,9 +45,28 @@ if (FALSE) {
   #[19] "rs62255849_C"        "9:140508031_A_G_G"   "rs72880701_T"
   #[22] "rs1817457_A"         "rs149996902_C"       "rs67393898_T"
 
+  #Check major and minor alleles
+  rsIDs <- c("rs62255849", "9:140508031_A_G", "rs72880701", "rs1817457", "rs149996902", "rs67393898")
+  SNPs <- as_tibble(matrix(ncol = 5))
+  names(SNPs) <- c("#CHROM", "POS", "ID", "REF", "ALT")
+  for (i in chrs) {
+    rs <- as_tibble(read_delim(paste(pgendir, "chr", i, ".pvar", sep = "")))
+    SNPs <- rbind(SNPs, rs[rs$ID %in% rsIDs, ])
+  } 
+  SNPs <- SNPs[-1, ]
+  SNPs
+  #  `#CHROM`       POS ID              REF   ALT
+  #     <dbl>     <dbl> <chr>           <chr> <chr>
+  #1        3  24215321 rs62255849      T     C
+  #2        9 140508031 9:140508031_A_G A     G
+  #3       11  24685414 rs72880701      G     T
+  #4       11  36945182 rs1817457       A     G #Different for Europeans, switch for major/minor
+  #5       11  36953685 rs149996902     C     CT
+  #6       13  98799253 rs67393898      G     T
+  
   #majorallele_minorallele
   names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
-                                                         "rs1817457_G_A", "rs149996902_T9_T10", "rs67393898_G_T")
+                                                         "rs1817457_G_A", "rs149996902_CT_C", "rs67393898_G_T")
   
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Complete cases
