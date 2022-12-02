@@ -9,6 +9,10 @@ if (FALSE) {
 
   pheno <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", suffix, ".txt", sep = ""), sep = "\t", 
                                   header = TRUE, stringsAsFactors = FALSE))
+  
+  cc <- c("IID", "Sex", "Age", "Townsend") #, "PC1"
+  pheno <- pheno[complete.cases(pheno[, cc]), ]
+  
   pheno <- pheno %>% select(-Sex, -Age, -Townsend, -starts_with("PC"))
 
   pheno$CSRV <- as.character(pheno$CSRV)
