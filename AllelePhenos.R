@@ -1,5 +1,4 @@
-source(CountVegFirst.R)
-library(rbgen)
+library(tidyverse)
 
 setwd("/scratch/ahc87874/Fall2022/")
 
@@ -18,9 +17,18 @@ pheno$CSRV <- replace(pheno$CSRV, pheno$CSRV == "1", "Veg")
 pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "0", "NonVeg")
 pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
 
+combined <- pheno
 #---------------------------------------------------------------------------------------------------------------------------------------
 #Load geno
 alleledir <- "/scratch/ahc87874/Fall2022/alleles/"
+chrs <- c(3, 9, 11, 13)
 
-chr13 <- as_tibble(read_delim(paste(alleledir, "chr13.raw", sep = ""), header = TRUE)
-11 9 3
+for (i in chrs) {
+  geno <- as_tibble(read_delim(paste(alleledir, "chr", i, "SNP.raw", sep = "")))
+  geno <- geno %>% select(IID, starts_with("rs"), contains(":"))
+  combined <- left_join(combined, geno)
+}
+
+#majorallele_minorallele
+names(combined)[(ncol(combined) - 5):ncol(combined)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
+                                                          "rs1817457_A_G", "rs149996902_T9_T10", "rs67393898_G_T")
