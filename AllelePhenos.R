@@ -65,8 +65,11 @@ alleles$rs1817457_A_G = round(alleles$rs1817457_A_G, digits = 0)
 alleles$rs149996902_T9_T10 = round(alleles$rs149996902_T9_T10, digits = 0)
 alleles$rs67393898_G_T = round(alleles$rs67393898_G_T, digits = 0)
 
+#Get minor allele %
 test <- alleles %>% select(starts_with("rs"))
 
 for (i in 1:ncol(test)) {
+  print(names(test)[i])
   print(table(test[, i]))
+  print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
 }
