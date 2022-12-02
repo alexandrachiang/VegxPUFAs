@@ -64,3 +64,9 @@ alleles$rs72880701_G_T = round(alleles$rs72880701_G_T, digits = 0)
 alleles$rs1817457_A_G = round(alleles$rs1817457_A_G, digits = 0)
 alleles$rs149996902_T9_T10 = round(alleles$rs149996902_T9_T10, digits = 0)
 alleles$rs67393898_G_T = round(alleles$rs67393898_G_T, digits = 0)
+
+test <- alleles %>% select(starts_with("rs"))
+
+for (i in 1:ncol(test)) {
+  print(table(test[, i]))
+}
