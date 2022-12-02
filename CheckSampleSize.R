@@ -2,10 +2,11 @@ library(tidyverse)
 
 phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
-genoQC <- as_tibble(read.delim("/scratch/ahc87874/Fall2022/geno/chr22.sample"))
+genoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", 
+                               header = TRUE, stringsAsFactors = FALSE))
 
 phenoQC <- phenoQC %>% mutate(hasPCA = !is.na(genetic_principal_components_f22009_0_1))
-genoQC <- genoQC %>% mutate(hasGenoData = TRUE) %>% select(IID, hasGenoData)
+genoQC <- genoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
 
 bothQC <- left_join(phenoQC, genoQC, by = "IID")
 
@@ -30,9 +31,10 @@ bothQC3 <- bothQC2[complete.cases(bothQC2[, covars2]), ] #210,702
 bothQC4 <- bothQC3 %>% select(hasPCA, hasGenoData)
 table(bothQC4, useNA = "always")
 #       hasGenoData
-#hasPCA   FALSE   TRUE
-#  FALSE   4063      0
-#  TRUE     428 206211
+#hasPCA   FALSE   TRUE   <NA>
+#  FALSE   4063      0      0
+#  TRUE   51457 155182      0
+#  <NA>       0      0      0
 
 bothQC5 <- bothQC3 %>% filter(hasGenoData == TRUE) %>% select(CSRV, SSRV)
 
@@ -41,19 +43,19 @@ table(bothQC$CSRV, useNA = "always")
 #202724   8243      0
 table(bothQC$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-#124526   3230  83211
+#202724   3271   4972
 table(bothQC5$CSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-#198150   8061      0
+#149572   5610      0
 table(bothQC5$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-#121862   3172  81177
+#149572   2369   3241
 
 #Difference
-#CSRV NonVeg = 4574
-#CSRV Veg = 182
-#SSRV NonVeg = 2664
-#SSRV Veg = 58
+#CSRV NonVeg = 53152
+#CSRV Veg = 2633
+#SSRV NonVeg = 53152
+#SSRV Veg = 902
 
 colSums(is.na(bothQC2)) %>% as.data.frame()
 #FID                      0
@@ -72,7 +74,7 @@ colSums(is.na(bothQC2)) %>% as.data.frame()
 #PC9                   4072
 #PC10                  4072
 #CSRV                     0
-#SSRV                 83211
+#SSRV                 4972
 #w3FA_NMR            161136
 #w3FA_NMR_TFAP       161136
 #w6FA_NMR            161136
@@ -91,18 +93,19 @@ colSums(is.na(bothQC2)) %>% as.data.frame()
 #hasGenoData              0
 
 cc <- c("IID", "Sex", "Age", "Townsend", "PC1", "w3FA_NMR")
-bothQC6 <- bothQC2[complete.cases(bothQC2[, cc]), ] #49,528
+bothQC6 <- bothQC2[complete.cases(bothQC2[, cc]), ]
+bothQC6 <- bothQC6 %>% filter(hasGenoData == TRUE) #37,106
 #colSums(is.na(bothQC6)) %>% as.data.frame() #onlt SSRV should have NA
 
 table(bothQC6$CSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-# 47627   1901      0
+# 35780   1326      0
 table(bothQC6$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-# 47627    769   1132
+# 35780    568    758
 
 #Difference
-#CSRV NonVeg = 155097
-#CSRV Veg = 6342
-#SSRV NonVeg = 95309
-#SSRV Veg = 2475
+#CSRV NonVeg = 166944
+#CSRV Veg = 6917
+#SSRV NonVeg = 166944
+#SSRV Veg = 2703
