@@ -73,3 +73,10 @@ for (i in 1:ncol(test)) {
   print(table(test[, i]))
   print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
 }
+
+alleles %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C = 0, "TT", ifelse(rs62255849_T_C = 2, "CC", "TC")),
+                   rs34249205_A_G = ifelse(rs34249205_A_G = 0, "AA", ifelse(rs34249205_A_G = 2, "GG", "AG")),
+                   rs72880701_G_T = ifelse(rs72880701_G_T = 0, "GG", ifelse(rs72880701_G_T = 2, "TT", "GT")),
+                   rs1817457_A_G = ifelse(rs1817457_A_G = 0, "AA", ifelse(rs1817457_A_G = 2, "GG", "AG")), #?
+                   rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 = 0, "?", ifelse(rs149996902_T9_T10 = 2, "?", "?")), #?
+                   rs67393898_G_T = ifelse(rs67393898_G_T = 0, "GG", ifelse(rs67393898_G_T = 2, "TT", "GT")))
