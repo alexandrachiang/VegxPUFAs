@@ -2,7 +2,7 @@ library(tidyverse)
 
 phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
-genoQC <- as_tibble(read.delim("/scratch/ahc87874/Fall2022/pgen/chr22.psam"))
+genoQC <- as_tibble(read.delim("/scratch/ahc87874/Fall2022/geno/chr22.sample"))
 
 phenoQC <- phenoQC %>% mutate(hasPCA = !is.na(genetic_principal_components_f22009_0_1))
 genoQC <- genoQC %>% mutate(hasGenoData = TRUE) %>% select(IID, hasGenoData)
