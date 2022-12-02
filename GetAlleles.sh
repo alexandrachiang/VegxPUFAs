@@ -15,13 +15,13 @@ ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
 genoindir=("/scratch/ahc87874/Fall2022/geno")
 outdir=("/scratch/ahc87874/Fall2022/alleles")
 mkdir -p $outdir
-i=("3")
-#13:rs67393898 11:rs72880701 11:rs1817457 11:rs149996902 9:140508031_A_G/9rs34249205 3:rs62255849 
+i=("9")
+#13:rs67393898 11:rs72880701 11:rs1817457 11:rs149996902 9:140508031_A_G/9:rs34249205 3:rs62255849 
 
 plink2 \
 --bgen $genoindir/chr"$i".bgen ref-first \
 --sample $genoindir/chr"$i".sample \
---snp rs62255849 \
+--snp rs34249205 \
 --export A \
 --out "$outdir"/chr"$i"SNP
 
