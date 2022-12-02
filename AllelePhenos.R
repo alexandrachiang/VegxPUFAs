@@ -34,9 +34,19 @@ if (FALSE) {
     alleles <- left_join(alleles, geno)
   }
 
+  #names(alleles)
+  # [1] "FID"                 "IID"                 "CSRV"
+  # [4] "SSRV"                "w3FA_NMR"            "w3FA_NMR_TFAP"
+  # [7] "w6FA_NMR"            "w6FA_NMR_TFAP"       "w6_w3_ratio_NMR"
+  #[10] "DHA_NMR"             "DHA_NMR_TFAP"        "LA_NMR"
+  #[13] "LA_NMR_TFAP"         "PUFA_NMR"            "PUFA_NMR_TFAP"
+  #[16] "MUFA_NMR"            "MUFA_NMR_TFAP"       "PUFA_MUFA_ratio_NMR"
+  #[19] "rs62255849_C"        "9:140508031_A_G_G"   "rs72880701_T"
+  #[22] "rs1817457_A"         "rs149996902_C"       "rs67393898_T"
+
   #majorallele_minorallele
   names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
-                                                         "rs1817457_A_G", "rs149996902_T9_T10", "rs67393898_G_T")
+                                                         "rs1817457_G_A", "rs149996902_T9_T10", "rs67393898_G_T")
   
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Complete cases
@@ -77,6 +87,6 @@ for (i in 1:ncol(test)) {
 alleles <- alleles %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
                               rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
                               rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
-                              rs1817457_A_G = ifelse(rs1817457_A_G == 0, "AA", ifelse(rs1817457_A_G == 2, "GG", "AG")), #?
+                              rs1817457_A_G = ifelse(rs1817457_A_G == 0, "GG", ifelse(rs1817457_A_G == 2, "AA", "GA")),
                               rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "?", ifelse(rs149996902_T9_T10 == 2, "?", "?")), #?
                               rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
