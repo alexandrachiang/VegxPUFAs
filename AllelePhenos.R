@@ -36,7 +36,7 @@ if (FALSE) {
 
   #majorallele_minorallele
   names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
-                                                            "rs1817457_A_G", "rs149996902_T9_T10", "rs67393898_G_T")
+                                                         "rs1817457_A_G", "rs149996902_T9_T10", "rs67393898_G_T")
   
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Complete cases
@@ -57,3 +57,10 @@ if (FALSE) {
   alleles <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno.txt", 
                                   header = TRUE, stringsAsFactors = FALSE))
 }
+
+alleles$rs62255849_T_C = round(alleles$rs62255849_T_C, digits = 0)
+alleles$rs34249205_A_G = round(alleles$rs34249205_A_G, digits = 0)
+alleles$rs72880701_G_T = round(alleles$rs72880701_G_T, digits = 0)
+alleles$rs1817457_A_G = round(alleles$rs1817457_A_G, digits = 0)
+alleles$rs149996902_T9_T10 = round(alleles$rs149996902_T9_T10, digits = 0)
+alleles$rs67393898_G_T = round(alleles$rs67393898_G_T, digits = 0)
