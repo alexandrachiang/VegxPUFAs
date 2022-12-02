@@ -22,6 +22,7 @@ plink2 \
 --bgen $genoindir/chr"$i".bgen ref-first \
 --sample $genoindir/chr"$i".sample \
 --snp rs67393898 \
-#--snps rs72880701, rs1817457, rs149996902 \
 --export A \
 --out "$outdir"/chr"i"SNP
+
+#--snps rs72880701, rs1817457, rs149996902 \
