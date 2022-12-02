@@ -47,11 +47,9 @@ if (FALSE) {
   #alleles %>% select(CSRV,SSRV) %>% table(useNA="always")
   #          SSRV
   #CSRV     NonVeg   Veg  <NA>
-  #  NonVeg  35829     0     0
+  #  NonVeg  35780     0     0
   #  Veg         0   568   758
   #  <NA>        0     0     0
-
-  #35829   1326
   
   write.table(alleles, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
