@@ -36,7 +36,7 @@ for (suffix in allsuffix) {
              x = "CSRV",
              y = "SSRV") 
 
-      png(filename = paste("Pvalplots/ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
+      png(filename = paste("pvalplots/ComparePvals_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
       print(pvalplot)
       dev.off()
     }
@@ -48,7 +48,7 @@ for (suffix in allsuffix) {
            x = "CSRV",
            y = "SSRV") 
 	  
-    png(filename = paste("Betaplots/CompareBetas_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
+    png(filename = paste("betaplots/CompareBetas_", i, suffix, ".png", sep = ""), type = "cairo", width = 600, height = 600)
     print(betaplot)
     dev.off()
   } #i phenos
