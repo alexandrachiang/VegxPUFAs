@@ -61,7 +61,7 @@ if (FALSE) {
   #2        9 140508031 9:140508031_A_G A     G
   #3       11  24685414 rs72880701      G     T
   #4       11  36945182 rs1817457       A     G #Different for Europeans, switch for major/minor
-  #5       11  36953685 rs149996902     C     CT
+  #5       11  36953685 rs149996902     C     CT #Different for Europeans, switch for major/minor
   #6       13  98799253 rs67393898      G     T
   
   #majorallele_minorallele
@@ -108,5 +108,5 @@ alleles <- alleles %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT",
                               rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
                               rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
                               rs1817457_A_G = ifelse(rs1817457_A_G == 0, "GG", ifelse(rs1817457_A_G == 2, "AA", "GA")),
-                              rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "?", ifelse(rs149996902_T9_T10 == 2, "?", "?")), #?
+                              rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "CT", ifelse(rs149996902_T9_T10 == 2, "T", "?")), #?
                               rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
