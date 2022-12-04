@@ -17,12 +17,12 @@ if (FALSE) {
                                  contains("genetic_principal_components_f22009_0_"), treatment_medication_code_f20003_0,
                                  body_mass_index_f21001_0_0, medication_combined_f6153_f6177_0_0, 
                                  CSRV, SSRV, 
-                                 w3FA_NMR, w3FA_NMR_TFAP, w6FA_NMR, w6FA_NMR_TFAP, w6_w3_ratio_NMR, DHA_NMR, DHA_NMR_TFAP,
-                                 LA_NMR, LA_NMR_TFAP, PUFA_NMR, PUFA_NMR_TFAP, MUFA_NMR, MUFA_NMR_TFAP, PUFA_MUFA_ratio_NMR, 
-                                 w3FA_NMR_QCflag, w3FA_NMR_TFAP_QCflag, w6FA_NMR_QCflag, w6FA_NMR_TFAP_QCflag, 
-                                 w6_w3_ratio_NMR_QCflag, DHA_NMR_QCflag, DHA_NMR_TFAP_QCflag, LA_NMR_QCflag, 
-                                 LA_NMR_TFAP_QCflag, PUFA_NMR_QCflag, PUFA_NMR_TFAP_QCflag, MUFA_NMR_QCflag, 
-                                 MUFA_NMR_TFAP_QCflag, PUFA_MUFA_ratio_NMR_QCflag)
+                                 w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP,
+                                 LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio, 
+                                 w3FA_QCflag, w3FA_TFAP_QCflag, w6FA_QCflag, w6FA_TFAP_QCflag, 
+                                 w6_w3_ratio_QCflag, DHA_QCflag, DHA_TFAP_QCflag, LA_QCflag, 
+                                 LA_TFAP_QCflag, PUFA_QCflag, PUFA_TFAP_QCflag, MUFA_QCflag, 
+                                 MUFA_TFAP_QCflag, PUFA_MUFA_ratio_QCflag)
 
   #Rename columns and change order
   covars <- c("Sex", "Age", "Age2", "Geno_batch", "Center", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", 
@@ -46,8 +46,8 @@ if (FALSE) {
                                  townsend_deprivation_index_at_recruitment_f189_0_0,
                                  contains("genetic_principal_components_f22009_0_"), 
                                  CSRV, SSRV, 
-                                 w3FA_NMR, w3FA_NMR_TFAP, w6FA_NMR, w6FA_NMR_TFAP, w6_w3_ratio_NMR, DHA_NMR, DHA_NMR_TFAP,
-                                 LA_NMR, LA_NMR_TFAP, PUFA_NMR, PUFA_NMR_TFAP, MUFA_NMR, MUFA_NMR_TFAP, PUFA_MUFA_ratio_NMR)
+                                 w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP,
+                                 LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
 
   #Rename columns and change order
   covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
