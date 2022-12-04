@@ -150,6 +150,8 @@ x <- c("CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898",
 
 x <- matrix(x, ncol = 4, byrow = TRUE)
 
+stderror <- function(x) sd(x)/sqrt(length(x))
+
 for (i in 1:nrow(x)) {
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
@@ -158,7 +160,7 @@ for (i in 1:nrow(x)) {
   xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
   #should these be split by exposure too
   
-  phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
+  phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean, StdE = stderror))
   
   if (x[i, 1] == "CSRV") {
     exposure <- "Self-ID"
@@ -166,14 +168,16 @@ for (i in 1:nrow(x)) {
     exposure <- "Strict"
   }
   
-  avgplot <- ggplot(phenoavg, aes(x = Genotype, y = Mean, fill = Exposure)) + 
-               geom_bar(color = "black", stat = "identity", position = "dodge", alpha = 0.7) +
+  avgplot <- ggplot(phenoavg) + 
+               geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
+               geom_errorbar(aes(x = Genotype, ymin = Mean - StdE, ymax = Mean + StdE, fill = Exposure), colour = "black", width = 0.3, position = position_dodge(0.9), stat = "identity") + 
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(exposure, "Exposure")) + 
-               scale_x_discrete(labels = xlabs)
+               scale_x_discrete(labels = xlabs) + 
+               ylim(min(phenoavg$Mean) - 1, max(phenoavg$Mean) + 1)
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 500, height = 300)
   print(avgplot)
