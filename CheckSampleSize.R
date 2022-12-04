@@ -15,8 +15,8 @@ bothQC2 <- bothQC %>% select(FID, IID,
                              townsend_deprivation_index_at_recruitment_f189_0_0,
                              contains("genetic_principal_components_f22009_0_"), 
                              CSRV, SSRV, 
-                             w3FA_NMR, w3FA_NMR_TFAP, w6FA_NMR, w6FA_NMR_TFAP, w6_w3_ratio_NMR, DHA_NMR, DHA_NMR_TFAP,
-                             LA_NMR, LA_NMR_TFAP, PUFA_NMR, PUFA_NMR_TFAP, MUFA_NMR, MUFA_NMR_TFAP, PUFA_MUFA_ratio_NMR,
+                             w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP,
+                             LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio,
                              hasPCA, hasGenoData)
 
 #Rename columns and change order
@@ -75,20 +75,20 @@ colSums(is.na(bothQC2)) %>% as.data.frame()
 #PC10                  4072
 #CSRV                     0
 #SSRV                 4972
-#w3FA_NMR            161136
-#w3FA_NMR_TFAP       161136
-#w6FA_NMR            161136
-#w6FA_NMR_TFAP       161136
-#w6_w3_ratio_NMR     161136
-#DHA_NMR             161136
-#DHA_NMR_TFAP        161136
-#LA_NMR              161136
-#LA_NMR_TFAP         161136
-#PUFA_NMR            161136
-#PUFA_NMR_TFAP       161136
-#MUFA_NMR            161136
-#MUFA_NMR_TFAP       161136
-#PUFA_MUFA_ratio_NMR 161136
+#w3FA                161136
+#w3FA_TFAP           161136
+#w6FA                161136
+#w6FA_TFAP           161136
+#w6_w3_ratio         161136
+#DHA                 161136
+#DHA_TFAP            161136
+#LA                  161136
+#LA_TFAP             161136
+#PUFA                161136
+#PUFA_TFAP           161136
+#MUFA                161136
+#MUFA_TFAP           161136
+#PUFA_MUFA_ratio     161136
 #hasPCA                   0
 #hasGenoData              0
 
