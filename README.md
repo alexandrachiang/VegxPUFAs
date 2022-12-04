@@ -28,21 +28,22 @@
     
     
 Exposures and phenos
-. CountVegFirst.R
-. MakeGEMPheno.R
+- CountVegFirst.R
+- MakeGEMPheno.R
 
 Pheno QC
-. PhenoQC.R
+- PhenoQC.R
 
 GenoQC
-. convertpgen.sh
-. infoscore.sh
-. genoQC.sh
+- convertpgen.sh
+- infoscore.sh
+- genoQC.sh
 
 GEM
-. GEM.sh
-. CombineGEM.R/.sh
+- GEM.sh
+- CombineGEM.R/.sh
 
 Results
-. qqman.R/.sh
-. ComparePvalsBetas.R/.sh
+- qqman.R/.sh
+- ComparePvalsBetas.R/.sh
+- 
