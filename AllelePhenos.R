@@ -155,12 +155,14 @@ for (i in 1:nrow(x)) {
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
   phenoavg <- phenoavg %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
   
-  avgplot <- ggplot(phenoavg, aes(x = Genotype, y = Mean, fill = Exposure)) + geom_bar(color = "black", stat = "identity", position = "dodge", alpha = 0.7) +
-  scale_fill_manual(values = c("#F8766D", "#00BA38")) +
-  labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
-       x = paste(x[i, 4], "Genotype"),
-       y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
-       fill = paste(x[i, 1], "Exposure"))
+  avgplot <- ggplot(phenoavg, aes(x = Genotype, y = Mean, fill = Exposure)) + 
+               geom_bar(color = "black", stat = "identity", position = "dodge", alpha = 0.7) +
+               scale_fill_manual(values = c("#F8766D", "#00BA38")) +
+               labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
+                    x = paste(x[i, 4], "Genotype"),
+                    y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
+                    fill = paste(x[i, 1], "Exposure"))
+  
 }
 
 #w6_w3_ratio_NMRxCSRV = rs67393898
