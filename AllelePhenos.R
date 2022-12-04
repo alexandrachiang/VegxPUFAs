@@ -88,25 +88,53 @@ if (FALSE) {
                                   header = TRUE, stringsAsFactors = FALSE))
 }
 
-alleles$rs62255849_T_C = round(alleles$rs62255849_T_C, digits = 0)
-alleles$rs34249205_A_G = round(alleles$rs34249205_A_G, digits = 0)
-alleles$rs72880701_G_T = round(alleles$rs72880701_G_T, digits = 0)
-alleles$rs1817457_A_G = round(alleles$rs1817457_A_G, digits = 0)
-alleles$rs149996902_T9_T10 = round(alleles$rs149996902_T9_T10, digits = 0)
-alleles$rs67393898_G_T = round(alleles$rs67393898_G_T, digits = 0)
+alleles2 <- alleles
+
+#Range for all SNPs is 0 to 2
+
+alleles2$rs62255849_T_C = round(alleles2$rs62255849_T_C, digits = 0)
+alleles2$rs34249205_A_G = round(alleles2$rs34249205_A_G, digits = 0)
+alleles2$rs72880701_G_T = round(alleles2$rs72880701_G_T, digits = 0)
+alleles2$rs1817457_G_A = round(alleles2$rs1817457_G_A, digits = 0)
+alleles2$rs149996902_CT_C = round(alleles2$rs149996902_CT_C, digits = 0)
+alleles2$rs67393898_G_T = round(alleles2$rs67393898_G_T, digits = 0)
 
 #Get minor allele %
-test <- alleles %>% select(starts_with("rs"))
+test <- alleles2 %>% select(starts_with("rs"))
 
 for (i in 1:ncol(test)) {
   print(names(test)[i])
   print(table(test[, i]))
   print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
 }
+#"rs62255849_T_C"
+#    0     1     2
+#34755  2309    42
+#0.0322
+#"rs34249205_A_G"
+#    0     1     2
+#28419  8096   591
+#0.125
+#"rs72880701_G_T"
+#    0     1     2
+#31909  4985   212
+#0.0729
+#"rs1817457_G_A"
+#    0     1     2
+#18776 15201  3129
+#0.2892
+#"rs149996902_CT_C"
+#    0     1     2
+#18812 15170  3124
+#0.2886
+#"rs67393898_G_T"
+#    0     1     2
+#28544  8003   559
+#0.1229
 
-alleles <- alleles %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
+alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
                               rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
                               rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
                               rs1817457_A_G = ifelse(rs1817457_A_G == 0, "GG", ifelse(rs1817457_A_G == 2, "AA", "GA")),
-                              rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "CT", ifelse(rs149996902_T9_T10 == 2, "T", "?")), #?
+                              rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "10T", ifelse(rs149996902_T9_T10 == 2, "8T", "9T")), #?
                               rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
