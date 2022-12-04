@@ -92,7 +92,7 @@ colSums(is.na(bothQC2)) %>% as.data.frame()
 #hasPCA                   0
 #hasGenoData              0
 
-cc <- c("IID", "Sex", "Age", "Townsend", "PC1", "w3FA_NMR")
+cc <- c("IID", "Sex", "Age", "Townsend", "PC1", "w3FA")
 bothQC6 <- bothQC2[complete.cases(bothQC2[, cc]), ]
 bothQC6 <- bothQC6 %>% filter(hasGenoData == TRUE) #37,106
 #colSums(is.na(bothQC6)) %>% as.data.frame() #onlt SSRV should have NA
