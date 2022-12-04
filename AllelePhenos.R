@@ -37,11 +37,11 @@ if (FALSE) {
 
   #names(alleles)
   # [1] "FID"                 "IID"                 "CSRV"
-  # [4] "SSRV"                "w3FA_NMR"            "w3FA_NMR_TFAP"
-  # [7] "w6FA_NMR"            "w6FA_NMR_TFAP"       "w6_w3_ratio_NMR"
-  #[10] "DHA_NMR"             "DHA_NMR_TFAP"        "LA_NMR"
-  #[13] "LA_NMR_TFAP"         "PUFA_NMR"            "PUFA_NMR_TFAP"
-  #[16] "MUFA_NMR"            "MUFA_NMR_TFAP"       "PUFA_MUFA_ratio_NMR"
+  # [4] "SSRV"                "w3FA"                "w3FA_TFAP"
+  # [7] "w6FA"                "w6FA_TFAP"           "w6_w3_ratio"
+  #[10] "DHA"                 "DHA_TFAP"            "LA"
+  #[13] "LA_TFAP"             "PUFA"                "PUFA_TFAP"
+  #[16] "MUFA"                "MUFA_TFAP"           "PUFA_MUFA_ratio"
   #[19] "rs62255849_C"        "9:140508031_A_G_G"   "rs72880701_T"
   #[22] "rs1817457_A"         "rs149996902_C"       "rs67393898_T"
 
@@ -141,12 +141,12 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
 write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
 
-x <- c("CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
-       "CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
-       "SSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
-       "SSRV", "LA_NMR_TFAP", "%", "rs1817457",
-       "SSRV", "LA_NMR_TFAP", "%", "rs149996902",
-       "SSRV", "w3FA_NMR_TFAP", "%", "rs34249205")
+x <- c("CSRV", "w6_w3_ratio", "mmol ratio", "rs67393898", 
+       "CSRV", "w6_w3_ratio", "mmol ratio", "rs62255849",
+       "SSRV", "w6_w3_ratio", "mmol ratio", "rs72880701",
+       "SSRV", "LA_TFAP", "%", "rs1817457",
+       "SSRV", "LA_TFAP", "%", "rs149996902",
+       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
 x <- matrix(x, ncol = 4, byrow = TRUE)
 
