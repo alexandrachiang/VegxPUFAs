@@ -135,7 +135,7 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
                                 rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
                                 rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
                                 rs1817457_G_A = ifelse(rs1817457_G_A == 0, "GG", ifelse(rs1817457_G_A == 2, "AA", "GA")),
-                                rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "10T", ifelse(rs149996902_CT_C == 2, "8T", "9T")), #?
+                                rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "CTCT", ifelse(rs149996902_CT_C == 2, "CC", "CCT")),
                                 rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
 
 write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
