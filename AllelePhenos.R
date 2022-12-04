@@ -138,7 +138,28 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
                                 rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "10T", ifelse(rs149996902_CT_C == 2, "8T", "9T")), #?
                                 rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
 
-#w6_w3_ratio_NMRxCSRV = rs67393898, rs62255849
+write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
+              sep = "\t", row.names = FALSE, quote = FALSE)
+
+x <- c("CSRV", "w6_w3_ratio_NMR", "rs67393898", 
+       "CSRV", "w6_w3_ratio_NMR", "rs62255849",
+       "SSRV", "w6_w3_ratio_NMR", "rs72880701",
+       "SSRV", "LA_NMR_TFAP", "rs1817457",
+       "SSRV", "LA_NMR_TFAP", "rs149996902",
+       "SSRV", "w3FA_NMR_TFAP", "rs34249205")
+
+x <- matrix(x, ncol = 3, byrow = TRUE)
+
+for (i in 1:nrow(x)) {
+  phenoavg <- alleles3 %>% select(contains(x[i, ]))
+  colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
+  phenoavg <- phenoavg %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
+  phenoavg %>% print.data.frame()
+}
+
+#w6_w3_ratio_NMRxCSRV = rs67393898
+#w6_w3_ratio_NMRxCSRV = rs62255849
 #w6_w3_ratio_NMRxSSRV = rs72880701
-#LA_NMR_TFAPxSSRV = rs1817457, rs149996902
+#LA_NMR_TFAPxSSRV = rs1817457
+#LA_NMR_TFAPxSSRV = rs149996902
 #w3FA_NMR_TFAPxSSRV = rs34249205
