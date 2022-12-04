@@ -45,5 +45,7 @@ GEM
 
 Results
 - qqman.R/.sh
+- SigSNPsTables.R
 - ComparePvalsBetas.R/.sh
-- 
+- GetAlleles.sh
+- AllelePhenos.R
