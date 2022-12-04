@@ -141,20 +141,26 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
 write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
 
-x <- c("CSRV", "w6_w3_ratio_NMR", "rs67393898", 
-       "CSRV", "w6_w3_ratio_NMR", "rs62255849",
-       "SSRV", "w6_w3_ratio_NMR", "rs72880701",
-       "SSRV", "LA_NMR_TFAP", "rs1817457",
-       "SSRV", "LA_NMR_TFAP", "rs149996902",
-       "SSRV", "w3FA_NMR_TFAP", "rs34249205")
+x <- c("CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
+       "CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
+       "SSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
+       "SSRV", "LA_NMR_TFAP", "%", "rs1817457",
+       "SSRV", "LA_NMR_TFAP", "%", "rs149996902",
+       "SSRV", "w3FA_NMR_TFAP", "%", "rs34249205")
 
-x <- matrix(x, ncol = 3, byrow = TRUE)
+x <- matrix(x, ncol = 4, byrow = TRUE)
 
 for (i in 1:nrow(x)) {
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
   phenoavg <- phenoavg %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
-  phenoavg %>% print.data.frame()
+  
+  avgplot <- ggplot(phenoavg, aes(x = Genotype, y = Mean, fill = Exposure)) + geom_bar(color = "black", stat = "identity", position = "dodge", alpha = 0.7) +
+  scale_fill_manual(values = c("#F8766D", "#00BA38")) +
+  labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
+       x = paste(x[i, 4], "Genotype"),
+       y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
+       fill = paste(x[i, 1], "Exposure"))
 }
 
 #w6_w3_ratio_NMRxCSRV = rs67393898
