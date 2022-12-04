@@ -153,7 +153,8 @@ x <- matrix(x, ncol = 4, byrow = TRUE)
 for (i in 1:nrow(x)) {
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
-  phenoavg <- phenoavg %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
+  
+  phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
   
   avgplot <- ggplot(phenoavg, aes(x = Genotype, y = Mean, fill = Exposure)) + 
                geom_bar(color = "black", stat = "identity", position = "dodge", alpha = 0.7) +
@@ -163,6 +164,9 @@ for (i in 1:nrow(x)) {
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(x[i, 1], "Exposure"))
   
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 500, height = 300)
+  print(avgplot)
+  dev.off()
 }
 
 #w6_w3_ratio_NMRxCSRV = rs67393898
