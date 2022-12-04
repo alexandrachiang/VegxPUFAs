@@ -91,7 +91,6 @@ if (FALSE) {
 alleles2 <- alleles
 
 #Range for all SNPs is 0 to 2
-
 alleles2$rs62255849_T_C = round(alleles2$rs62255849_T_C, digits = 0)
 alleles2$rs34249205_A_G = round(alleles2$rs34249205_A_G, digits = 0)
 alleles2$rs72880701_G_T = round(alleles2$rs72880701_G_T, digits = 0)
@@ -133,8 +132,13 @@ for (i in 1:ncol(test)) {
 #0.1229
 
 alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
-                              rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
-                              rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
-                              rs1817457_A_G = ifelse(rs1817457_A_G == 0, "GG", ifelse(rs1817457_A_G == 2, "AA", "GA")),
-                              rs149996902_T9_T10 = ifelse(rs149996902_T9_T10 == 0, "10T", ifelse(rs149996902_T9_T10 == 2, "8T", "9T")), #?
-                              rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
+                                rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
+                                rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
+                                rs1817457_G_A = ifelse(rs1817457_G_A == 0, "GG", ifelse(rs1817457_G_A == 2, "AA", "GA")),
+                                rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "10T", ifelse(rs149996902_CT_C == 2, "8T", "9T")), #?
+                                rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
+
+#w6_w3_ratio_NMRxCSRV = rs67393898, rs62255849
+#w6_w3_ratio_NMRxSSRV = rs72880701
+#LA_NMR_TFAPxSSRV = rs1817457, rs149996902
+#w3FA_NMR_TFAPxSSRV = rs34249205
