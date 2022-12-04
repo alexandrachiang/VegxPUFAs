@@ -2,7 +2,7 @@
 #https://www.ebi.ac.uk/gwas/home
 #https://www.ncbi.nlm.nih.gov/snp/
 
-cat w6_w3_ratio_NMRxCSRVtopSNPs.txt
+cat w6_w3_ratioxCSRVtopSNPs.txt
 CHR BP P SNP
 13 98799253 3.5263e-08 rs67393898
 3 24215321 3.89011e-08 rs62255849
@@ -17,7 +17,7 @@ CHR BP P SNP
 #All chr3 SNPs google = triiodothyronine
 #No results on GWAS catalog or NCBI
 
-cat w6_w3_ratio_NMRxSSRVwKeeptopSNPs.txt
+cat w6_w3_ratioxSSRVwKeeptopSNPs.txt
 CHR BP P SNP
 11 24685414 1.99882e-08 rs72880701
 8 19246998 6.05308e-07 rs10090580 #lots of google hits, come back to this
@@ -30,7 +30,7 @@ CHR BP P SNP
 3 157219233 2.92463e-06 rs10513515
 3 157219279 2.93084e-06 rs58178116
 
-cat LA_NMR_TFAPxSSRVwKeeptopSNPs.txt
+cat LA_TFAPxSSRVwKeeptopSNPs.txt
 CHR BP P SNP
 11 36945182 2.08319e-08 rs1817457
 11 36953685 3.36638e-08 rs149996902
@@ -43,7 +43,7 @@ CHR BP P SNP
 11 36955020 2.5299e-07 rs10768234
 11 36956493 2.60399e-07 rs1904826
 
-cat w3FA_NMR_TFAPxSSRVwKeeptopSNPs.txt
+cat w3FA_TFAPxSSRVwKeeptopSNPs.txt
 CHR BP P SNP
 9 140508031 3.21335e-08 9:140508031_A_G #rs34249205 Educational attainment
 9 140533681 5.96124e-08 9:140533681_TA_T
