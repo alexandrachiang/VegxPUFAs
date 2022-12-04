@@ -46,12 +46,12 @@ if (FALSE) {
                           f.23750.0.0, f.23757.0.0, f.23749.0.0, f.23756.0.0, f.23746.0.0, 
                           f.23753.0.0, f.23747.0.0, f.23754.0.0, f.23758.0.0) %>% as_tibble() 
 
-  colnames(PUFAs) <- c("IID", "w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP",	
-                       "w6_w3_ratio_NMR", "DHA_NMR", "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP",
-                       "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR", 
-                       "w3FA_NMR_QCflag", "w3FA_NMR_TFAP_QCflag", "w6FA_NMR_QCflag", "w6FA_NMR_TFAP_QCflag", "w6_w3_ratio_NMR_QCflag",
-                       "DHA_NMR_QCflag", "DHA_NMR_TFAP_QCflag",	"LA_NMR_QCflag", "LA_NMR_TFAP_QCflag", "PUFA_NMR_QCflag",
-                       "PUFA_NMR_TFAP_QCflag", "MUFA_NMR_QCflag", "MUFA_NMR_TFAP_QCflag", "PUFA_MUFA_ratio_NMR_QCflag")
+  colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",	
+                       "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", "LA_TFAP",
+                       "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio", 
+                       "w3FA_QCflag", "w3FA_TFAP_QCflag", "w6FA_QCflag", "w6FA_TFAP_QCflag", "w6_w3_ratio_QCflag",
+                       "DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
+                       "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")
   
   LipidMeds <- Meds %>% select(f.eid, f.6177.0.0, f.6177.0.1, f.6177.0.2, 
                                f.6153.0.0, f.6153.0.1, f.6153.0.2, f.6153.0.3) %>% as_tibble()
