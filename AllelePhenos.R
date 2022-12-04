@@ -71,7 +71,7 @@ if (FALSE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Complete cases
   #colSums(is.na(df))
-  alleles <- alleles[complete.cases(alleles$w3FA_NMR), ]
+  alleles <- alleles[complete.cases(alleles$w3FA), ]
   alleles <- alleles[complete.cases(alleles$rs62255849_T_C), ]
   
   #alleles %>% select(CSRV,SSRV) %>% table(useNA="always")
@@ -187,9 +187,9 @@ for (i in 1:nrow(x)) {
   dev.off()
 }
 
-#w6_w3_ratio_NMRxCSRV = rs67393898
-#w6_w3_ratio_NMRxCSRV = rs62255849
-#w6_w3_ratio_NMRxSSRV = rs72880701
-#LA_NMR_TFAPxSSRV = rs1817457
-#LA_NMR_TFAPxSSRV = rs149996902
-#w3FA_NMR_TFAPxSSRV = rs34249205
+#w6_w3_ratioxCSRV = rs67393898
+#w6_w3_ratioxCSRV = rs62255849
+#w6_w3_ratioxSSRV = rs72880701
+#LA_TFAPxSSRV = rs1817457
+#LA_TFAPxSSRV = rs149996902
+#w3FA_TFAPxSSRV = rs34249205
