@@ -156,6 +156,7 @@ for (i in 1:nrow(x)) {
   
   genofreq <- data.frame(table(phenoavg$Genotype))
   xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
+  #should these be split by exposure too
   
   phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean))
   
