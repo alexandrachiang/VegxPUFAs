@@ -2,19 +2,20 @@ library(tidyverse)
 
 setwd("/scratch/ahc87874/Fall2022/")
 
-allsuffix <- c("", "woCred", "wKeep")
+#allsuffix <- c("", "woCred", "wKeep")
+allsuffix <- c("wKeep")
 	
-phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
-            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
-            "MUFA_TFAP", "PUFA_MUFA_ratio")
+#phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
+#            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
+#            "MUFA_TFAP", "PUFA_MUFA_ratio")
 #phenos <- c("w3FA_TFAP", "w6_w3_ratio", "LA_TFAP")
 
 for (suffix in allsuffix) {
-  if (suffix == "") {
-    exposures <- c("CSRV", "SSRV")
-  } else {
-    exposures <- c("SSRV")
-  }
+  #if (suffix == "") {
+  #  exposures <- c("CSRV", "SSRV")
+  #} else {
+  #  exposures <- c("SSRV")
+  #}
   
   for (i in phenos) {
     GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
@@ -41,8 +42,8 @@ for (suffix in allsuffix) {
         } #k chr number
 
         #Save data table of all chr for pheno x exposure
-        outdirFUMA = "/scratch/ahc87874/Fall2022/Combined/"
-        write.table(infileall, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
+        outdir = "/scratch/ahc87874/Fall2022/Combined/"
+        write.table(infileall, paste(outdir, i, "x", j, suffix, "all.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
       } else {
         infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, suffix, "all.txt", sep = ""), 
@@ -50,4 +51,29 @@ for (suffix in allsuffix) {
       } 
     } #exposures
   } #phenos
+} #suffix
+
+
+#Combine all results into one df
+for (suffix in allsuffix) {
+  infileall <- as_tibble(matrix(ncol = ))
+  
+  for (i in phenos) {
+    Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
+
+    print(paste("pheno:", i))
+
+    for (j in exposures) {
+      print(paste("exposure:", j))
+	    
+	    infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, suffix, "all.txt", sep = ""), 
+                                         header = TRUE, stringsAsFactors = FALSE))
+      infile <- infile %>% mutate()
+      
+      infileall <- rbind(infileall, infile)
+    } #exposures
+  } #phenos
+  outdir = "/scratch/ahc87874/Fall2022/Combined/"
+  write.table(outdir, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
+              row.names = FALSE, quote = FALSE)
 } #suffix
