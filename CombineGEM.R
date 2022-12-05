@@ -16,6 +16,7 @@ exposures <- c("CSRV", "SSRV")
 #            "MUFA_TFAP", "PUFA_MUFA_ratio")
 #phenos <- c("w3FA_TFAP", "w6_w3_ratio", "LA_TFAP")
 
+#Combine chr into pheno x exposure
 for (suffix in allsuffix) {
   #if (suffix == "") {
   #  
