@@ -1,4 +1,5 @@
 library(tidyverse)
+library(scales)
 
 setwd("/scratch/ahc87874/Fall2022/")
 
