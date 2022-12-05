@@ -62,14 +62,13 @@ for (suffix in allsuffix) {
 
 #Combine all results into one df
 exposures <- c("CSRV", "SSRV")
+Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
 
 for (suffix in allsuffix) {
   infileall <- as_tibble(matrix(ncol = 7))
   colnames(infileall) <- c("Phenotype", "Exposure", "CHR", "POS", "robust_P_Value_Interaction", "Beta_G", "RSID")
   
   for (i in phenos) {
-    Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
-
     print(paste("pheno:", i))
 
     for (j in exposures) {
