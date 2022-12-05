@@ -93,6 +93,6 @@ for (suffix in allsuffix) {
   infileall <- infileall %>% arrange(robust_P_Value_Interaction)
   
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
-  write.table(outdir, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
+  write.table(outdir, paste(outdir, "allSNPs.txt", sep = ""), 
               row.names = FALSE, quote = FALSE)
 } #suffix
