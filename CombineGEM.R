@@ -73,18 +73,31 @@ for (suffix in allsuffix) {
 
     for (j in exposures) {
       print(paste("exposure:", j))
-      
-	    if (j == "CSRV") {
-        infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, "all.txt", sep = ""), 
-                                     header = TRUE, stringsAsFactors = FALSE))
+	    
+      if (j == "CSRV") {
+        GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", sep = "")
       } else {
-        infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, suffix, "all.txt", sep = ""), 
-                                     header = TRUE, stringsAsFactors = FALSE))
+        GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
       }
-	    colnames(infile)[4] <- "Beta_G"
-      infile <- infile %>% mutate(Phenotype = i, Exposure = j) %>% select(Phenotype, Exposure, everything())
       
-      infileall <- rbind(infileall, infile)
+      for (k in 1:22) {
+        print(paste("chr:", k))
+        infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
+                                         header = TRUE, stringsAsFactors = FALSE))
+
+        #Add to input
+        if (k == 1) {
+          chrall <- infile
+        } else {
+          chrall <- rbind(chrall, infile)
+        } #ifelse
+      } #k chr number
+      
+	    colnames(chrall)[15] <- "Beta_G"
+      colnames(chrall)[16] <- "robust_SE_Beta_G"
+      chrall <- chrall %>% mutate(Phenotype = i, Exposure = j) %>% select(Phenotype, Exposure, everything())
+      
+      infileall <- rbind(infileall, chrall)
     } #exposures
   } #phenos
   infileall <- infileall[-1, ]
