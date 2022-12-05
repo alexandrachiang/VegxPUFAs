@@ -87,7 +87,7 @@ for (suffix in allsuffix) {
     } #exposures
   } #phenos
   infileall <- infileall[-1, ]
-  infile <-
+  infileall <- infileall %>% arrange(robust_P_Value_Interaction)
   
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
   write.table(outdir, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
