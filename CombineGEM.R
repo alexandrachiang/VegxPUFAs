@@ -5,6 +5,11 @@ setwd("/scratch/ahc87874/Fall2022/")
 #allsuffix <- c("", "woCred", "wKeep")
 allsuffix <- c("wKeep")
 	
+phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
+            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
+            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
+
+exposures <- c("CSRV", "SSRV")
 #phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
 #            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
 #            "MUFA_TFAP", "PUFA_MUFA_ratio")
@@ -12,7 +17,7 @@ allsuffix <- c("wKeep")
 
 for (suffix in allsuffix) {
   #if (suffix == "") {
-  #  exposures <- c("CSRV", "SSRV")
+  #  
   #} else {
   #  exposures <- c("SSRV")
   #}
@@ -53,10 +58,12 @@ for (suffix in allsuffix) {
   } #phenos
 } #suffix
 
-
 #Combine all results into one df
+exposures <- c("CSRV", "SSRV")
+
 for (suffix in allsuffix) {
-  infileall <- as_tibble(matrix(ncol = ))
+  infileall <- as_tibble(matrix(ncol = 7))
+  colnames(infileall) <- c("Phenotype", "Exposure", "CHR", "POS", "robust_P_Value_Interaction", "Beta_G", "RSID")
   
   for (i in phenos) {
     Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
@@ -65,14 +72,23 @@ for (suffix in allsuffix) {
 
     for (j in exposures) {
       print(paste("exposure:", j))
-	    
-	    infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, suffix, "all.txt", sep = ""), 
-                                         header = TRUE, stringsAsFactors = FALSE))
-      infile <- infile %>% mutate()
+      
+	    if (j == "CSRV") {
+        infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, "all.txt", sep = ""), 
+                                     header = TRUE, stringsAsFactors = FALSE))
+      } else {
+        infile <- as_tibble(read.table(paste(Combineddir, i, "x", j, suffix, "all.txt", sep = ""), 
+                                     header = TRUE, stringsAsFactors = FALSE))
+      }
+	    colnames(infile)[4] <- "Beta_G"
+      infile <- infile %>% mutate(Phenotype = i, Exposure = j) %>% select(Phenotype, Exposure, everything())
       
       infileall <- rbind(infileall, infile)
     } #exposures
   } #phenos
+  infileall <- infileall[-1, ]
+  infile <-
+  
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
   write.table(outdir, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
               row.names = FALSE, quote = FALSE)
