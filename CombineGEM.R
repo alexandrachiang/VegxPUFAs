@@ -87,6 +87,7 @@ for (suffix in allsuffix) {
     } #exposures
   } #phenos
   infileall <- infileall[-1, ]
+  infileall$robust_P_Value_Interaction <- scientific(infileall$robust_P_Value_Interaction, digits = 6)
   infileall <- infileall %>% arrange(robust_P_Value_Interaction)
   
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
