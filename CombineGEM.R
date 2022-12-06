@@ -108,17 +108,24 @@ for (suffix in allsuffix) {
   infileall <- infileall %>% arrange(robust_P_Value_Interaction)
   
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
-  write.table(outdir, paste(outdir, "allSNPs.txt", sep = ""), 
+  write.table(infileall, paste(outdir, suffix, "allSNPs.txt", sep = ""), 
               row.names = FALSE, quote = FALSE)
 } #suffix
 
+outdir = "/scratch/ahc87874/Fall2022/Combined/"
 #Number of SNPs
 unique(infileall$RSID)
 
 #Number of sig SNPs
-infileallsig <- infileall
+infileallsig <- infileall %>% filter(robust_P_Value_Interaction <= 1e-5)
+nrow(infileallsig)
 unique(infileallsig$RSID)
+write.table(infileallsig, paste(outdir, suffix, "allSigSNPs.txt", sep = ""), 
+            row.names = FALSE, quote = FALSE)
 
 #Number of very sig SNPs
-infileallverysig <- infileall
+infileallverysig <- infileall %>% filter(robust_P_Value_Interaction <= 5e-8)
+nrow(infileallverysig)
 unique(infileallverysig$RSID)
+write.table(infileallverysig, paste(outdir, suffix, "allVerySigSNPs.txt", sep = ""), 
+            row.names = FALSE, quote = FALSE)
