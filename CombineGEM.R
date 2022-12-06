@@ -113,7 +113,11 @@ for (suffix in allsuffix) {
 } #suffix
 
 outdir = "/scratch/ahc87874/Fall2022/Combined/"
+#infileall <- as_tibble(read.table(paste(outdir, suffix, "allSNPs.txt", sep = ""), 
+#				  header = TRUE, stringsAsFactors = FALSE))
+
 #Number of SNPs
+print(nrow(infileall))
 print(length(unique(infileall$RSID)))
 
 #Number of sig SNPs
