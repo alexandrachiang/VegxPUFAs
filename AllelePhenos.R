@@ -138,6 +138,13 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
                                 rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "CTCT", ifelse(rs149996902_CT_C == 2, "CC", "CCT")),
                                 rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
 
+#alleles3 %>% select(rs1817457_G_A, rs149996902_CT_C) %>% table()
+#             rs149996902_CT_C
+#rs1817457_G_A    CC   CCT  CTCT
+#           AA  3073    53     3
+#           GA    51 15000   150
+#           GG     0   117 18659
+
 write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
 
