@@ -88,6 +88,8 @@ for (suffix in allsuffix) {
         infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
                                          header = TRUE, stringsAsFactors = FALSE))
 
+	      infile <- filter(robust_P_Value_Interaction <= 1e-5)
+        
         #Add to input
         if (k == 1) {
           chrall <- infile
@@ -104,12 +106,8 @@ for (suffix in allsuffix) {
     } #exposures
   } #phenos
   infileall <- infileall[-1, ]
-  infileall$robust_P_Value_Interaction <- scientific(infileall$robust_P_Value_Interaction, digits = 6)
+  #infileall$robust_P_Value_Interaction <- scientific(infileall$robust_P_Value_Interaction, digits = 6)
   infileall <- infileall %>% arrange(robust_P_Value_Interaction)
-  
-  outdir = "/scratch/ahc87874/Fall2022/Combined/"
-  write.table(infileall, paste(outdir, suffix, "allSNPs.txt", sep = ""), 
-              row.names = FALSE, quote = FALSE)
 } #suffix
 
 outdir = "/scratch/ahc87874/Fall2022/Combined/"
@@ -118,11 +116,14 @@ suffix <- "wKeep"
 #				  header = TRUE, stringsAsFactors = FALSE))
 
 #Number of SNPs
-print(nrow(infileall))
-print(length(unique(infileall$RSID)))
+#print(nrow(infileall))
+#print(length(unique(infileall$RSID)))
+#write.table(infileall, paste(outdir, suffix, "allSigSNPs.txt", sep = ""), 
+#            row.names = FALSE, quote = FALSE)
 
 #Number of sig SNPs
 infileallsig <- infileall %>% filter(robust_P_Value_Interaction <= 1e-5)
+infileallsig$robust_P_Value_Interaction <- scientific(infileallsig$robust_P_Value_Interaction, digits = 6)
 print(nrow(infileallsig))
 print(length(unique(infileallsig$RSID)))
 write.table(infileallsig, paste(outdir, suffix, "allSigSNPs.txt", sep = ""), 
@@ -130,6 +131,7 @@ write.table(infileallsig, paste(outdir, suffix, "allSigSNPs.txt", sep = ""),
 
 #Number of very sig SNPs
 infileallverysig <- infileall %>% filter(robust_P_Value_Interaction <= 5e-8)
+infileallverysig$robust_P_Value_Interaction <- scientific(infileallverysig$robust_P_Value_Interaction, digits = 6)
 print(nrow(infileallverysig))
 print(length(unique(infileallverysig$RSID)))
 write.table(infileallverysig, paste(outdir, suffix, "allVerySigSNPs.txt", sep = ""), 
