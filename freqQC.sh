@@ -17,8 +17,8 @@ cd /scratch/ahc87874/Fall2022
 
 ml PLINK/2.00-alpha2.3-x86_64-20210920-dev
 
-indir=("/scratch/ahc87874/Fall2022/genoQC")
-outdir=("/scratch/ahc87874/Fall2022/genoQC/freq")
+indir=("/scratch/ahc87874/Fall2022/geno")
+outdir=("/scratch/ahc87874/Fall2022/geno/freq")
 mkdir -p $outdir
 
 plink2 \
