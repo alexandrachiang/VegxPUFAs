@@ -87,8 +87,8 @@ for (suffix in allsuffix) {
         print(paste("chr:", k))
         infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
                                          header = TRUE, stringsAsFactors = FALSE))
-
-	      infile <- filter(robust_P_Value_Interaction <= 1e-5)
+        
+        infile <- infile %>% filter(robust_P_Value_Interaction <= 1e-5)
         
         #Add to input
         if (k == 1) {
