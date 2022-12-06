@@ -114,18 +114,18 @@ for (suffix in allsuffix) {
 
 outdir = "/scratch/ahc87874/Fall2022/Combined/"
 #Number of SNPs
-print(unique(infileall$RSID))
+print(length(unique(infileall$RSID)))
 
 #Number of sig SNPs
 infileallsig <- infileall %>% filter(robust_P_Value_Interaction <= 1e-5)
 print(nrow(infileallsig))
-print(unique(infileallsig$RSID))
+print(length(unique(infileallsig$RSID)))
 write.table(infileallsig, paste(outdir, suffix, "allSigSNPs.txt", sep = ""), 
             row.names = FALSE, quote = FALSE)
 
 #Number of very sig SNPs
 infileallverysig <- infileall %>% filter(robust_P_Value_Interaction <= 5e-8)
 print(nrow(infileallverysig))
-print(unique(infileallverysig$RSID))
+print(length(unique(infileallverysig$RSID)))
 write.table(infileallverysig, paste(outdir, suffix, "allVerySigSNPs.txt", sep = ""), 
             row.names = FALSE, quote = FALSE)
