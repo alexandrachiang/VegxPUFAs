@@ -110,5 +110,15 @@ for (suffix in allsuffix) {
   outdir = "/scratch/ahc87874/Fall2022/Combined/"
   write.table(outdir, paste(outdir, "allSNPs.txt", sep = ""), 
               row.names = FALSE, quote = FALSE)
-	
 } #suffix
+
+#Number of SNPs
+unique(infileall$RSID)
+
+#Number of sig SNPs
+infileallsig <- infileall
+unique(infileallsig$RSID)
+
+#Number of very sig SNPs
+infileallverysig <- infileall
+unique(infileallverysig$RSID)
