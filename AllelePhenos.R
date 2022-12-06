@@ -141,20 +141,29 @@ alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT
 write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
 
-x <- c("CSRV", "w6_w3_ratio", "mmol ratio", "rs67393898", 
-       "CSRV", "w6_w3_ratio", "mmol ratio", "rs62255849",
-       "SSRV", "w6_w3_ratio", "mmol ratio", "rs72880701",
-       "SSRV", "LA_TFAP", "%", "rs1817457",
-       "SSRV", "LA_TFAP", "%", "rs149996902",
-       "SSRV", "w3FA_TFAP", "%", "rs34249205")
+#x <- c("CSRV", "w6_w3_ratio", "mmol ratio", "rs67393898", 
+#       "CSRV", "w6_w3_ratio", "mmol ratio", "rs62255849",
+#       "SSRV", "w6_w3_ratio", "mmol ratio", "rs72880701",
+#       "SSRV", "LA_TFAP", "%", "rs1817457",
+#       "SSRV", "LA_TFAP", "%", "rs149996902",
+#       "SSRV", "w3FA_TFAP", "%", "rs34249205")
+
+x <- c("CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
+       "CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
+       "SSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
+       "SSRV", "LA_NMR_TFAP", "%", "rs1817457",
+       "SSRV", "LA_NMR_TFAP", "%", "rs149996902",
+       "SSRV", "w3FA_NMR_TFAP", "%", "rs34249205")
 
 x <- matrix(x, ncol = 4, byrow = TRUE)
 
 stderror <- function(x) sd(x)/sqrt(length(x))
 
 for (i in 1:nrow(x)) {
+  print(x[i, ])
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
+  print(phenoavg)
   
   genofreq <- data.frame(table(phenoavg$Genotype))
   xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
