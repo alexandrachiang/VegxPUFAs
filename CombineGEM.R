@@ -65,8 +65,11 @@ exposures <- c("CSRV", "SSRV")
 Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
 
 for (suffix in allsuffix) {
-  infileall <- as_tibble(matrix(ncol = 7))
-  colnames(infileall) <- c("Phenotype", "Exposure", "CHR", "POS", "robust_P_Value_Interaction", "Beta_G", "RSID")
+  infileall <- as_tibble(matrix(ncol = 21))
+  colnames(infileall) <- c("Phenotype", "Exposure", "SNPID", "RSID", "CHR", "POS", "Non_Effect_Allele", "Effect_Allele", 
+                           "N_Samples", "AF", "N_Exposure_0", "AF_Exposure_0", "N_Exposure_1", "AF_Exposure_1", "Beta_Marginal",
+                           "robust_SE_Beta_Marginal", "Beta_G", "robust_SE_Beta_G", "robust_P_Value_Marginal", 
+                           "robust_P_Value_Interaction", "robust_P_Value_Joint")
   
   for (i in phenos) {
     print(paste("pheno:", i))
@@ -93,8 +96,8 @@ for (suffix in allsuffix) {
         } #ifelse
       } #k chr number
       
-	    colnames(chrall)[15] <- "Beta_G"
-      colnames(chrall)[16] <- "robust_SE_Beta_G"
+      colnames(chrall)[9:12] <- c("N_Exposure_0", "AF_Exposure_0", "N_Exposure_1", "AF_Exposure_1")
+	    colnames(chrall)[15:16] <- c("Beta_G", "robust_SE_Beta_G")
       chrall <- chrall %>% mutate(Phenotype = i, Exposure = j) %>% select(Phenotype, Exposure, everything())
       
       infileall <- rbind(infileall, chrall)
