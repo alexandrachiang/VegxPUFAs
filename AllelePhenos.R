@@ -170,6 +170,8 @@ for (i in 1:nrow(x)) {
   
   phenoavg <- phenoavg %>% mutate(PhenoMax = Mean + StdE, PhenoMin = Mean - StdE)
   
+  print(phenoavg)
+  
   avgplot <- ggplot(phenoavg) + 
                geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
                geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
