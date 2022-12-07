@@ -128,6 +128,7 @@ print(nrow(infileallsig))
 print(length(unique(infileallsig$RSID)))
 write.table(infileallsig, paste(outdir, suffix, "allSigSNPs.txt", sep = ""), 
             row.names = FALSE, quote = FALSE)
+#infileallsig <- as_tibble(read.table(paste(outdir, suffix, "allSigSNPs.txt", sep = ""), header = TRUE, stringsAsFactors = FALSE))
 
 #Number of very sig SNPs
 infileallverysig <- infileall %>% filter(robust_P_Value_Interaction <= 5e-8)
