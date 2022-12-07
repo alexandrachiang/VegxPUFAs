@@ -8,9 +8,12 @@ setwd("/scratch/ahc87874/Fall2022/")
 
 allsuffix <- c("", "woCred", "wKeep")
 	
-phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
-            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
-            "MUFA_TFAP", "PUFA_MUFA_ratio")
+#phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
+#            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
+#            "MUFA_TFAP", "PUFA_MUFA_ratio")
+phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
+            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
+            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 
 for (suffix in allsuffix) {
   if (suffix == "") {
@@ -79,8 +82,10 @@ for (suffix in allsuffix) {
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
       if (j == "CSRV") {
+	      expo = "Self-ID"
         exposurecol <- "firebrick1"
       } else if (j == "SSRV") {
+        expo = "Strict"
         exposurecol <- "deepskyblue1"
       }
       maxy <- -log10(5e-08)
@@ -90,7 +95,7 @@ for (suffix in allsuffix) {
       png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", 
           width = 1200, height = 600)
       manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
-                main = paste("Manhattan Plot of ", i, " x ", j, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
+                main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
           annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
       #highlight = newdata
       dev.off()
@@ -100,7 +105,7 @@ for (suffix in allsuffix) {
       outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
       png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", 
           width = 600, height = 600)
-      qq(infileall$P, main = paste("Q-Q plot of ", i, "x", j, " GWIS p-values", sep = ""))
+      qq(infileall$P, main = paste("Q-Q plot of ", i, "x", expo, " GWIS p-values", sep = ""))
       dev.off()
     } #j exposures
   } #i phenos
