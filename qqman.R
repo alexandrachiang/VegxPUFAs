@@ -31,7 +31,7 @@ for (suffix in allsuffix) {
 
     for (j in exposures) {
       print(paste("exposure:", j))
-      if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+      if (FALSE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
         for (k in 1:22) {
           print(paste("chr:", k))
           infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
@@ -69,7 +69,7 @@ for (suffix in allsuffix) {
       }
 	    
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
-	    colnames(infilesub) <- c("CHR", "BP", "P", "SNP")
+	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
       
       print("SNPs")
       #Make table of sig SNPs (P < 1e-5)
