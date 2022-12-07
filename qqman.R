@@ -18,11 +18,11 @@ allsuffix <- c("wKeep")
 phenos <- c("w3FA_NMR_TFAP", "w6_w3_ratio_NMR", "LA_NMR_TFAP")
 
 for (suffix in allsuffix) {
-  if (suffix == "") {
-    exposures <- c("CSRV", "SSRV")
-  } else {
-    exposures <- c("SSRV")
-  }
+  #if (suffix == "") {
+  #  exposures <- c("CSRV", "SSRV")
+  #} else {
+  #  exposures <- c("SSRV")
+  #}
   
   for (i in phenos) {
     GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
