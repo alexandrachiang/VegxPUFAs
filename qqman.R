@@ -6,7 +6,7 @@ source("ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
 
-allsuffix <- c("", "woCred", "wKeep")
+allsuffix <- c("wKeep")
 	
 #phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
 #            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
@@ -57,9 +57,15 @@ for (suffix in allsuffix) {
         infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/FUMA/", i, "x", j, suffix, "all.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
       } #DONT USE
-
-	    infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, suffix, "all.txt", sep = ""), 
+      
+      if (j == "CSRV") {
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, "all.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
+      } else {
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, suffix, "all.txt", sep = ""), 
+                                          header = TRUE, stringsAsFactors = FALSE))
+      }
+	    
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    colnames(infilesub) <- c("CHR", "BP", "P", "SNP")
       
