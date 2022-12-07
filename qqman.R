@@ -16,6 +16,7 @@ allsuffix <- c("wKeep")
 #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 
 phenos <- c("w3FA_NMR_TFAP", "w6_w3_ratio_NMR", "LA_NMR_TFAP")
+exposures <- c("CSRV", "SSRV")
 
 for (suffix in allsuffix) {
   #if (suffix == "") {
