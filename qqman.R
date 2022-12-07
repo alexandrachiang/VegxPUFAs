@@ -101,24 +101,34 @@ for (suffix in allsuffix) {
       if (newdata$P[1] < 5e-08) {
         maxy <- -log10(newdata$P[1])
       }
-      png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", 
-          width = 1200, height = 600)
-      manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),  
-                main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
-          annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
-      #highlight = newdata
-      dev.off()
+	    
+      if (j == "CSRV") {
+        png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
+        manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
+                     main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
+                     annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
+        #highlight = newdata
+        dev.off()
+      } else {
+        png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
+        manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
+                     main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
+                     annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
+        #highlight = newdata
+        dev.off()
+      }
+     
 
       print("QQ")
       #Make qq plot
       outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
 	    
       if (j == "CSRV") {
-        png(filename = paste(outdirqq, i, "x", j, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+        png(filename = paste(outdirqq, i, " x ", j, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
         qq(infileall$P, main = paste("Q-Q plot of ", i, "x", expo, " GWIS p-values", sep = ""))
         dev.off()
       } else {
-        png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+        png(filename = paste(outdirqq, i, " x ", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
         qq(infileall$P, main = paste("Q-Q plot of ", i, "x", expo, " GWIS p-values", sep = ""))
         dev.off()
       }
