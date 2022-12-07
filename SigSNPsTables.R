@@ -61,6 +61,9 @@ infileallsig %>% select(Phenotype, Exposure, CHR, POS, RSID, Effect_Allele, Non_
 SNPs <- c("rs72880701", "rs1817457", "9:140508031_A_G", "rs149996902", "rs67393898", "rs62255849")
 for (i in 1:length(SNPs)) {
   print(SNPs[i])
-  infileallsig %>% filter(RSID %in% SNPs[i]) %>% select(Phenotype, Exposure, CHR, POS, RSID, Effect_Allele, Non_Effect_Allele, 
-                                                        AF, Beta_G, robust_SE_Beta_G, robust_P_Value_Interaction) %>% print()
+  #x <- infileallsig %>% filter(RSID %in% SNPs[i]) %>% select(Phenotype, Exposure, CHR, POS, RSID, Effect_Allele, Non_Effect_Allele, 
+  #                                                           AF, Beta_G, robust_SE_Beta_G, robust_P_Value_Interaction) %>% print()
+  x <- infileallsig %>% filter(RSID %in% SNPs[i]) %>% select(Phenotype, Exposure, CHR, POS, RSID, robust_P_Value_Interaction) %>% print()
+  x$robust_P_Value_Interaction <- scientific(x$robust_P_Value_Interaction, digits = 6)
+  x
 }
