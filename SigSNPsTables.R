@@ -64,6 +64,6 @@ for (i in 1:length(SNPs)) {
   #x <- infileallsig %>% filter(RSID %in% SNPs[i]) %>% select(Phenotype, Exposure, CHR, POS, RSID, Effect_Allele, Non_Effect_Allele, 
   #                                                           AF, Beta_G, robust_SE_Beta_G, robust_P_Value_Interaction) %>% print()
   x <- infileallsig %>% filter(RSID %in% SNPs[i]) %>% select(Phenotype, Exposure, CHR, POS, RSID, robust_P_Value_Interaction) %>% print()
-  x$robust_P_Value_Interaction <- scientific(x$robust_P_Value_Interaction, digits = 6)
+  x$robust_P_Value_Interaction <- scientific(as.numeric(x$robust_P_Value_Interaction), digits = 6)
   x
 }
