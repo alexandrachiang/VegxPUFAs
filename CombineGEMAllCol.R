@@ -50,7 +50,7 @@ for (suffix in allsuffix) {
         } #k chr number
 
         #Save data table of all chr for pheno x exposure
-        outdir = "/scratch/ahc87874/Fall2022/Combined/"
+        outdir = "/scratch/ahc87874/Fall2022/CombinedAllCol/"
         write.table(infileall, paste(outdir, i, "x", j, suffix, "all.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
       } else {
@@ -60,58 +60,3 @@ for (suffix in allsuffix) {
     } #exposures
   } #phenos
 } #suffix
-
-#Combine all results into one df
-exposures <- c("CSRV", "SSRV")
-Combineddir <- paste("/scratch/ahc87874/Fall2022/Combined/", sep = "")
-
-for (suffix in allsuffix) {
-  infileall <- as_tibble(matrix(ncol = 21))
-  colnames(infileall) <- c("Phenotype", "Exposure", "SNPID", "RSID", "CHR", "POS", "Non_Effect_Allele", "Effect_Allele", 
-                           "N_Samples", "AF", "N_Exposure_0", "AF_Exposure_0", "N_Exposure_1", "AF_Exposure_1", "Beta_Marginal",
-                           "robust_SE_Beta_Marginal", "Beta_G", "robust_SE_Beta_G", "robust_P_Value_Marginal", 
-                           "robust_P_Value_Interaction", "robust_P_Value_Joint")
-  
-  for (i in phenos) {
-    print(paste("pheno:", i))
-
-    for (j in exposures) {
-      print(paste("exposure:", j))
-	    
-      if (j == "CSRV") {
-        GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", sep = "")
-      } else {
-        GEMdir <- paste("/scratch/ahc87874/Fall2022/GEM", suffix, sep = "")
-      }
-      
-      for (k in 1:22) {
-        print(paste("chr:", k))
-        infile <- as_tibble(read.table(paste(GEMdir, i, paste(i, "x", j, "-chr", k, sep = ""), sep = "/"), 
-                                         header = TRUE, stringsAsFactors = FALSE))
-        
-        infile <- infile %>% filter(robust_P_Value_Interaction <= 1e-5)
-        
-        #Add to input
-        if (k == 1) {
-          chrall <- infile
-        } else {
-          chrall <- rbind(chrall, infile)
-        } #ifelse
-      } #k chr number
-      
-      colnames(chrall)[9:12] <- c("N_Exposure_0", "AF_Exposure_0", "N_Exposure_1", "AF_Exposure_1")
-	    colnames(chrall)[15:16] <- c("Beta_G", "robust_SE_Beta_G")
-      chrall <- chrall %>% mutate(Phenotype = i, Exposure = j) %>% select(Phenotype, Exposure, everything())
-      
-      infileall <- rbind(infileall, chrall)
-    } #exposures
-  } #phenos
-  infileall <- infileall[-1, ]
-  #infileall$robust_P_Value_Interaction <- scientific(infileall$robust_P_Value_Interaction, digits = 6)
-  infileall <- infileall %>% arrange(robust_P_Value_Interaction)
-} #suffix
-
-outdir = "/scratch/ahc87874/Fall2022/Combined/"
-suffix <- "wKeep"
-#infileall <- as_tibble(read.table(paste(outdir, suffix, "allSNPs.txt", sep = ""), 
-#				  header = TRUE, stringsAsFactors = FALSE))
