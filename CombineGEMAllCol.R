@@ -47,8 +47,10 @@ for (suffix in allsuffix) {
 
         #Save data table of all chr for pheno x exposure
         outdir = "/scratch/ahc87874/Fall2022/CombinedAllCol/"
-        write.table(infileall, paste(outdir, i, "x", j, suffix, "all.txt", sep = ""), 
+        write.table(infileall, paste(outdir, i, "x", j, suffix, "alltab.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE, sep = "\t")
+	#write.table(infileall, paste(outdir, i, "x", j, suffix, "all.txt", sep = ""), 
+        #            row.names = FALSE, quote = FALSE)
       } else {
         infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", i, "x", j, suffix, "all.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
