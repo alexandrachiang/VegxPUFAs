@@ -9,7 +9,10 @@ allsuffix <- c("wKeep")
 #phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
 #            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
 #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
-phenos <- c("w3FA_NMR_TFAP", "LA_NMR_TFAP", "w6_w3_ratio_NMR")
+#phenos <- c("w3FA_NMR_TFAP", "LA_NMR_TFAP", "w6_w3_ratio_NMR")
+phenos <- c("w3FA_NMR", "w6FA_NMR", "w6FA_NMR_TFAP", "DHA_NMR", 
+            "DHA_NMR_TFAP", "LA_NMR", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
+            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 
 exposures <- c("CSRV", "SSRV")
 
