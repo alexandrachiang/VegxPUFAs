@@ -190,8 +190,8 @@ for (i in 1:nrow(x)) {
   Expose <- x[i, 1]
   
   avgplot <- ggplot(phenoavg) + 
-               geom_bar(aes(x = Genotype, y = Mean, fill = Expose), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
-               geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Expose), colour = "black", width = 0.3, 
+               geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
+               geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
                              position = position_dodge(0.9), stat = "identity") + 
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
