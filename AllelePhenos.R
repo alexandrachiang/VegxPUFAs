@@ -218,8 +218,7 @@ for (i in 1:nrow(x)) {
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(Expose, "Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
-               guides(color = "none") + 
-               theme(legend.position = c(0.85, 0.9))
+               guides(color = "none")
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), type = "cairo", width = 500, height = 600)
   print(boxp)
