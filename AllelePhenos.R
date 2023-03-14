@@ -216,7 +216,7 @@ for (i in 1:nrow(x)) {
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
-                    fill = paste(exposure, "Exposure")) + 
+                    fill = paste(Expose, "Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
                guides(color = "none") + 
                theme(legend.position = c(0.85, 0.9))
