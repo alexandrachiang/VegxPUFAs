@@ -159,12 +159,12 @@ if (FALSE) {
 #       "SSRV", "LA_TFAP", "%", "rs149996902",
 #       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
-x <- c("CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
-       "CSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
-       "SSRV", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
-       "SSRV", "LA_NMR_TFAP", "%", "rs1817457",
-       "SSRV", "LA_NMR_TFAP", "%", "rs149996902",
-       "SSRV", "w3FA_NMR_TFAP", "%", "rs34249205")
+x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
+       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
+       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
+       "Strict", "LA_NMR_TFAP", "%", "rs1817457",
+       "Strict", "LA_NMR_TFAP", "%", "rs149996902",
+       "Strict", "w3FA_NMR_TFAP", "%", "rs34249205")
 
 x <- matrix(x, ncol = 4, byrow = TRUE)
 
@@ -184,26 +184,20 @@ for (i in 1:nrow(x)) {
   #should these be split by exposure too
   
   phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean, StdE = stderror))
-  
-  if (x[i, 1] == "CSRV") {
-    exposure <- "Self-ID"
-  } else if (x[i, 1] == "SSRV") {
-    exposure <- "Strict"
-  }
-  
   phenoavg <- phenoavg %>% mutate(PhenoMax = Mean + StdE, PhenoMin = Mean - StdE)
-  
   print(phenoavg)
   
+  Expose <- x[i, 1]
+  
   avgplot <- ggplot(phenoavg) + 
-               geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
-               geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
+               geom_bar(aes(x = Genotype, y = Mean, fill = Expose), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
+               geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Expose), colour = "black", width = 0.3, 
                              position = position_dodge(0.9), stat = "identity") + 
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
-                    fill = paste(exposure, "Exposure")) + 
+                    fill = paste(Expose, "Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
                coord_cartesian(ylim = c(min(phenoavg$PhenoMin) - 0.5, max(phenoavg$PhenoMax) + 0.5))
                
@@ -211,14 +205,23 @@ for (i in 1:nrow(x)) {
   print(avgplot)
   dev.off()
   
-  avgplot <- ggplot(alleles3) + 
-               geom_boxplot(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
+  alleles4 <- alleles3 %>% select(x[i, 1], x[i, 2], contains(x[i, 4]))
+  alleles4 <- alleles4[complete.cases(alleles4), ]
+  names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
+  
+  boxp <- ggplot(alleles4) + 
+               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure), 
+                            color = "black", alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(exposure, "Exposure")) + 
                scale_x_discrete(labels = xlabs)
+  
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), type = "cairo", width = 500, height = 300)
+  print(boxp)
+  dev.off()
 }
 
 #w6_w3_ratioxCSRV = rs67393898
