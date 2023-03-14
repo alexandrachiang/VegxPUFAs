@@ -210,16 +210,17 @@ for (i in 1:nrow(x)) {
   names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
   
   boxp <- ggplot(alleles4) + 
-               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure), 
-                            color = "black", alpha = 0.7) +
+               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
+               scale_color_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(exposure, "Exposure")) + 
-               scale_x_discrete(labels = xlabs)
+               scale_x_discrete(labels = xlabs) + 
+               guides(color = "none")
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), type = "cairo", width = 500, height = 300)
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), type = "cairo", width = 700, height = 700)
   print(boxp)
   dev.off()
 }
