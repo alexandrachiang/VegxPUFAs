@@ -203,6 +203,15 @@ for (i in 1:nrow(x)) {
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 500, height = 300)
   print(avgplot)
   dev.off()
+  
+  avgplot <- ggplot(phenoavg) + 
+               geom_boxplot(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
+               scale_fill_manual(values = c("#F8766D", "#00BA38")) +
+               labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
+                    x = paste(x[i, 4], "Genotype"),
+                    y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
+                    fill = paste(exposure, "Exposure")) + 
+               scale_x_discrete(labels = xlabs)
 }
 
 #w6_w3_ratioxCSRV = rs67393898
