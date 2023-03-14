@@ -213,7 +213,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                scale_color_manual(values = c("#F8766D", "#00BA38")) +
-               labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 2], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(Expose, "Exposure")) + 
