@@ -88,66 +88,70 @@ if (FALSE) {
                                   header = TRUE, stringsAsFactors = FALSE))
 }
 
-alleles2 <- alleles
+if (FALSE) {
+  alleles2 <- alleles
 
-#Range for all SNPs is 0 to 2
-alleles2$rs62255849_T_C = round(alleles2$rs62255849_T_C, digits = 0)
-alleles2$rs34249205_A_G = round(alleles2$rs34249205_A_G, digits = 0)
-alleles2$rs72880701_G_T = round(alleles2$rs72880701_G_T, digits = 0)
-alleles2$rs1817457_G_A = round(alleles2$rs1817457_G_A, digits = 0)
-alleles2$rs149996902_CT_C = round(alleles2$rs149996902_CT_C, digits = 0)
-alleles2$rs67393898_G_T = round(alleles2$rs67393898_G_T, digits = 0)
+  #Range for all SNPs is 0 to 2
+  alleles2$rs62255849_T_C = round(alleles2$rs62255849_T_C, digits = 0)
+  alleles2$rs34249205_A_G = round(alleles2$rs34249205_A_G, digits = 0)
+  alleles2$rs72880701_G_T = round(alleles2$rs72880701_G_T, digits = 0)
+  alleles2$rs1817457_G_A = round(alleles2$rs1817457_G_A, digits = 0)
+  alleles2$rs149996902_CT_C = round(alleles2$rs149996902_CT_C, digits = 0)
+  alleles2$rs67393898_G_T = round(alleles2$rs67393898_G_T, digits = 0)
 
-#Get minor allele %
-test <- alleles2 %>% select(starts_with("rs"))
+  #Get minor allele %
+  test <- alleles2 %>% select(starts_with("rs"))
 
-for (i in 1:ncol(test)) {
-  print(names(test)[i])
-  print(table(test[, i]))
-  print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
+  for (i in 1:ncol(test)) {
+    print(names(test)[i])
+    print(table(test[, i]))
+    print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
+  }
+  #"rs62255849_T_C"
+  #    0     1     2
+  #34755  2309    42
+  #0.0322
+  #"rs34249205_A_G"
+  #    0     1     2
+  #28419  8096   591
+  #0.125
+  #"rs72880701_G_T"
+  #    0     1     2
+  #31909  4985   212
+  #0.0729
+  #"rs1817457_G_A"
+  #    0     1     2
+  #18776 15201  3129
+  #0.2892
+  #"rs149996902_CT_C"
+  #    0     1     2
+  #18812 15170  3124
+  #0.2886
+  #"rs67393898_G_T"
+  #    0     1     2
+  #28544  8003   559
+  #0.1229
+
+  alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
+                                  rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
+                                  rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
+                                  rs1817457_G_A = ifelse(rs1817457_G_A == 0, "GG", ifelse(rs1817457_G_A == 2, "AA", "GA")),
+                                  rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "CTCT", ifelse(rs149996902_CT_C == 2, "CC", "CCT")),
+                                  rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
+
+  #alleles3 %>% select(rs1817457_G_A, rs149996902_CT_C) %>% table()
+  #             rs149996902_CT_C
+  #rs1817457_G_A    CC   CCT  CTCT
+  #           AA  3073    53     3
+  #           GA    51 15000   150
+  #           GG     0   117 18659
+
+  write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
+                sep = "\t", row.names = FALSE, quote = FALSE)
+} else {
+  alleles3 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", 
+                                  header = TRUE, stringsAsFactors = FALSE))
 }
-#"rs62255849_T_C"
-#    0     1     2
-#34755  2309    42
-#0.0322
-#"rs34249205_A_G"
-#    0     1     2
-#28419  8096   591
-#0.125
-#"rs72880701_G_T"
-#    0     1     2
-#31909  4985   212
-#0.0729
-#"rs1817457_G_A"
-#    0     1     2
-#18776 15201  3129
-#0.2892
-#"rs149996902_CT_C"
-#    0     1     2
-#18812 15170  3124
-#0.2886
-#"rs67393898_G_T"
-#    0     1     2
-#28544  8003   559
-#0.1229
-
-alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
-                                rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
-                                rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
-                                rs1817457_G_A = ifelse(rs1817457_G_A == 0, "GG", ifelse(rs1817457_G_A == 2, "AA", "GA")),
-                                rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "CTCT", ifelse(rs149996902_CT_C == 2, "CC", "CCT")),
-                                rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
-
-#alleles3 %>% select(rs1817457_G_A, rs149996902_CT_C) %>% table()
-#             rs149996902_CT_C
-#rs1817457_G_A    CC   CCT  CTCT
-#           AA  3073    53     3
-#           GA    51 15000   150
-#           GG     0   117 18659
-
-write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
-              sep = "\t", row.names = FALSE, quote = FALSE)
-
 #x <- c("CSRV", "w6_w3_ratio", "mmol ratio", "rs67393898", 
 #       "CSRV", "w6_w3_ratio", "mmol ratio", "rs62255849",
 #       "SSRV", "w6_w3_ratio", "mmol ratio", "rs72880701",
