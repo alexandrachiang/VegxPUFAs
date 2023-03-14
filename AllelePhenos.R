@@ -209,7 +209,7 @@ for (i in 1:nrow(x)) {
   alleles4 <- alleles4[complete.cases(alleles4), ]
   names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
   
-  boxp <- ggplot(alleles4) + 
+  boxp <- ggplot(alleles4) +
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                scale_color_manual(values = c("#F8766D", "#00BA38")) +
@@ -218,7 +218,8 @@ for (i in 1:nrow(x)) {
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(exposure, "Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
-               guides(color = "none")
+               guides(color = "none") + 
+               theme(legend.position = c(0.85, 0.9))
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), type = "cairo", width = 500, height = 600)
   print(boxp)
