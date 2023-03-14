@@ -170,6 +170,9 @@ x <- matrix(x, ncol = 4, byrow = TRUE)
 
 stderror <- function(x) sd(x)/sqrt(length(x))
 
+names(alleles3)[names(alleles3) == "CSRV"] <- "Self-ID"
+names(alleles3)[names(alleles3) == "SSRV"] <- "Strict"
+
 for (i in 1:nrow(x)) {
   print(x[i, ])
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
@@ -208,7 +211,7 @@ for (i in 1:nrow(x)) {
   print(avgplot)
   dev.off()
   
-  avgplot <- ggplot(phenoavg) + 
+  avgplot <- ggplot(alleles3) + 
                geom_boxplot(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
