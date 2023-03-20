@@ -1,7 +1,0 @@
-library(tidyverse)
-
-setwd("/scratch/ahc87874/Fall2022/")
-
-
-
-AllSigAllCols.txt
