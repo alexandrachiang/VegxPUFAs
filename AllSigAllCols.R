@@ -13,7 +13,7 @@ exposures <- "SSRV"
 suffix <- "wKeep"
 dir <- "/scratch/ahc87874/Fall2022/CombinedAllCol"
 
-for (i in length(phenos)) {
+for (i in 1:length(phenos)) {
   print(paste("pheno:", phenos[i]))
   infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures, suffix, "all.txt", sep = ""), sep = "/"), 
                                        header = TRUE, stringsAsFactors = FALSE))
