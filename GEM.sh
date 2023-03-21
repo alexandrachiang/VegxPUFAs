@@ -19,7 +19,7 @@ ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
-outdir=("/scratch/ahc87874/Fall2022/GEMwKeep")
+outdir=("/scratch/ahc87874/Fall2022/GEMFull")
 mkdir -p $outdir
 
 #phenotypes=("w3Fa" "w3FA_TFAP" "w6FA" "w6FA_TFAP" "w6_w3_ratio" 
