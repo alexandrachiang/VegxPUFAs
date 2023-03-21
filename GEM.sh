@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=GEMwKeep
+#SBATCH --job-name=GEMFull
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=70:00:00
 #SBATCH --mem=30000
-#SBATCH --output=GEMwKeep.%j.out
-#SBATCH --error=GEMwKeep.%j.err
+#SBATCH --output=GEMFull.%j.out
+#SBATCH --error=GEMFull.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
