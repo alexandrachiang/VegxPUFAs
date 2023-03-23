@@ -196,7 +196,7 @@ for (i in 1:nrow(x)) {
                geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
                geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
                              position = position_dodge(0.9), stat = "identity") + 
-               scale_fill_manual(values = c("#F8766D", "#00BA38")) +
+               scale_fill_manual(values = c("#00BA38", "#F8766D")) +
                labs(title = paste("Average", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
@@ -214,8 +214,8 @@ for (i in 1:nrow(x)) {
   
   boxp <- ggplot(alleles4) +
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
-               scale_fill_manual(values = c("#F8766D", "#00BA38")) +
-               scale_color_manual(values = c("#F8766D", "#00BA38")) +
+               scale_fill_manual(values = c("#00BA38", "#F8766D")) +
+               #scale_color_manual(values = c("#00BA38", "#F8766D")) +
                labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
