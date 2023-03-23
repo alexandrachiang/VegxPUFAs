@@ -215,7 +215,7 @@ for (i in 1:nrow(x)) {
   boxp <- ggplot(alleles4) +
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(values = c("#00BA38", "#F8766D")) +
-               scale_color_manual(values = c("#000000", "#000000")) +
+               scale_color_manual(values = c("#002E0E", "#3E1D1B")) +
                labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
