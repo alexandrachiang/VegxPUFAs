@@ -173,6 +173,9 @@ stderror <- function(x) sd(x)/sqrt(length(x))
 names(alleles3)[names(alleles3) == "CSRV"] <- "Self-ID"
 names(alleles3)[names(alleles3) == "SSRV"] <- "Strict"
 
+alleles3$'Self-ID' <- factor(alleles3$'Self-ID', c("Veg", "NonVeg"))
+alleles3$Strict <- factor(alleles3$Strict, c("Veg", "NonVeg"))
+
 for (i in 1:nrow(x)) {
   print(x[i, ])
   phenoavg <- alleles3 %>% select(contains(x[i, ]))
@@ -194,7 +197,7 @@ for (i in 1:nrow(x)) {
                geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
                              position = position_dodge(0.9), stat = "identity") + 
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
-               labs(title = paste("Average", x[i, 2], "Levels by", x[i, 4]),
+               labs(title = paste("Average", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste(Expose, "Exposure")) + 
@@ -215,7 +218,7 @@ for (i in 1:nrow(x)) {
                scale_color_manual(values = c("#F8766D", "#00BA38")) +
                labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
-                    y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
+                    y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
                guides(color = "none")
