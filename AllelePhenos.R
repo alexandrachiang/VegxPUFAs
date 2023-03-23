@@ -159,14 +159,14 @@ if (FALSE) {
 #       "SSRV", "LA_TFAP", "%", "rs149996902",
 #       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
-x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", 
-       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849",
-       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701",
-       "Strict", "LA_NMR_TFAP", "%", "rs1817457",
-       "Strict", "LA_NMR_TFAP", "%", "rs149996902",
-       "Strict", "w3FA_NMR_TFAP", "%", "rs34249205")
+x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", "w6 w3 Ratio",
+       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849", "w6 w3 Ratio",
+       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701", "w6 w3 Ratio",
+       "Strict", "LA_NMR_TFAP", "%", "rs1817457", "LA %",
+       "Strict", "LA_NMR_TFAP", "%", "rs149996902", "LA %",
+       "Strict", "w3FA_NMR_TFAP", "%", "rs34249205", "w3 %")
 
-x <- matrix(x, ncol = 4, byrow = TRUE)
+x <- matrix(x, ncol = 5, byrow = TRUE)
 
 stderror <- function(x) sd(x)/sqrt(length(x))
 
@@ -213,7 +213,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(values = c("#F8766D", "#00BA38")) +
                scale_color_manual(values = c("#F8766D", "#00BA38")) +
-               labs(title = paste("Distribution of", x[i, 2], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 2], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
