@@ -7,9 +7,14 @@ setwd("/scratch/ahc87874/Fall2022/")
 #            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
 #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 phenos <- c("w3FA_NMR_TFAP", "LA_NMR_TFAP", "w6_w3_ratio_NMR")
+suffic <- "wKeep"
 
-infile <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", i, "x", "SSRV", suffix, "all.txt", sep = ""), 
-header = TRUE, stringsAsFactors = FALSE))
+w3FA_NMR_TFAP <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", "w3FA_NMR_TFAP", "x", "SSRV", suffix, "all.txt", sep = ""), 
+                               header = TRUE, stringsAsFactors = FALSE))
+LA_NMR_TFAP <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", "LA_NMR_TFAP", "x", "SSRV", suffix, "all.txt", sep = ""), 
+                               header = TRUE, stringsAsFactors = FALSE))
+w6_w3_ratio_NMR <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", "w6_w3_ratio_NMR", "x", "SSRV", suffix, "all.txt", sep = ""), 
+                               header = TRUE, stringsAsFactors = FALSE))
 
 CMplot(pig60K,type="p",plot.type="c",r=0.4,col=c("grey30","grey60"),chr.labels=paste("Chr",c(1:18,"X","Y"),sep=""),
       threshold=c(1e-6,1e-4),cir.chr.h=1.5,amplify=TRUE,threshold.lty=c(1,2),threshold.col=c("red",
