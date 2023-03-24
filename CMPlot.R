@@ -131,8 +131,8 @@ CMplot(SNPs, #dataset
        #highlight = toHighlight,
        #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
-       signal.cex = c(0.9), #significant SNP size
-       signal.pch = c(20), #significant SNP shape
+       signal.cex = c(1), #significant SNP size
+       signal.pch = c(18), #significant SNP shape
        signal.col = c("red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        outward = TRUE, #plot from inside out
