@@ -117,9 +117,9 @@ png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 10
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
-       col = matrix(c("ACBFA1", "E6FFD7", #w3 %
-                    "A1A9BF","D7E1FF", #LA
-                    "BFA1BA", "FFD7F8"), #w6 w3 ratio
+       col = matrix(c("#ACBFA1", "#E6FFD7", #w3 %
+                    "#A1A9BF","#D7E1FF", #LA
+                    "#BFA1BA", "#FFD7F8"), #w6 w3 ratio
                     nrow = 3, byrow = TRUE),
        cex = c(0.5, 0.5),
        cir.chr.h = 1, #width of chromosome boundary
