@@ -45,6 +45,8 @@ toHighlight[[2]]<-SNPs$RSID[SNPs$LA_Percent_P <= 5e-8]
 toHighlight[[3]]<-SNPs$RSID[SNPs$w6_w3_Ratio_P <= 5e-08]
 toHighlight 
 
+#https://htmlcolorcodes.com/color-picker/
+
 #Suggested and Significant
 options(bitmapType='cairo')
 png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
