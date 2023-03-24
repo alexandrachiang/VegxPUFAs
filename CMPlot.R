@@ -51,20 +51,21 @@ CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
        col = c("grey30", "grey60"), #regular SNP colors, alternating
+       cex = c(0.5, 0.5),
        cir.chr.h = 1, #width of chromosome boundary
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
-       threshold = c(5e-5, 5e-8), #significant thresholds
-       threshold.col = c("darkgreen", "darkred"), #threshold line colors
+       threshold = c(5e-8, 5e-5), #significant thresholds
+       threshold.col = c("darkred", "darkgreen"), #threshold line colors
        threshold.lty = c(2, 2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
-       #highlight = toHighlight,7
+       #highlight = toHighlight,
        #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
-       signal.cex = c(1.0, 1.0), #significant SNP size
+       signal.cex = c(1, 1), #significant SNP size
        signal.pch = c(20, 20), #significant SNP shape
-       signal.col = c("green", "red"), #significant SNP colors
+       signal.col = c("red", "green"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        outward = TRUE, #plot from inside out
        file = "jpg", #file type
@@ -72,7 +73,7 @@ CMplot(SNPs, #dataset
        dpi = 300, #resolution
        file.output = TRUE, #save as file
        width = 10,
-       height = 10)
+       height = 13)
 dev.off()
 
 CMplot(pig60K,type="p",plot.type="c",r=0.4,col=c("grey30","grey60"),chr.labels=paste("Chr",c(1:18,"X","Y"),sep=""),
