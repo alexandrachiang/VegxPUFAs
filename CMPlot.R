@@ -37,29 +37,42 @@ if (FALSE) {
                                header = TRUE, stringsAsFactors = FALSE))
 }
 
+SNPs$RSID[SNPs$RSID == "9:140508031_A_G"] <- "rs34249205"
+
+toHighlight<-list()
+toHighlight[[1]]<-SNPs$RSID[SNPs$w3_Percent_P <= 5e-8]
+toHighlight[[2]]<-SNPs$RSID[SNPs$LA_Percent_P <= 5e-8]
+toHighlight[[3]]<-SNPs$RSID[SNPs$w6_w3_Ratio_P <= 5e-08]
+toHighlight 
+
 options(bitmapType='cairo')
 png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
 CMplot(SNPs, #dataset
-                  plot.type = "c", #circular
-                  col = c("grey30", "grey60"), #regular SNP colors, alternating
-                  cir.chr.h = 1, #width of chromosome boundary
-                  cir.legend.cex = 0.7, 
-                  cir.legend.col = "black",
-                  threshold = c(5e-8, 5e-5), #significant thresholds
-                  LOG10 = TRUE, #change P vals into log10
-                  threshold.col = c("pink", "green"), #threshold line colors
-                  threshold.lty = c(2, 2), #threshold line types
-                  amplify = TRUE, #amplify significant SNPs
-                  signal.line = 1, 
-                  signal.col = c("red", "darkgreen"), #significant SNP colors
-                  chr.labels = paste(1:22), #labels for chromosomes
-                  outward = TRUE, #plot from inside out
-                  file = "jpg", #file type
-                  memo = "",
-                  dpi = 300, #resolution
-                  file.output = TRUE, #save as file
-                  width = 10,
-                  height = 10)
+       plot.type = "c", #circular
+       r = 1.5, #radius of circle
+       col = c("grey30", "grey60"), #regular SNP colors, alternating
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
+       LOG10 = TRUE, #change P vals into log10
+       threshold = c(5e-5, 5e-8), #significant thresholds
+       threshold.col = c("darkgreen", "darkred"), #threshold line colors
+       threshold.lty = c(2, 2), #threshold line types
+       amplify = TRUE, #amplify significant SNPs
+       #highlight = toHighlight,7
+       #highlight.text = unlist(toHighlight), 
+       signal.line = NULL, 
+       signal.cex = c(1.0, 1.0), #significant SNP size
+       signal.pch = c(20, 20), #significant SNP shape
+       signal.col = c("green", "red"), #significant SNP colors
+       chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
+       outward = TRUE, #plot from inside out
+       file = "jpg", #file type
+       memo = "",
+       dpi = 300, #resolution
+       file.output = TRUE, #save as file
+       width = 10,
+       height = 10)
 dev.off()
 
 CMplot(pig60K,type="p",plot.type="c",r=0.4,col=c("grey30","grey60"),chr.labels=paste("Chr",c(1:18,"X","Y"),sep=""),
