@@ -117,7 +117,7 @@ CMplot(SNPs, #dataset
        r = 1.5, #radius of circle
        col = matrix(c("aquamarine3", "aquamarine1", #w3 %
                     "gold3","gold1", #LA
-                    "mediumpurple3", "mediumpurple1", #w6 w3 ratio
+                    "mediumpurple3", "mediumpurple1"), #w6 w3 ratio
                     nrow = 3, byrow = TRUE),
        cex = c(0.5, 0.5),
        cir.chr.h = 1, #width of chromosome boundary
