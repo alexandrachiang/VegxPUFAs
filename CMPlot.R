@@ -138,7 +138,7 @@ CMplot(SNPs, #dataset
        outward = TRUE, #plot from inside out
        file = "jpg", #file type
        memo = "Colored",
-       dpi = 300, #resolution
+       dpi = 500, #resolution
        file.output = TRUE, #save as file
        width = 10,
        height = 13)
