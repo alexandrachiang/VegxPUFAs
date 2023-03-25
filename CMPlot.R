@@ -145,3 +145,34 @@ CMplot(SNPs, #dataset
        width = 10,
        height = 13)
 dev.off()
+
+#Blank plot
+SNPsBlank <- SNPs %>% filter(w3_Percent_P <= 5e-8 | LA_Percent_P <= 5e-8 | w6_w3_Ratio_P <= 5e-8)
+x <- c("rs1", 1, 1, 1, 1, 1)
+y <- c("rs22", 22, 249222325, 1, 1, 1)
+
+SNPsBlank <- rbind(SNPsBlank, x, y)
+SNPsBlank <- SNPsBlank[5:6, ]
+SNPsBlank
+
+options(bitmapType='cairo')
+png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+CMplot(SNPsBlank, #dataset
+       plot.type = "c", #circular
+       r = 1.5, #radius of circle
+       col = c("#FFFFFF", "#FFFFFF"),
+       cex = c(0.01, 0.01),
+       lwd.axis = 0.001,
+       ylim = c(0, 8),
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
+       LOG10 = FALSE, #change P vals into log10
+       outward = TRUE, #plot from inside out
+       file = "jpg", #file type
+       memo = "Blank",
+       dpi = 500, #resolution
+       file.output = TRUE, #save as file
+       width = 10,
+       height = 13)
+dev.off()
