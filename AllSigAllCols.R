@@ -43,7 +43,7 @@ if (TRUE) {
                                      header = TRUE, stringsAsFactors = FALSE))
   AllSignif <- as_tibble(read.table(paste(outdir, "AllSignificantAllCols.txt", sep = ""), 
                                     header = TRUE, stringsAsFactors = FALSE))
-  
+}  
   nrow(AllSuggest)
   #4068
   length(unique(AllSuggest$RSID))
@@ -63,4 +63,3 @@ if (TRUE) {
   table(AllSignif$Pheno)
   #LA_TFAP   w3FA_TFAP w6_w3_ratio
   #      2           1           1
-}
