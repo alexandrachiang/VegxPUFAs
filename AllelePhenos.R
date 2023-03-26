@@ -245,8 +245,25 @@ for (i in 1:nrow(x)) {
       type = "cairo", width = 500, height = 500, res = 100)
   print(boxp2)
   dev.off()
-}
 
+  #horizontal legend on side
+  boxp3 <- ggplot(alleles4) +
+               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
+               scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
+               scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
+               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+                    x = paste(x[i, 4], "Genotype"),
+                    y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
+                    fill = paste("Exposure")) + 
+               scale_x_discrete(labels = xlabs) + 
+               theme(legend.position="right") + 
+               coord_flip()
+  
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
+      type = "cairo", width = 500, height = 500, res = 100)
+  print(boxp3)
+  dev.off()
+}
 #w6_w3_ratioxCSRV = rs67393898
 #w6_w3_ratioxCSRV = rs62255849
 #w6_w3_ratioxSSRV = rs72880701
