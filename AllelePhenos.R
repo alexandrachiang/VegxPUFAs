@@ -212,6 +212,7 @@ for (i in 1:nrow(x)) {
   alleles4 <- alleles4[complete.cases(alleles4), ]
   names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
   
+  #vertical
   boxp <- ggplot(alleles4) +
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
@@ -225,6 +226,24 @@ for (i in 1:nrow(x)) {
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
       type = "cairo", width = 500, height = 600, res = 100)
   print(boxp)
+  dev.off()
+  
+  #horizontal
+  boxp2 <- ggplot(alleles4) +
+               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
+               scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
+               scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
+               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+                    x = paste(x[i, 4], "Genotype"),
+                    y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
+                    fill = paste("Exposure")) + 
+               scale_x_discrete(labels = xlabs) + 
+               theme(legend.position="bottom") + 
+               coord_flip()
+  
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
+      type = "cairo", width = 500, height = 600, res = 100)
+  print(boxp2)
   dev.off()
 }
 
