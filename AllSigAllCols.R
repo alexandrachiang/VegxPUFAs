@@ -1,8 +1,8 @@
 library(tidyverse)
 
-setwd("/scratch/ahc87874/Fall2022/CombinedAllCol/")
+setwd("/scratch/ahc87874/Fall2022/CombinedAllColFull/")
 
-if (FALSE) {
+if (TRUE) {
   phenonames <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
                   "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
                   "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
@@ -11,8 +11,8 @@ if (FALSE) {
               "MUFA_TFAP", "PUFA_MUFA_ratio")
 
   exposures <- "SSRV"
-  suffix <- "wKeep"
-  dir <- "/scratch/ahc87874/Fall2022/CombinedAllCol"
+  suffix <- "Full"
+  dir <- "/scratch/ahc87874/Fall2022/CombinedAllColFull"
 
   for (i in 1:length(phenos)) {
     print(paste("pheno:", phenos[i]))
