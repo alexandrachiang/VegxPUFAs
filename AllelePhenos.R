@@ -224,7 +224,7 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs)
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
-      type = "cairo", width = 500, height = 600, res = 100)
+      type = "cairo", width = 500, height = 500, res = 100)
   print(boxp)
   dev.off()
   
@@ -242,7 +242,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
-      type = "cairo", width = 500, height = 600, res = 100)
+      type = "cairo", width = 500, height = 500, res = 100)
   print(boxp2)
   dev.off()
 }
