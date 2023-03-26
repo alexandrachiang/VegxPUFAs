@@ -16,7 +16,7 @@ if (TRUE) {
 
   for (i in 1:length(phenos)) {
     print(paste("pheno:", phenos[i]))
-    infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures, suffix, "all.txt", sep = ""), sep = "/"), 
+    infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures, suffix, "alltab.txt", sep = ""), sep = "/"), 
                                          header = TRUE, stringsAsFactors = FALSE))
 
     infile <- infile %>% mutate(Pheno = phenos[i], Expose = exposures) %>% select(SNPID, RSID, Pheno, Expose, everything())
