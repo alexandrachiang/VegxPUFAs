@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=GEMFull
+#SBATCH --job-name=GEM
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=70:00:00
 #SBATCH --mem=30000
-#SBATCH --output=GEMFull.%j.out
-#SBATCH --error=GEMFull.%j.err
+#SBATCH --output=GEM.%j.out
+#SBATCH --error=GEM.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
@@ -19,7 +19,7 @@ ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
-outdir=("/scratch/ahc87874/Fall2022/GEMFull")
+outdir=("/scratch/ahc87874/Fall2022/GEM")
 mkdir -p $outdir
 
 #phenotypes=("w3Fa" "w3FA_TFAP" "w6FA" "w6FA_TFAP" "w6_w3_ratio" 
