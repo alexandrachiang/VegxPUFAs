@@ -34,14 +34,14 @@ if (TRUE) {
     } #ifelse  
   }
 
-  outdir = "/scratch/ahc87874/Fall2022/CombinedAllCol/"
-  write.table(AllSuggest, paste(outdir, "AllSuggestAllCols.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
-  write.table(AllSignif, paste(outdir, "AllSignificantAllCols.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
+  outdir = "/scratch/ahc87874/Fall2022/CombinedAllColFull/"
+  write.table(AllSuggest, paste(outdir, "AllSuggestAllColsFull.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
+  write.table(AllSignif, paste(outdir, "AllSignificantAllColsFull.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
 } else {
-  outdir = "/scratch/ahc87874/Fall2022/CombinedAllCol/"
-  AllSuggest <- as_tibble(read.table(paste(outdir, "AllSuggestAllCols.txt", sep = ""), 
+  outdir = "/scratch/ahc87874/Fall2022/CombinedAllColFull/"
+  AllSuggest <- as_tibble(read.table(paste(outdir, "AllSuggestAllColsFull.txt", sep = ""), 
                                      header = TRUE, stringsAsFactors = FALSE))
-  AllSignif <- as_tibble(read.table(paste(outdir, "AllSignificantAllCols.txt", sep = ""), 
+  AllSignif <- as_tibble(read.table(paste(outdir, "AllSignificantAllColsFull.txt", sep = ""), 
                                     header = TRUE, stringsAsFactors = FALSE))
 }  
   nrow(AllSuggest)
