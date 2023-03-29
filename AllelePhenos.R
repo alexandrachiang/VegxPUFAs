@@ -159,9 +159,9 @@ if (FALSE) {
 #       "SSRV", "LA_TFAP", "%", "rs149996902",
 #       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
-x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", "w6 w3 Ratio",
-       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849", "w6 w3 Ratio",
-       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701", "w6 w3 Ratio",
+x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", "w6/w3 Ratio",
+       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849", "w6/w3 Ratio",
+       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701", "w6/w3 Ratio",
        "Strict", "LA_NMR_TFAP", "%", "rs1817457", "LA %",
        "Strict", "LA_NMR_TFAP", "%", "rs149996902", "LA %",
        "Strict", "w3FA_NMR_TFAP", "%", "rs34249205", "w3 %")
