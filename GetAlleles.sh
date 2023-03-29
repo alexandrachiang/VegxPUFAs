@@ -22,7 +22,7 @@ i=("11")
 plink2 \
 --bgen $genoindir/chr"$i".bgen ref-first \
 --sample $genoindir/chr"$i".sample \
---snp 11:rs174583 \
+--snp rs174583 \
 --export A \
 --out "$outdir"/chr"$i"SNP_FADS2
 
