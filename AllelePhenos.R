@@ -208,6 +208,11 @@ for (i in 1:nrow(x)) {
   print(avgplot)
   dev.off()
   
+  #Remove outlier
+  if (x[i, 2] == "w6_w3_ratio_NMR") {
+    alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
+  }
+  
   alleles4 <- alleles3 %>% select(x[i, 1], x[i, 2], contains(x[i, 4]))
   alleles4 <- alleles4[complete.cases(alleles4), ]
   names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
@@ -266,8 +271,14 @@ for (i in 1:nrow(x)) {
 }
 
 #FADS2
+alleles3 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2FADS2.txt", 
+                                  header = TRUE, stringsAsFactors = FALSE))
+
 x <- c("Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs174583", "w6/w3 Ratio")
 x <- matrix(x, ncol = 5, byrow = TRUE)
+
+#Remove outlier
+alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
 
 for (i in 1:nrow(x)) {
   print(x[i, ])
