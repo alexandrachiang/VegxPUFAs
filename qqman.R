@@ -16,7 +16,8 @@ allsuffix <- c("wKeep")
 #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
 
 phenos <- c("w3FA_NMR_TFAP", "w6_w3_ratio_NMR", "LA_NMR_TFAP")
-exposures <- c("CSRV", "SSRV")
+#exposures <- c("CSRV", "SSRV")
+exposures <- c("SSRV")
 
 for (suffix in allsuffix) {
   #if (suffix == "") {
@@ -97,24 +98,39 @@ for (suffix in allsuffix) {
         expo = "Strict"
         exposurecol <- "deepskyblue1"
       }
+	    
       maxy <- -log10(5e-08)
       if (newdata$P[1] < 5e-08) {
         maxy <- -log10(newdata$P[1])
       }
 	    
-      if (j == "CSRV") {
+      if (i == "w3FA_NMR_TFAP") {
+        phe <- "w3 %";
+      } else if (i == "w6_w3_ratio_NMR") {
+        phe <- "w6/w3 Ratio";
+      } else if (i == "LA_NMR_TFAP") {
+        phe <- "LA %";
+      }
+	    
+      if (j == "CSRV" & FALSE) {
         png(filename = paste(outdirman, i, "x", j, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
         manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
                      main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
                      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
         #highlight = newdata
         dev.off()
-      } else {
+      } else if (FALSE) {
         png(filename = paste(outdirman, i, "x", j, suffix, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
         manhattancex(infileall, col = c(exposurecol, "black"), suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
                      main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
                      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
         #highlight = newdata
+        dev.off()
+      } else {
+      	png(filename = paste(outdirman, i, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
+        manhattancex(infileall, suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
+                     main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 1e-5, ylim = c(0, 1e-08), 
+                     annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
         dev.off()
       }
      
@@ -129,7 +145,7 @@ for (suffix in allsuffix) {
         dev.off()
       } else {
         png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
-        qq(infileall$P, main = paste("Q-Q plot of ", i, " x ", expo, " GWIS p-values", sep = ""))
+        qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
         dev.off()
       }
     } #j exposures
