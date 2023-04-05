@@ -128,8 +128,8 @@ for (suffix in allsuffix) {
         dev.off()
       } else {
       	png(filename = paste(outdirman, i, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
-        manhattancex(infileall, suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
-                     main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 1e-5, ylim = c(0, 1e-08), 
+        manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08),
+                     main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, 1e-08), 
                      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
         dev.off()
       }
