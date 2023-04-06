@@ -222,29 +222,30 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     if (!is.null(annotatePval)) {
         # extract top SNPs at given p-val
         topHits = subset(d, P <= annotatePval)
+        highlightHits = subset(d, P <= genomewideline)
         par(xpd = TRUE)
         # annotate these SNPs
         if (annotateTop == FALSE) {
             with(subset(d, P <= annotatePval), 
                  textxycex(pos, -log10(P), offset = 0.625, labs = topHits$SNP), cex = annofontsize, ...)
-        }
-        else {
-		    if (!is.null(highlight)) {
+        } else {
+		        if (!is.null(highlight)) {
                 topHits <- topHits[order(topHits$P),]
                 topSNPs <- NULL
+                highlightHits <- highlightHits[order(highlightHits$P),]
+                highlightSNPs <- NULL
 
                 for (i in unique(topHits$CHR)) {
-
                     chrSNPs <- topHits[topHits$CHR == i,]
                     topSNPs <- rbind(topSNPs, chrSNPs[1,])
-
+                  
+                    chrhighlightSNPs <- highlightHits[highlightHits$CHR == i,]
+                    highlightSNPs <- rbind(highlightSNPs, chrhighlightSNPs[1,])
                 }
                 
                 #highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
-                highlightSNPs <- topSNPs %>% filter(SNP == highlight)
-                #topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
-                topSNPs <- topSNPs %>% filter(SNP != highlight)
-                head(highlightSNPs)
+                topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                
                 textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
                 textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, 
                           cex = annofontsize * 1.25, col = highlighttextcol, ...)
