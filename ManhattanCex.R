@@ -213,7 +213,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     if (!is.null(highlight)) {
         if (any(!(highlight %in% d$SNP))) warning("You're trying to highlight SNPs that don't exist in your results.")
         d.highlight=d[which(d$SNP %in% highlight), ]
-        with(d.highlight, points(pos, logp, col="green3", pch=20, ...)) 
+        with(d.highlight, points(pos, logp, col="green3", pch=20, size = 1.5, ...)) 
     }
     
     # Highlight top SNPs
@@ -227,17 +227,35 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                  textxycex(pos, -log10(P), offset = 0.625, labs = topHits$SNP), cex = annofontsize, ...)
         }
         else {
-            # could try alternative, annotate top SNP of each sig chr
-            topHits <- topHits[order(topHits$P),]
-            topSNPs <- NULL
-            
-            for (i in unique(topHits$CHR)) {
+		    if (!is.null(highlight)) {
+                topHits <- topHits[order(topHits$P),]
+                topSNPs <- NULL
+
+                for (i in unique(topHits$CHR)) {
+
+                    chrSNPs <- topHits[topHits$CHR == i,]
+                    topSNPs <- rbind(topSNPs, chrSNPs[1,])
+
+                }
                 
-                chrSNPs <- topHits[topHits$CHR == i,]
-                topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 
+                highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
+                topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
+                textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize * 1.25, ...)
+            } else {
+                # could try alternative, annotate top SNP of each sig chr
+                topHits <- topHits[order(topHits$P),]
+                topSNPs <- NULL
+
+                for (i in unique(topHits$CHR)) {
+
+                    chrSNPs <- topHits[topHits$CHR == i,]
+                    topSNPs <- rbind(topSNPs, chrSNPs[1,])
+
+                }
+                textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
             }
-            textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
         }
     }  
     par(xpd = FALSE)
