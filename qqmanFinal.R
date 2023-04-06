@@ -69,9 +69,10 @@ for (i in phenos) {
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
       png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
-      manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08),
+      manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), col = c("#141a17", "#7b998a"),
                    main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, -log10(1e-08)), 
-                   annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs)
+                   annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, 
+		   highlightcol = "#ff0000", highlighttextcol = "#ff0000")
       dev.off()
 
       #print("QQ")
@@ -94,10 +95,10 @@ for (i in phenos) {
 
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
         png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1200, height = 600)
-        manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = c("#13111a", "#716999")
+        manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = c("#15141a", "#807b99"),
                      main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
-                     annotatePval = -log10(2.619e-6), ylim = c(0, -log10(1e-08)), 
-                     annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs)
+                     annotatePval = -log10(2.619e-6), ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
+		     cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, highlightcol = "#ff0000", highlighttextcol = "#ff0000")
         dev.off()
       }  
     } #j exposures
