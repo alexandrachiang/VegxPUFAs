@@ -246,6 +246,9 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                 #highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
                 topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
                 
+                print(highlightSNPs)
+                print(head(topSNPs))
+				
                 textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
                 textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, 
                           cex = annofontsize * 1.25, col = highlighttextcol, ...)
