@@ -40,6 +40,7 @@
 #' @importFrom calibrate textxy  
 #'   
 #' @export
+library(tidyverse)
 
 textxycex <- function (X, Y, labs, m = c(0, 0), cex = 0.5, offset = 0.8, ...) {
     posXposY <- ((X >= m[1]) & ((Y >= m[2])))
@@ -238,8 +239,11 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
 
                 }
                 
-                highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
-                topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                #highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
+                highlightSNPs <- topSNPs %>% filter(SNP == highlight)
+                #topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                topSNPs <- topSNPs %>% filter(SNP != highlight)
+                head(highlightSNPs)
                 textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
                 textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, cex = annofontsize * 1.25, ...)
             } else {
