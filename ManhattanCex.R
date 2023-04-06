@@ -171,7 +171,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     ## And call the plot function passing NA, your ... arguments, and the default
     ## arguments that were not defined in the ... arguments.
     do.call("plot", c(NA, dotargs, def_args[!names(def_args) %in% names(dotargs)]))
-    
+    par(mar = c(5.1,10.1,4.1,2.1))
+	
     # If manually specifying chromosome labels, ensure a character vector and number of labels matches number chrs.
     if (!is.null(chrlabs)) {
         if (is.character(chrlabs)) {
@@ -186,7 +187,6 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     }
     
     # Add an axis. 
-    par(mar = c(5.1,5.1,4.1,2.1))
     if (nchr==1) { #If single chromosome, ticks and labels automatic.
         axis(1, ...)
     } else { # if multiple chrs, use the ticks and labels you created above.
