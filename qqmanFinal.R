@@ -94,7 +94,7 @@ for (i in phenos) {
 
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
         png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1200, height = 600)
-        manhattancex(magma, genomewideline = -log10(2.619e-6),
+        manhattancex(magma, suggestiveline = NULL, genomewideline = -log10(2.619e-6),
                      main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                      annotatePval = -log10(2.619e-6), ylim = c(0, -log10(1e-08)), 
                      annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs)
