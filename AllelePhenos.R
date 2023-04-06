@@ -205,7 +205,7 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs) + 
                coord_cartesian(ylim = c(min(phenoavg$PhenoMin) - 0.5, max(phenoavg$PhenoMax) + 0.5))
                
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 500, height = 300)
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 600, height = 700)
   print(avgplot)
   dev.off()
   
@@ -231,7 +231,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
-      type = "cairo", width = 500, height = 500, res = reso)
+      type = "cairo", width = 600, height = 700, res = reso)
   print(boxp)
   dev.off()
   
@@ -249,7 +249,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
-      type = "cairo", width = 500, height = 500, res = reso)
+      type = "cairo", width = 600, height = 700, res = reso)
   print(boxp2)
   dev.off()
 
@@ -267,7 +267,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
-      type = "cairo", width = 500, height = 500, res = reso)
+      type = "cairo", width = 600, height = 700, res = reso)
   print(boxp3)
   dev.off()
 }
