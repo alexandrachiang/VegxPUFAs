@@ -74,13 +74,13 @@ for (i in phenos) {
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs)
       dev.off()
 
-      print("QQ")
+      #print("QQ")
       #Make qq plot
-      outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
+      #outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
 	    
-      png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
-      qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
-      dev.off()
+      #png(filename = paste(outdirqq, "FINAL", i, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+      #qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
+      #dev.off()
       
       if (i == "w3FA_NMR_TFAP") {
         print("MAGMA")
