@@ -244,6 +244,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
 			    significantSNPs <- topSNPs[topSNPs$SNP == highlight, ]
 			    suggestedSNPs <- topSNPs[topSNPs$SNP != highlight, ]
                 
+                print(head(d))
+                print(head(topSNPs))
                 print(significantSNPs)
                 print(head(suggestedSNPs))
 				
