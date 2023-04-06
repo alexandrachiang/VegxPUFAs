@@ -229,28 +229,23 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
             with(subset(d, P <= annotatePval), 
                  textxycex(pos, -log10(P), offset = 0.625, labs = topHits$SNP), cex = annofontsize, ...)
         } else {
-		        if (!is.null(highlight)) {
+		    if (!is.null(highlight)) {
                 topHits <- topHits[order(topHits$P),]
                 topSNPs <- NULL
-                highlightHits <- highlightHits[order(highlightHits$P),]
-                highlightSNPs <- NULL
-
+                
                 for (i in unique(topHits$CHR)) {
                     chrSNPs <- topHits[topHits$CHR == i,]
                     topSNPs <- rbind(topSNPs, chrSNPs[1,])
-                  
-                    chrhighlightSNPs <- highlightHits[highlightHits$CHR == i,]
-                    highlightSNPs <- rbind(highlightSNPs, chrhighlightSNPs[1,])
                 }
                 
-                #highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
-                topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                significantSNPs <- topSNPs[topSNPs$P <= 5e-8, ]
+                suggestedSNPs <- topSNPs[topSNPs$P > 5e-8, ]
                 
-                print(highlightSNPs)
-                print(head(topSNPs))
+                print(significantSNPs)
+                print(head(suggestedSNPs))
 				
-                textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
-                textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, 
+                textxycex(suggestedSNPs$pos, -log10(suggestedSNPs$P), offset = 0.625, labs = suggestedSNPs$SNP, cex = annofontsize, ...)
+                textxycex(significantSNPs$pos, -log10(significantSNPs$P), offset = 0.625, labs = significantSNPs$SNP, 
                           cex = annofontsize * 1.25, col = highlighttextcol, ...)
             } else {
                 # could try alternative, annotate top SNP of each sig chr
