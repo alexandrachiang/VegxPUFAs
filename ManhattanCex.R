@@ -42,23 +42,23 @@
 #' @export
 library(tidyverse)
 
-textxycex <- function (X, Y, labs, m = c(0, 0), cex = 0.5, offset = 0.8, ...) {
+textxycex <- function (X, Y, labs, m = c(0, 0), cex = 0.5, offset = 0.8, col = "black", ...) {
     posXposY <- ((X >= m[1]) & ((Y >= m[2])))
     posXnegY <- ((X >= m[1]) & ((Y < m[2])))
     negXposY <- ((X < m[1]) & ((Y >= m[2])))
     negXnegY <- ((X < m[1]) & ((Y < m[2])))
     if (sum(posXposY) > 0)
         text(X[posXposY], Y[posXposY], labs[posXposY], adj = c(0.5 -
-            offset, 0.5 - offset), cex = cex, ...)
+            offset, 0.5 - offset), cex = cex, col = col, ...)
     if (sum(posXnegY) > 0)
         text(X[posXnegY], Y[posXnegY], labs[posXnegY], adj = c(0.5 -
-            offset, 0.5 + offset), cex = cex, ...)
+            offset, 0.5 + offset), cex = cex, col = col, ...)
     if (sum(negXposY) > 0)
         text(X[negXposY], Y[negXposY], labs[negXposY], adj = c(0.5 +
-            offset, 0.5 - offset), cex = cex, ...)
+            offset, 0.5 - offset), cex = cex, col = col, ...)
     if (sum(negXnegY) > 0)
         text(X[negXnegY], Y[negXnegY], labs[negXnegY], adj = c(0.5 +
-            offset, 0.5 + offset), cex = cex, ...)
+            offset, 0.5 + offset), cex = cex, col = col, ...)
 }
 
 
@@ -66,7 +66,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                       col=c("gray10", "gray60"), chrlabs=NULL,
                       suggestiveline=-log10(1e-5), genomewideline=-log10(5e-8), 
                       highlight=NULL, logp=TRUE, annotatePval = NULL, annotateTop = TRUE, 
-		      annofontsize = 0.45, highlightcol = "green3", highlightcex = 1.5, ...) {
+		              annofontsize = 0.45, highlightcol = "green3", 
+			          highlightcex = 1.5, highlighttextcol = "black", ...) {
 
     # Not sure why, but package check will warn without this.
     CHR=BP=P=index=NULL
@@ -245,7 +246,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                 topSNPs <- topSNPs %>% filter(SNP != highlight)
                 head(highlightSNPs)
                 textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
-                textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, cex = annofontsize * 1.25, ...)
+                textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, 
+                          cex = annofontsize * 1.25, col = highlighttextcol, ...)
             } else {
                 # could try alternative, annotate top SNP of each sig chr
                 topHits <- topHits[order(topHits$P),]
