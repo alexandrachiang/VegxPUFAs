@@ -238,11 +238,10 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
 
                 }
                 
-                
                 highlightSNPs <- topSNPs[topSNPs$SNP == highlight, ]
                 topSNPs <- topSNPs[topSNPs$SNP != highlight, ]
                 textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize, ...)
-                textxycex(topSNPs$pos, -log10(topSNPs$P), offset = 0.625, labs = topSNPs$SNP, cex = annofontsize * 1.25, ...)
+                textxycex(highlightSNPs$pos, -log10(highlightSNPs$P), offset = 0.625, labs = highlightSNPs$SNP, cex = annofontsize * 1.25, ...)
             } else {
                 # could try alternative, annotate top SNP of each sig chr
                 topHits <- topHits[order(topHits$P),]
