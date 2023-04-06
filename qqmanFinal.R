@@ -102,3 +102,11 @@ for (i in phenos) {
       }  
     } #j exposures
   } #i phenos
+
+
+#Colors
+#Dark 		light
+##1a1a1a	#999999	#Gray
+##141a17	#7b998a #Green
+##15141a	#807b99	#Purple
+##ff0000		Red
