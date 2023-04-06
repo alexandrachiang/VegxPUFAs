@@ -241,6 +241,9 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                 significantSNPs <- topSNPs[topSNPs$P <= 10^genomewideline, ]
                 suggestedSNPs <- topSNPs[topSNPs$P > 10^genomewideline, ]
                 
+			    significantSNPs <- topSNPs[topSNPs$SNP == highlight, ]
+			    suggestedSNPs <- topSNPs[topSNPs$SNP != highlight, ]
+                
                 print(significantSNPs)
                 print(head(suggestedSNPs))
 				
