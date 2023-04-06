@@ -186,7 +186,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     }
     
     # Add an axis. 
-    par(mar = c(5.1,5.1,4.1,2.1)
+    par(mar = c(5.1,5.1,4.1,2.1))
     if (nchr==1) { #If single chromosome, ticks and labels automatic.
         axis(1, ...)
     } else { # if multiple chrs, use the ticks and labels you created above.
