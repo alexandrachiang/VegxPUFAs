@@ -230,7 +230,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom")
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
-      type = "cairo", width = 450, height = 500, res = 100)
+      type = "cairo", width = 450, height = 500, res = 200)
   print(boxp)
   dev.off()
   
@@ -248,7 +248,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
-      type = "cairo", width = 450, height = 500, res = 100)
+      type = "cairo", width = 450, height = 500, res = 200)
   print(boxp2)
   dev.off()
 
@@ -266,7 +266,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
-      type = "cairo", width = 450, height = 500, res = 100)
+      type = "cairo", width = 450, height = 500, res = 200)
   print(boxp3)
   dev.off()
 }
@@ -313,7 +313,7 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs)
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "FADS2BoxPlot.png", sep = ""), 
-      type = "cairo", width = 500, height = 500, res = 100)
+      type = "cairo", width = 500, height = 500, res = 200)
   print(boxp)
   dev.off()
 }
