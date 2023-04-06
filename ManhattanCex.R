@@ -213,7 +213,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     if (!is.null(highlight)) {
         if (any(!(highlight %in% d$SNP))) warning("You're trying to highlight SNPs that don't exist in your results.")
         d.highlight=d[which(d$SNP %in% highlight), ]
-        with(d.highlight, points(pos, logp, col="green3", pch=20, size = 1.5, ...)) 
+        with(d.highlight, points(pos, logp, col="green3", pch=20, cex = 1.5, ...)) 
     }
     
     # Highlight top SNPs
