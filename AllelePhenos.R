@@ -198,7 +198,7 @@ for (i in 1:nrow(x)) {
                geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
                              position = position_dodge(0.9), stat = "identity") + 
                scale_fill_manual(values = c("#00BA38", "#F8766D")) +
-               labs(title = paste("Average", x[i, 5], "Levels by", x[i, 4]),
+               labs(title = paste("Average", x[i, 5], "Levels\nby", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste(Expose, "Exposure")) + 
@@ -223,12 +223,12 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nby", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
-               theme(legend.position="bottom")
+               theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
       type = "cairo", width = 450, height = 500, res = reso)
@@ -240,12 +240,12 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nbyy", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
-               theme(legend.position="bottom") + 
+               theme(legend.position="bottom", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
@@ -263,7 +263,7 @@ for (i in 1:nrow(x)) {
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
-               theme(legend.position="right") + 
+               theme(legend.position="right", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
