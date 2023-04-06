@@ -44,27 +44,10 @@ for (i in phenos) {
         infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined/", i, "x", j, suffix, "all.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
 	    }
+      
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
-      pvalue <- newdata$P[10]
-
-      print("Manhattan")
-      #Make manhattan plot
-      outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-      if (j == "CSRV") {
-	      expo = "Self-ID"
-        exposurecol <- "firebrick1"
-      } else if (j == "SSRV") {
-        expo = "Strict"
-        exposurecol <- "deepskyblue1"
-      }
-	    
-      maxy <- -log10(5e-08)
-      if (newdata$P[1] < 5e-08) {
-        maxy <- -log10(newdata$P[1])
-      }
-	    
       if (i == "w3FA_NMR_TFAP") {
         phe <- "w3 %";
       } else if (i == "w6_w3_ratio_NMR") {
@@ -73,6 +56,9 @@ for (i in phenos) {
         phe <- "LA %";
       }
 	   
+      print("Manhattan")
+      #Make manhattan plot
+      outdirman = "/scratch/ahc87874/Fall2022/manplots/"
       png(filename = paste(outdirman, i, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08),
                    main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, 1e-08), 
@@ -88,14 +74,15 @@ for (i in phenos) {
       dev.off()
       
       print("MAGMA")
+      #Make MAGMA plot
       magma <-  as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/MAGMA/magma.genes.", i, ".txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
 	    
 	    magma <- magma %>% mutate(MIDDLE = (START + STOP)/2) %>% select(CHR, MIDDLE, P, SYMBOL)
 	    colnames(magma) <- c("CHR", "BP", "P", "SNP")
       
-      outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
-      png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1200, height = 600)
-      dev.off()
+      #outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
+      #png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1200, height = 600)
+      #dev.off()
     } #j exposures
   } #i phenos
