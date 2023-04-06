@@ -238,14 +238,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                     topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 }
                 
-                print("d")
-                print(head(d))
-                
-			    significantSNPs <- d[d$SNP == highlight, ]
-			    suggestedSNPs <- topSNPs[topSNPs$SNP != highlight, ]
-                
-                print("significantSNPs")
-                print(significantSNPs)
+			    significantSNPs <- d[d$SNP %in% highlight, ]
+			    suggestedSNPs <- topSNPs[!topSNPs$SNP %in% highlight, ]
 				
                 textxycex(suggestedSNPs$pos, -log10(suggestedSNPs$P), offset = 0.625, labs = suggestedSNPs$SNP, cex = annofontsize, ...)
                 textxycex(significantSNPs$pos, -log10(significantSNPs$P), offset = 0.625, labs = significantSNPs$SNP, 
