@@ -66,7 +66,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                       col=c("gray10", "gray60"), chrlabs=NULL,
                       suggestiveline=-log10(1e-5), genomewideline=-log10(5e-8), 
                       highlight=NULL, logp=TRUE, annotatePval = NULL, annotateTop = TRUE, 
-		      annofontsize = 0.45, ...) {
+		      annofontsize = 0.45, highlightcol = "green3", highlightcex = 1.5, ...) {
 
     # Not sure why, but package check will warn without this.
     CHR=BP=P=index=NULL
@@ -214,7 +214,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     if (!is.null(highlight)) {
         if (any(!(highlight %in% d$SNP))) warning("You're trying to highlight SNPs that don't exist in your results.")
         d.highlight=d[which(d$SNP %in% highlight), ]
-        with(d.highlight, points(pos, logp, col="green3", pch=20, cex = 1.5, ...)) 
+        with(d.highlight, points(pos, logp, col=highlightcol, pch=20, cex = highlightcex, ...)) 
     }
     
     # Highlight top SNPs
