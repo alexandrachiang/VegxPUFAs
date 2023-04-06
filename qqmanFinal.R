@@ -1,6 +1,11 @@
 library(tidyverse)
 library(qqman)
 
+#Download FUMA MAGMA files
+#Extract zip files
+#Cmd Prompt cd into folder and run > ren *.out *.txt
+#Rename magma.genes file
+
 source("/work/kylab/alex/Fall2022/ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
@@ -50,10 +55,14 @@ for (i in phenos) {
 
       if (i == "w3FA_NMR_TFAP") {
         phe <- "w3 %";
+	      SNPs <- ""
       } else if (i == "w6_w3_ratio_NMR") {
         phe <- "w6/w3 Ratio";
+        
+        SNPs <- "rs72880701"
       } else if (i == "LA_NMR_TFAP") {
         phe <- "LA %";
+        SNPs <- c("rs1817457", "rs149996902")
       }
 	   
       print("Manhattan")
