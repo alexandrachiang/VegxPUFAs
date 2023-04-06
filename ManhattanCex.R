@@ -238,8 +238,8 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                     topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 }
                 
-                significantSNPs <- topSNPs[topSNPs$P <= 5e-8, ]
-                suggestedSNPs <- topSNPs[topSNPs$P > 5e-8, ]
+                significantSNPs <- topSNPs[topSNPs$P <= genomewideline, ]
+                suggestedSNPs <- topSNPs[topSNPs$P > genomewideline, ]
                 
                 print(significantSNPs)
                 print(head(suggestedSNPs))
