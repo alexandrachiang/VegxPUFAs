@@ -54,21 +54,21 @@ for (i in phenos) {
 	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
       if (i == "w3FA_NMR_TFAP") {
-        phe <- "w3 %";
-	      infileall$SNP[infileall$SNP == "9:140508031_A_G"] <- "rs34249205"
-	      SNPs <- "rs34249205"
+        phe <- "w3 %"
+	infileall$SNP[infileall$SNP == "9:140508031_A_G"] <- "rs34249205"
+	SNPs <- "rs34249205"
       } else if (i == "w6_w3_ratio_NMR") {
-        phe <- "w6/w3 Ratio";
+        phe <- "w6/w3 Ratio"
         SNPs <- "rs72880701"
       } else if (i == "LA_NMR_TFAP") {
-        phe <- "LA %";
+        phe <- "LA %"
         SNPs <- c("rs1817457", "rs149996902")
       }
 	   
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-      png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1200, height = 600)
+      png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1300, height = 600)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), col = c("#141a17", "#7b998a"),
                    main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, -log10(1e-08)), 
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, 
@@ -94,7 +94,7 @@ for (i in phenos) {
         SNPs <- c("C9orf37", "ARRDC1")
 
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
-        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1200, height = 600)
+        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1300, height = 600)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = c("#15141a", "#807b99"),
                      main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                      annotatePval = -log10(2.619e-6), ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
