@@ -223,7 +223,6 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
     if (!is.null(annotatePval)) {
         # extract top SNPs at given p-val
         topHits = subset(d, P <= annotatePval)
-        highlightHits = subset(d, P <= genomewideline)
         par(xpd = TRUE)
         # annotate these SNPs
         if (annotateTop == FALSE) {
@@ -239,10 +238,7 @@ manhattancex <- function(x, chr="CHR", bp="BP", p="P", snp="SNP",
                     topSNPs <- rbind(topSNPs, chrSNPs[1,])
                 }
                 
-                significantSNPs <- topSNPs[topSNPs$P <= 10^genomewideline, ]
-                suggestedSNPs <- topSNPs[topSNPs$P > 10^genomewideline, ]
-                
-			    significantSNPs <- topSNPs[topSNPs$SNP == highlight, ]
+			    significantSNPs <- d[d$SNP == highlight, ]
 			    suggestedSNPs <- topSNPs[topSNPs$SNP != highlight, ]
 				
                 textxycex(suggestedSNPs$pos, -log10(suggestedSNPs$P), offset = 0.625, labs = suggestedSNPs$SNP, cex = annofontsize, ...)
