@@ -176,3 +176,37 @@ CMplot(SNPsBlank, #dataset
        width = 10,
        height = 13)
 dev.off()
+
+#Multi_tracks Rectangular-Manhattan plot
+options(bitmapType='cairo')
+png(filename = "MultiPlot.png", type = "cairo", width = 1000, height = 800, res = 115)
+CMplot(SNPs, #dataset
+       plot.type = "m",
+       multracks = TRUE,
+       col = c("grey30", "grey60"), #regular SNP colors, alternating
+       cex = c(0.5, 0.5),
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
+       LOG10 = TRUE, #change P vals into log10
+       threshold = c(5e-8, 5e-5), #significant thresholds
+       threshold.col = c("darkred", "darkgreen"), #threshold line colors
+       threshold.lty = c(1, 2), #threshold line types
+       amplify = TRUE, #amplify significant SNPs
+       highlight = toHighlight,
+       highlight.text = unlist(toHighlight), 
+       highlight.col=c("red","blue","green","purple"),
+       highlight.text.col=c("red","blue","green","purple"),
+       signal.line = NULL, 
+       signal.cex = c(0.9, 0.9), #significant SNP size
+       signal.pch = c(20, 20), #significant SNP shape
+       signal.col = c("red", "green"), #significant SNP colors
+       chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
+       outward = TRUE, #plot from inside out
+       file = "jpg", #file type
+       memo = "Multi",
+       dpi = 300, #resolution
+       file.output = TRUE, #save as file
+       width = 10,
+       height = 13)
+dev.off()
