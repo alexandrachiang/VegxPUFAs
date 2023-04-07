@@ -182,8 +182,8 @@ options(bitmapType='cairo')
 png(filename = "MultiPlot.png", type = "cairo", width = 1000, height = 800, res = 115)
 CMplot(SNPs, #dataset
        plot.type = "m",
-       multracks = FALSE,
-       col = c("grey30", "grey60"), #regular SNP colors, alternating
+       multracks = TRUE,
+       col = c("#ACBFA1", "#A1A9BF", "#BFA1BA"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
        cir.chr.h = 1, #width of chromosome boundary
        cir.legend.cex = 0.7, #legend text size
@@ -202,11 +202,11 @@ CMplot(SNPs, #dataset
        signal.pch = c(20, 20), #significant SNP shape
        signal.col = c("red", "green"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
-       outward = TRUE, #plot from inside out
+       main = "Manhattan Plot",
        file = "jpg", #file type
        memo = "Multi",
        dpi = 300, #resolution
        file.output = TRUE, #save as file
        width = 10,
-       height = 13)
+       height = 8)
 dev.off()
