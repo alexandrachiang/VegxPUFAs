@@ -68,7 +68,7 @@ for (i in phenos) {
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-      png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1500, height = 525, res = 110)
+      png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), col = c("#141a17", "#7b998a"),
                    main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, -log10(1e-08)), 
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, 
