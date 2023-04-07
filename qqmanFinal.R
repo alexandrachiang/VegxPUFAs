@@ -94,7 +94,7 @@ for (i in phenos) {
         SNPs <- c("C9orf37", "ARRDC1")
 
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
-        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1000, height = 400, res = 115)
+        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1000, height = 400, res = 105)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), #col = c("#15141a", "#807b99"),
                      main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                      annotatePval = -log10(2.619e-6), ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
