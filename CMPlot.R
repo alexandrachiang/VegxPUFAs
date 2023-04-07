@@ -182,7 +182,7 @@ options(bitmapType='cairo')
 png(filename = "MultiPlot.png", type = "cairo", width = 1000, height = 800, res = 115)
 CMplot(SNPs, #dataset
        plot.type = "m",
-       multracks = TRUE,
+       multracks = FALSE,
        col = c("grey30", "grey60"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
        cir.chr.h = 1, #width of chromosome boundary
@@ -194,7 +194,7 @@ CMplot(SNPs, #dataset
        threshold.lty = c(1, 2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
        highlight = toHighlight,
-       highlight.text = unlist(toHighlight), 
+       highlight.text = toHighlight, 
        highlight.col=c("red","blue","green","purple"),
        highlight.text.col=c("red","blue","green","purple"),
        signal.line = NULL, 
