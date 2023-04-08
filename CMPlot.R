@@ -3,7 +3,7 @@ library(CMplot)
 
 setwd("/scratch/ahc87874/Fall2022/manplots")
 
-if (FALSE) {
+if (TRUE) {
   #phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
   #            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
   #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
@@ -20,9 +20,9 @@ if (FALSE) {
   w3FA_NMR_TFAP <- w3FA_NMR_TFAP %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
   LA_NMR_TFAP <- LA_NMR_TFAP %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
   w6_w3_ratio_NMR <- w6_w3_ratio_NMR %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
-  colnames(w3FA_NMR_TFAP)[4] <- "w3_Percent_P"
-  colnames(LA_NMR_TFAP)[4] <- "LA_Percent_P"
-  colnames(w6_w3_ratio_NMR)[4] <- "w6_w3_Ratio_P"
+  colnames(w3FA_NMR_TFAP)[4] <- "w3 %"
+  colnames(LA_NMR_TFAP)[4] <- "LA %"
+  colnames(w6_w3_ratio_NMR)[4] <- "w6/w3 Ratio"
   
   SNPs <- full_join(w3FA_NMR_TFAP, LA_NMR_TFAP, by = c("RSID", "CHR", "POS"))
   SNPs <- full_join(SNPs, w6_w3_ratio_NMR, by = c("RSID", "CHR", "POS"))
@@ -179,11 +179,11 @@ dev.off()
 
 #Multi_tracks Rectangular-Manhattan plot
 options(bitmapType='cairo')
-png(filename = "MultiPlot.png", type = "cairo", width = 1750, height = 1400, res = 100)
+png(filename = "MultiPlot.png", type = "cairo", width = 1600, height = 1000, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "m",
        multracks = TRUE,
-       col = c("#7A9669", "#697496", "#95698D"), #regular SNP colors, alternating
+       col = c("#B6E997", "#97AAE7", "#E898D9"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
@@ -197,7 +197,7 @@ CMplot(SNPs, #dataset
        highlight.col=c("red","blue","green","purple"),
        highlight.text.col=c("red","blue","green","purple"),
        signal.line = NULL, 
-       signal.cex = c(1.3, 1.3, 1.3), #significant SNP size
+       signal.cex = c(2, 2, 2), #significant SNP size
        signal.pch = c(20, 20, 20), #significant SNP shape
        signal.col = c("#5EFF00", "#0044FF", "#FF00D4"), #significant SNP colors
        chr.labels = c(1:22), #labels for chromosomes
@@ -206,8 +206,8 @@ CMplot(SNPs, #dataset
        memo = "Multi",
        dpi = 300, #resolution
        file.output = TRUE, #save as file
-       width = 12.5,
-       height = 10)
+       width = 8,
+       height = 5)
 dev.off()
 
 
