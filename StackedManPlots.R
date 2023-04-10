@@ -227,11 +227,7 @@ CMplot(SNPs, #dataset
        threshold = c(5e-8, 5e-5), #significant thresholds
        threshold.col = c("red", "darkgray"), #threshold line colors
        threshold.lty = c(1, 2), #threshold line types
-       amplify = TRUE, #amplify significant SNPs
-       highlight = toHighlight,
-       highlight.text = toHighlight, 
-       highlight.col=c("red","blue","green","purple"),
-       highlight.text.col=c("red","blue","green","purple"),
+       amplify = FALSE, #amplify significant SNPs
        signal.line = NULL, 
        signal.cex = c(2, 2, 2), #significant SNP size
        signal.pch = c(16, 16, 16), #significant SNP shape
