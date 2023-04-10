@@ -181,13 +181,12 @@ dev.off()
 
 #Multi_tracks Rectangular-Manhattan plot
 options(bitmapType='cairo')
-png(filename = "MultiPlot.png", type = "cairo", width = 1200, height = 600, res = 100)
+png(filename = "MultiPlot.png", type = "cairo", width = 1200, height = 600, res = 300)
 CMplot(SNPs, #dataset
        plot.type = "m",
        multracks = TRUE,
        col = c("#B6E997", "#97AAE7", "#E898D9"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
-       points.alpha=100L,
        pch=16,
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
@@ -195,11 +194,11 @@ CMplot(SNPs, #dataset
        threshold = c(5e-8, 5e-5), #significant thresholds
        threshold.col = c("red", "darkgray"), #threshold line colors
        threshold.lty = c(1, 2), #threshold line types
-       #amplify = TRUE, #amplify significant SNPs
-       #highlight = toHighlight,
-       #highlight.text = toHighlight, 
-       #highlight.col=c("red","blue","green","purple"),
-       #highlight.text.col=c("red","blue","green","purple"),
+       amplify = TRUE, #amplify significant SNPs
+       highlight = toHighlight,
+       highlight.text = toHighlight, 
+       highlight.col=c("red","blue","green","purple"),
+       highlight.text.col=c("red","blue","green","purple"),
        signal.line = NULL, 
        signal.cex = c(2, 2, 2), #significant SNP size
        signal.pch = c(16, 16, 16), #significant SNP shape
@@ -208,10 +207,10 @@ CMplot(SNPs, #dataset
        main = "Manhattan Plot",
        file = "jpg", #file type
        memo = "Multi",
-       dpi = 200, #resolution
+       dpi = 300, #resolution
        file.output = TRUE, #save as file
-       width = 8,
-       height = 4)
+       width = 12,
+       height = 6)
 dev.off()
 
 
