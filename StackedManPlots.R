@@ -224,9 +224,9 @@ CMplot(SNPs, #dataset
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
-       threshold = c(5e-8, 5e-5), #significant thresholds
-       threshold.col = c("red", "darkgray"), #threshold line colors
-       threshold.lty = c(1, 2), #threshold line types
+       threshold = c(5e-5, 5e-8), #significant thresholds
+       threshold.col = c("darkgray", "red"), #threshold line colors
+       threshold.lty = c(2, 1), #threshold line types
        amplify = FALSE, #amplify significant SNPs
        signal.line = NULL, 
        signal.cex = c(2, 2, 2), #significant SNP size
