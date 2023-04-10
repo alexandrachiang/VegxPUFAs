@@ -542,7 +542,7 @@ CMplot <- function(
     trait <- colnames(Pmap)[-c(1:3)]
     if(!is.null(memo) && memo != "")    memo <- paste("_", memo, sep="")
     if(length(trait) == 0)   trait <- paste("Col", 1:(ncol(Pmap)-3), sep="")
-    taxa <- paste(trait, memo, sep="")
+    taxa <- paste(memo, sep="")
     if(length(points.alpha) != 1L)   stop("invalid 'points.alpha': must be 'TRUE', 'FALSE' or an integer between 0 and 255")
     if(is.logical(points.alpha))   points.alpha <- ifelse(points.alpha, formals()$points.alpha, 255L)
     if(!is.integer(points.alpha)){
