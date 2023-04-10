@@ -181,7 +181,7 @@ dev.off()
 
 #Multi_tracks Rectangular-Manhattan plot
 options(bitmapType='cairo')
-png(filename = "MultiPlot.png", type = "cairo", width = 1200, height = 750, res = 100)
+png(filename = "MultiPlot.png", type = "cairo", width = 1200, height = 600, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "m",
        multracks = TRUE,
@@ -195,9 +195,9 @@ CMplot(SNPs, #dataset
        threshold = c(5e-8, 5e-5), #significant thresholds
        threshold.col = c("red", "darkgray"), #threshold line colors
        threshold.lty = c(1, 2), #threshold line types
-       amplify = TRUE, #amplify significant SNPs
-       highlight = toHighlight,
-       highlight.text = toHighlight, 
+       #amplify = TRUE, #amplify significant SNPs
+       #highlight = toHighlight,
+       #highlight.text = toHighlight, 
        #highlight.col=c("red","blue","green","purple"),
        #highlight.text.col=c("red","blue","green","purple"),
        signal.line = NULL, 
@@ -208,10 +208,10 @@ CMplot(SNPs, #dataset
        main = "Manhattan Plot",
        file = "jpg", #file type
        memo = "Multi",
-       dpi = 300, #resolution
+       dpi = 200, #resolution
        file.output = TRUE, #save as file
        width = 8,
-       height = 5)
+       height = 4)
 dev.off()
 
 
