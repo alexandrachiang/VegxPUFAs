@@ -179,12 +179,14 @@ dev.off()
 
 #Multi_tracks Rectangular-Manhattan plot
 options(bitmapType='cairo')
-png(filename = "MultiPlot.png", type = "cairo", width = 1600, height = 1000, res = 100)
+png(filename = "MultiPlot.png", type = "cairo", width = 1200, height = 750, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "m",
        multracks = TRUE,
        col = c("#B6E997", "#97AAE7", "#E898D9"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
+       points.alpha=100L,
+       pch=16,
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
@@ -194,11 +196,11 @@ CMplot(SNPs, #dataset
        amplify = TRUE, #amplify significant SNPs
        highlight = toHighlight,
        highlight.text = toHighlight, 
-       highlight.col=c("red","blue","green","purple"),
-       highlight.text.col=c("red","blue","green","purple"),
+       #highlight.col=c("red","blue","green","purple"),
+       #highlight.text.col=c("red","blue","green","purple"),
        signal.line = NULL, 
        signal.cex = c(2, 2, 2), #significant SNP size
-       signal.pch = c(20, 20, 20), #significant SNP shape
+       signal.pch = c(16, 16, 16), #significant SNP shape
        signal.col = c("#5EFF00", "#0044FF", "#FF00D4"), #significant SNP colors
        chr.labels = c(1:22), #labels for chromosomes
        main = "Manhattan Plot",
