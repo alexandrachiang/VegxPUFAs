@@ -9,7 +9,6 @@ if (TRUE) {
   #            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
   phenos <- c("w3FA_NMR_TFAP", "LA_NMR_TFAP", "w6_w3_ratio_NMR")
   suffix <- "wKeep"
-
   w3FA_NMR_TFAP <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", "w3FA_NMR_TFAP", "x", "SSRV", suffix, "all.txt", sep = ""), 
                                  header = TRUE, stringsAsFactors = FALSE))
   LA_NMR_TFAP <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/CombinedAllCol/", "LA_NMR_TFAP", "x", "SSRV", suffix, "all.txt", sep = ""), 
@@ -20,9 +19,9 @@ if (TRUE) {
   w3FA_NMR_TFAP <- w3FA_NMR_TFAP %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
   LA_NMR_TFAP <- LA_NMR_TFAP %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
   w6_w3_ratio_NMR <- w6_w3_ratio_NMR %>% select(RSID, CHR, POS, robust_P_Value_Interaction)
-  colnames(w3FA_NMR_TFAP)[4] <- "w3 %"
-  colnames(LA_NMR_TFAP)[4] <- "LA %"
-  colnames(w6_w3_ratio_NMR)[4] <- "w6/w3 Ratio"
+  colnames(w3FA_NMR_TFAP)[4] <- "w3_Percent_P"
+  colnames(LA_NMR_TFAP)[4] <- "LA_Percent_P"
+  colnames(w6_w3_ratio_NMR)[4] <- "w6_w3_Ratio_P"
   
   SNPs <- full_join(w3FA_NMR_TFAP, LA_NMR_TFAP, by = c("RSID", "CHR", "POS"))
   SNPs <- full_join(SNPs, w6_w3_ratio_NMR, by = c("RSID", "CHR", "POS"))
@@ -44,6 +43,10 @@ toHighlight[[1]]<-SNPs$RSID[SNPs$w3_Percent_P <= 5e-8]
 toHighlight[[2]]<-SNPs$RSID[SNPs$LA_Percent_P <= 5e-8]
 toHighlight[[3]]<-SNPs$RSID[SNPs$w6_w3_Ratio_P <= 5e-08]
 toHighlight 
+
+colnames(SNPs)[4] <- "w3 %"
+colnames(SNPs)[5] <- "LA %"
+colnames(SNPs)[6] <- "w6/w3 Ratio"
 
 #https://htmlcolorcodes.com/color-picker/
 
