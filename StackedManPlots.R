@@ -228,10 +228,6 @@ CMplot(SNPs, #dataset
        threshold.col = c("darkgray", "red"), #threshold line colors
        threshold.lty = c(2, 1), #threshold line types
        amplify = FALSE, #amplify significant SNPs
-       signal.line = NULL, 
-       signal.cex = c(2, 2, 2), #significant SNP size
-       signal.pch = c(16, 16, 16), #significant SNP shape
-       signal.col = c("#5EFF00", "#0044FF", "#FF00D4"), #significant SNP colors
        chr.labels = c(1:22), #labels for chromosomes
        main = "Manhattan Plot",
        file = "jpg", #file type
