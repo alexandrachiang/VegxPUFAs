@@ -1,3 +1,5 @@
+#Subset necessary columns, change to numeric 
+
 library(tidyverse)
 library(fastDummies)
 #source("/work/kylab/alex/Fall2022/CountVegFirst.R")
