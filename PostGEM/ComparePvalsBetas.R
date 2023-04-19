@@ -2,7 +2,7 @@ library(tidyverse)
 
 setwd("/scratch/ahc87874/Fall2022/")
 
-allsuffix <- c("", "woCred", "wKeep")
+allsuffix <- c("wKeep")
 	
 #phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
 #            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
