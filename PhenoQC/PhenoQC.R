@@ -1,3 +1,5 @@
+#Phenotype QC
+
 #Load packages and set up wd
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
