@@ -1,4 +1,4 @@
-#Phenotype QC
+#Phenotype QC (separate from vegetarian designating)
 
 #Load packages and set up wd
 suppressMessages(library(plyr))
