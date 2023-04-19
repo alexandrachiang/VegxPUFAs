@@ -1,3 +1,5 @@
+#Get all suggested and significant SNPs from GEM results and save as txt files
+
 library(tidyverse)
 
 setwd("/scratch/ahc87874/Fall2022/CombinedAllColFull/")
