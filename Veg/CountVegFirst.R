@@ -1,4 +1,4 @@
-# Get counts for CSRV and SSRV for the initial and recall surveys
+# Get counts for CSRV and SSRV for the initial and recall surveys, first response only
 # CSRV = self-ID vegatarian, field 20086
 # SSRV = true vegetarian, field 
 
@@ -29,12 +29,14 @@ if (FALSE) {
   ukb <- as_tibble(ukb)
 }
 
+#Load auxillary datasets
 if (FALSE) {
   NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
   Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
   Meds2 <- as_tibble(read.table("updated_42606/ukb42606.tab", header = TRUE, sep = "\t")) #For Statins
   
+  #Subset needed columns & rename
   BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
 
   colnames(BMI) <- c("IID", "body_mass_index_f21001_0_0")
@@ -83,6 +85,7 @@ if (FALSE) {
   Statins <- Statins %>% mutate(treatment_medication_code_f20003_0 = ifelse(apply(Statins, 1, function(r) any(r %in% StatinCodes)) == TRUE, 1, 0)) %>% select(f.eid, treatment_medication_code_f20003_0)
   colnames(Statins) <- c("IID", "treatment_medication_code_f20003_0")
   
+  #Save datasets
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
   write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.txt",
@@ -104,6 +107,7 @@ if (FALSE) {
 colnames(ukb)[1] <- "IID"
 ukb <- ukb %>% mutate(FID = IID)
 
+#Subset columns
 ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, genetic_sex_f22001_0_0, 
                        ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0, 
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
@@ -393,6 +397,7 @@ if (isCredible) {
 #  African                       423      3
 #  Any other Black background     13      0
 
+#Save dataset
 if (FALSE) {
   
   if (!isCredible) {
