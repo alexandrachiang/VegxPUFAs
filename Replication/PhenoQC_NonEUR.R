@@ -69,7 +69,7 @@ bd_QC <- as_tibble(bd_QC) #502413
 bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448155
 
 #Filter by Genetic ethnicity != Caucasian VIA PAN UKBB
-bd_QC <- bd_QC[bd_QC$pop != "EUR", ] #426847
+bd_QC <- bd_QC[bd_QC$pop != "EUR" & bd_QC$Race != "White" & bd_QC$Race != "Any other white background" & bd_QC$Race != "British", ] #20279
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
@@ -103,4 +103,29 @@ write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_No
             row.names = FALSE, quote = FALSE)
             
 #Start with 502527 participants
-#End with 356950 participants, removed 145577
+#End with 18,866 participants, removed 
+
+#table(bd_QC$Race)
+#       Prefer not to answer                Do not know
+#                       271                         61
+#                     White                      Mixed
+#                         0                         13
+#    Asian or Asian British     Black or Black British
+#                        23                         18
+#                   Chinese         Other ethnic group
+#                      1434                       2421
+#                   British                      Irish
+#                         0                          1
+#Any other white background  White and Black Caribbean
+#                         0                        111
+#   White and Black African            White and Asian
+#                        80                        123
+#Any other mixed background                     Indian
+#                       286                       4962
+#                 Pakistani                Bangladeshi
+#                      1571                        193
+#Any other Asian background                  Caribbean
+#                      1317                       3479
+#                   African Any other Black background
+#                      2206                         76
+
