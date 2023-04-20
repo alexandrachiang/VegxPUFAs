@@ -68,8 +68,8 @@ colnames(bd_QC) <- c("IID", "Sex", "Genetic_Sex", "Race",
 bd_QC <- as_tibble(bd_QC) #502413
 bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448155
 
-#Filter by Genetic ethnicity = Caucasian VIA PAN UKBB
-bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426847
+#Filter by Genetic ethnicity != Caucasian VIA PAN UKBB
+bd_QC <- bd_QC[bd_QC$pop != "EUR", ] #426847
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
@@ -99,7 +99,7 @@ bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356950
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
-write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.txt",
+write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_NonEur.txt",
             row.names = FALSE, quote = FALSE)
             
 #Start with 502527 participants
