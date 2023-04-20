@@ -1,4 +1,4 @@
-# BIOL4970RFall2022
+# VegxPUFAs
 
 1. Move all necessary files in scratch
     - /bgen_v1.2_UKBsource (ukb genotype data)
