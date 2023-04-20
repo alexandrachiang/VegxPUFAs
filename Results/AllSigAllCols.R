@@ -4,7 +4,8 @@ library(tidyverse)
 
 setwd("/scratch/ahc87874/Fall2022/CombinedAllColFull/")
 
-if (TRUE) {
+#Import Combined GEM results
+if (FALSE) {
   phenonames <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
                   "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
                   "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
@@ -16,6 +17,7 @@ if (TRUE) {
   suffix <- "Full"
   dir <- "/scratch/ahc87874/Fall2022/CombinedAllColFull"
 
+  #Loopp through phenos, combine suggested & significant SNPs
   for (i in 1:length(phenos)) {
     print(paste("pheno:", phenos[i]))
     infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures, suffix, "alltab.txt", sep = ""), sep = "/"), 
