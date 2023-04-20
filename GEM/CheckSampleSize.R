@@ -1,14 +1,20 @@
-library(tidyverse)
+#Get the sample size of GEM (complete for everything)
 
-phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt", sep = "\t", 
+#Packages & Datasets
+library(tidyverse)
+pheno <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/CSRVSSRVwKeep.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
-genoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", 
+phenoQCgenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", 
                                header = TRUE, stringsAsFactors = FALSE))
 
-phenoQC <- phenoQC %>% mutate(hasPCA = !is.na(genetic_principal_components_f22009_0_1))
-genoQC <- genoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
+#Remove if missing PCA
+pheno <- pheno %>% mutate(hasPCA = !is.na(genetic_principal_components_f22009_0_1))
 
-bothQC <- left_join(phenoQC, genoQC, by = "IID")
+#Add column if the participant has genotype data & subset (all IIDs in this should have genetic data)
+phenoQCgenoQC <- phenoQCgenoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
+
+#Combine datasets & subset needed columns
+bothQC <- left_join(pheno, phenoQCgenoQC, by = "IID")
 
 bothQC2 <- bothQC %>% select(FID, IID, 
                              sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0,
@@ -23,8 +29,11 @@ bothQC2 <- bothQC %>% select(FID, IID,
 covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10")
 
 names(bothQC2)[3:(2 + length(covars))] <- covars
+
+#Has genetic data if IID appeared in genoQC output
 bothQC2 <- bothQC2 %>% mutate(hasGenoData = !is.na(hasGenoData))
 
+#Remove if missing covariate data
 covars2 <- c("Sex", "Age", "Townsend")
 bothQC3 <- bothQC2[complete.cases(bothQC2[, covars2]), ] #210,702
 
@@ -36,6 +45,7 @@ table(bothQC4, useNA = "always")
 #  TRUE   51457 155182      0
 #  <NA>       0      0      0
 
+#Remove if missing genotype data (PCA = genotype data so no one should be removed)
 bothQC5 <- bothQC3 %>% filter(hasGenoData == TRUE) %>% select(CSRV, SSRV)
 
 table(bothQC$CSRV, useNA = "always")
@@ -92,6 +102,7 @@ colSums(is.na(bothQC2)) %>% as.data.frame()
 #hasPCA                   0
 #hasGenoData              0
 
+#Get complete cases
 cc <- c("IID", "Sex", "Age", "Townsend", "PC1", "w3FA")
 bothQC6 <- bothQC2[complete.cases(bothQC2[, cc]), ]
 bothQC6 <- bothQC6 %>% filter(hasGenoData == TRUE) #37,106
