@@ -1,4 +1,4 @@
-#Combine GEM results for all 22 chr into one file
+#Combine GEM results for all 22 chr into one file, subset columns
 
 library(tidyverse)
 library(scales)
