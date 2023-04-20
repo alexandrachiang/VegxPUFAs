@@ -10,7 +10,7 @@ suffix <- "wKeep"
 ukbSSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".txt", sep = ""), sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
 
-if (FALSE) {
+if (FALSE) { #Covars we arent using
   #Select necessary columns
   GEMpheno <- ukbSSRV %>% select(FID, IID, 
                                  sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0,
