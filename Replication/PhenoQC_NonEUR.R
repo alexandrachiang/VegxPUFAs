@@ -16,10 +16,10 @@ ukb <- ukb_df("ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
-setwd("/scratch/ahc87874/Fall2022/pheno/48364")
-ukbNMR <- as_tibble(ukb_df("ukb48364"))
+#setwd("/scratch/ahc87874/Fall2022/pheno/48364")
+#ukbNMR <- as_tibble(ukb_df("ukb48364"))
 
-ukbNMR <- as_tibble(read.table("48364/ukb48364.tab",
+ukbNMR <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/48364/ukb48364.tab",
                     header=TRUE, sep="\t"))
 
 setwd("/scratch/ahc87874/Fall2022/pheno")
