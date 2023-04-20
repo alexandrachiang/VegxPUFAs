@@ -10,6 +10,8 @@
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 
+#Get the alleles of every participant at select SNPs
+
 ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
 
 genoindir=("/scratch/ahc87874/Fall2022/geno")
