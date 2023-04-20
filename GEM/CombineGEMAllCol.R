@@ -1,3 +1,5 @@
+#Combine GEM results for all 22 chr into one file
+
 library(tidyverse)
 library(scales)
 
