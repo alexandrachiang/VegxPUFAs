@@ -105,6 +105,7 @@ write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_No
 #Start with 502527 participants
 #End with 18,866 participants, removed 
 
+table(bd_QC$pop)
 #table(bd_QC$Race)
 #       Prefer not to answer                Do not know
 #                       271                         61
