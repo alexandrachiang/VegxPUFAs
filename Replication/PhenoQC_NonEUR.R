@@ -69,7 +69,8 @@ bd_QC <- as_tibble(bd_QC) #502413
 bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448155
 
 #Filter by Genetic ethnicity != Caucasian VIA PAN UKBB
-bd_QC <- bd_QC[bd_QC$pop != "EUR", ] #20279
+#bd_QC <- bd_QC[bd_QC$pop != "EUR", ] #20279
+bd_QC <- bd_QC[bd_QC$pop == "CSA", ]
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
@@ -99,9 +100,11 @@ bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356950
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
-write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_NonEur.txt",
+#write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_NonEur.txt",
+#            row.names = FALSE, quote = FALSE)
+write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_CSA.txt",
             row.names = FALSE, quote = FALSE)
-            
+
 #Start with 502527 participants
 #End with 18,866 participants, removed 
 
