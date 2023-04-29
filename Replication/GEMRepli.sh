@@ -18,7 +18,7 @@ cd /scratch/ahc87874/Fall2022
 ml GEM/1.4.3-intel-2020b
 
 genodir=("/scratch/ahc87874/Replication/genoCSA")
-phenodir=("/scratch/ahc87874/Replication/pheno")
+phenodir=("/scratch/ahc87874/Fall2022/pheno")
 outdir=("/scratch/ahc87874/Replication/GEM")
 mkdir -p $outdir
 
