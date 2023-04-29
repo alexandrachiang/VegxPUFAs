@@ -13,7 +13,7 @@
 
 i=$SLURM_ARRAY_TASK_ID
 
-cd /scratch/ahc87874/Fall2022
+cd /scratch/ahc87874/Replication
 
 ml GEM/1.4.3-intel-2020b
 
@@ -53,7 +53,7 @@ PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 \
 --robust 1 \
 --exposure-names "$e" \
 --thread 16 \
---output-style "full"
+--output-style "full" \
 --out $outdir/$j/"$j"x"$e"-chr"$i"
 
 done
