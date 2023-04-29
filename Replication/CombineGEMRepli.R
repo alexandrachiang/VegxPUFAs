@@ -43,7 +43,7 @@ exposures <- c("CSRV", "SSRV")
 
         #Save data table of all chr for pheno x exposure
         outdir = "/scratch/ahc87874/Replication/CombinedCSA/"
-        write.table(infileall, paste(outdir, i, "x", j, suffix, "alltab.txt", sep = ""), 
+        write.table(infileall, paste(outdir, i, "x", j, "alltab.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE, sep = "\t")
 	#write.table(infileall, paste(outdir, i, "x", j, "all.txt", sep = ""), 
         #            row.names = FALSE, quote = FALSE)
