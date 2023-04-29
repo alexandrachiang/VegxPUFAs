@@ -14,7 +14,7 @@
 
 ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
 
-genoindir=("/scratch/ahc87874/Replication/genoCSA")
+genoindir=("/scratch/ahc87874/Replication/geno")
 outdir=("/scratch/ahc87874/Replication/alleles")
 mkdir -p $outdir
 i=("13")
@@ -28,4 +28,7 @@ plink2 \
 --export A \
 --out "$outdir"/chr"$i"
 
+#--snp rs67393898
 #--snps rs72880701, rs1817457, rs149996902 \
+#--snp 9:140508031_A_G
+#--snp rs62255849
