@@ -23,7 +23,7 @@ if (TRUE) {
       infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures[j], "alltab.txt", sep = ""), sep = "/"), 
                                            header = TRUE, stringsAsFactors = FALSE))
 
-      infile <- infile %>% mutate(Pheno = phenos[i], Expose = exposures) %>% select(SNPID, RSID, Pheno, Expose, everything())
+      infile <- infile %>% mutate(Pheno = phenos[i], Expose = exposures[j]) %>% select(SNPID, RSID, Pheno, Expose, everything())
 
       infileSuggest <- infile %>% filter(robust_P_Value_Interaction <= 5e-5)
       infileSignif <- infile %>% filter(robust_P_Value_Interaction <= 5e-8)
