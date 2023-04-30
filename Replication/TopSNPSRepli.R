@@ -1,59 +1,70 @@
+#Get all suggested and significant SNPs from GEM results and save as txt files
+
 library(tidyverse)
-library(scales)
 
-setwd("/scratch/ahc87874/Replication")
+setwd("/scratch/ahc87874/Replication/CombinedCSA/")
 
-#phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
-#            "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
-#            "MUFA_TFAP", "PUFA_MUFA_ratio")
-phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
-            "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
-            "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")            
+#Import Combined GEM results
+if (TRUE) {
+  phenonames <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", "DHA_NMR", 
+                  "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP", "MUFA_NMR", 
+                  "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
+  phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
+              "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
+              "MUFA_TFAP", "PUFA_MUFA_ratio")
 
-SNPsSum <- as_tibble(cbind(rep(phenos, each = 2), 
-                               rep(c("CSRV", "SSRV"), times = length(phenos)), 
-                               data.frame(matrix(ncol = 3, nrow = 2 * length(phenos)))))
-names(SNPsSum) <- c("Phenotype", "Exposure", "p5eneg5", "p5eneg8", "Smallestp")
+  exposures <- c("CSRV", "SSRV")
+  dir <- "/scratch/ahc87874/Replication/CombinedCSA"
 
-SigSNPs <- as_tibble(matrix(ncol = 7))
-names(SigSNPs) <- c("Pheno", "Exposure", "CHR", "BP", "P", "Beta", "SNP")
+  #Loop through phenos, combine suggested & significant SNPs
+  for (j in 1:length(exposures)) {
+    for (i in 1:length(phenos)) {
+      print(paste("pheno:", phenos[i]))
+      infile <- as_tibble(read.table(paste(dir, paste(phenonames[i], "x", exposures[j], "alltab.txt", sep = ""), sep = "/"), 
+                                           header = TRUE, stringsAsFactors = FALSE))
 
-for (i in 1:length(phenos)) {
-  CSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Replication/CombinedCSA/", phenos[i], "xCSRV", "alltab.txt", sep = ""), 
-                                            header = TRUE, stringsAsFactors = FALSE))
-  SSRV <- as_tibble(read.table(paste("/scratch/ahc87874/Replication/CombinedCSA/", phenos[i], "xSSRV", suffix, "alltab.txt", sep = ""), 
-                                            header = TRUE, stringsAsFactors = FALSE))
-  names(CSRV) <- c("CHR", "BP", "P", "Beta", "SNP")
-  names(SSRV) <- c("CHR", "BP", "P", "Beta", "SNP")
+      infile <- infile %>% mutate(Pheno = phenos[i], Expose = exposures) %>% select(SNPID, RSID, Pheno, Expose, everything())
+
+      infileSuggest <- infile %>% filter(robust_P_Value_Interaction <= 5e-5)
+      infileSignif <- infile %>% filter(robust_P_Value_Interaction <= 5e-8)
+
+      #Add to input
+      if (i == 1) {
+        AllSuggest <- infileSuggest
+        AllSignif <- infileSignif
+      } else {
+        AllSuggest <- rbind(AllSuggest, infileSuggest)
+        AllSignif <- rbind(AllSignif, infileSignif)
+      } #ifelse  
+    }
   
-  SNPsSum$p1eneg5[1 + 2 * (i - 1)] <- CSRV %>% filter(P <= 5e-5) %>% nrow()
-  SNPsSum$p1eneg5[2 + 2 * (i - 1)] <- SSRV %>% filter(P <= 5e-5) %>% nrow()
-  SNPsSum$p5eneg8[1 + 2 * (i - 1)] <- CSRV %>% filter(P <= 5e-8) %>% nrow()
-  SNPsSum$p5eneg8[2 + 2 * (i - 1)] <- SSRV %>% filter(P <= 5e-8) %>% nrow()
-  SNPsSum$Smallestp[1 + 2 * (i - 1)] <- scientific(min(CSRV$P, na.rm = TRUE), digits = 6)
-  SNPsSum$Smallestp[2 + 2 * (i - 1)] <- scientific(min(SSRV$P, na.rm = TRUE), digits = 6)
-
-  if (SNPsSum$p5eneg8[1 + 2 * (i - 1)] != 0) {
-    x <- CSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "CSRV") %>% select(Pheno, Exposure, everything())
-    SigSNPs <- rbind(SigSNPs, x)
+    outdir = "/scratch/ahc87874/Replication/CombinedCSA/"
+    write.table(AllSuggest, paste(outdir, "AllSuggest", exposures[j], "CSA.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
+    write.table(AllSignif, paste(outdir, "AllSignificant", exposures[j], "CSA.txt", sep = ""), row.names = FALSE, quote = FALSE, sep = "\t")
   }
+} else {
+  outdir = "/scratch/ahc87874/Fall2022/CombinedAllColFull/"
+  AllSuggest <- as_tibble(read.table(paste(outdir, "AllSuggestAllColsFull.txt", sep = ""), 
+                                     header = TRUE, stringsAsFactors = FALSE))
+  AllSignif <- as_tibble(read.table(paste(outdir, "AllSignificantAllColsFull.txt", sep = ""), 
+                                    header = TRUE, stringsAsFactors = FALSE))
+}  
+  nrow(AllSuggest)
+  #4068
+  length(unique(AllSuggest$RSID))
+  #2603
+  table(AllSuggest$Pheno)
+  #      DHA        DHA_TFAP              LA         LA_TFAP            MUFA
+  #       93             178             261             189             307
+  #MUFA_TFAP            PUFA PUFA_MUFA_ratio       PUFA_TFAP            w3FA
+  #      243             284             339             382             329
+  #w3FA_TFAP            w6FA       w6FA_TFAP     w6_w3_ratio
+  #      239             250             462             512
   
-  if (SNPsSum$p5eneg8[2 + 2 * (i - 1)] != 0) {
-    x <- SSRV %>% filter(P <= 5e-8) %>% mutate(Pheno = phenos[i], Exposure = "SSRV") %>% select(Pheno, Exposure, everything())
-    SigSNPs <- rbind(SigSNPs, x)
-  }
-}
-
-SNPsSum
-SigSNPs <- SigSNPs[-1, ]
-SigSNPs <- SigSNPs %>% arrange(P)
-SigSNPs$P <- scientific(SigSNPs$P, digits = 6)
-SigSNPs
-
-write.table(SNPsSum, file = paste("/scratch/ahc87874/Replication/SNPsTableCSA.txt", sep = ""),
-            sep = "\t", row.names = FALSE, quote = FALSE)
-write.table(SigSNPs, file = paste("/scratch/ahc87874/Replication/SigSNPsCSA.txt", sep = ""),
-            sep = "\t", row.names = FALSE, quote = FALSE)
-
-#infileallsig <- as_tibble(read.table("/scratch/ahc87874/Fall2022/Combined/wKeepallSigSNPs.txt", header = TRUE, stringsAsFactors = FALSE))
-#infileallsig %>% select(Phenotype, Exposure, CHR, POS, RSID, Effect_Allele, Non_Effect_Allele, AF, Beta_G, robust_SE_Beta_G, robust_P_Value_Interaction)
+  nrow(AllSignif)
+  #4
+  length(unique(AllSignif$RSID))
+  #4
+  table(AllSignif$Pheno)
+  #LA_TFAP   w3FA_TFAP w6_w3_ratio
+  #      2           1           1
