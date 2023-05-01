@@ -169,13 +169,9 @@ for (i in 1:nrow(x)) {
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
   print(phenoavg)
   
-  genofreq <- data.frame(table(phenoavg$Genotype))
+  genofreq <- data.frame(table(phenoavg$Genotype[!is.na(phenoavg$Exposure)]))
   xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
   #should these be split by exposure too
-  
-  phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean, StdE = stderror))
-  phenoavg <- phenoavg %>% mutate(PhenoMax = Mean + StdE, PhenoMin = Mean - StdE)
-  print(phenoavg)
   
   Expose <- x[i, 1]
   
