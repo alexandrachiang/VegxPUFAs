@@ -20,8 +20,6 @@ if (TRUE) {
   pheno$CSRV <- replace(pheno$CSRV, pheno$CSRV == "1", "Veg")
   pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "0", "NonVeg")
   pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
-
-  alleles <- pheno
   
   pan <- read_tsv("/scratch/ahc87874/Fall2022/pheno/all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
   pan <- as_tibble(pan)
@@ -33,19 +31,22 @@ if (TRUE) {
   colnames(bridge) <- c("IID", "panID")
   pan2 <- pan %>% select(s, pop) %>% left_join(bridge, by = c("s" = "panID"))
   
-  alleles <- left_join(pheno, pan2, by = c("s" = "panID"))
+  alleles <- left_join(pheno, pan2, by = "IID")
+  alleles <- alleles %>% select(-s)
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load geno
-  alleledir <- "/scratch/ahc87874/Replication/alleles"
+  alleledir <- "/scratch/ahc87874/Replication/alleles/"
   pgendir <- "/scratch/ahc87874/Fall2022/pgen/"
   chrs <- c(9, 11)
 
   for (i in chrs) {
-    geno <- as_tibble(read_delim(paste(alleledir, "chr", i, "SNP.raw", sep = "")))
+    geno <- as_tibble(read_delim(paste(alleledir, "chr", i, ".raw", sep = "")))
     geno <- geno %>% select(IID, starts_with("rs"), contains(":"))
     alleles <- left_join(alleles, geno)
   }
 
+  alleles2 <- alleles
+  alleles <- alleles %>% filter(pop == "CSA")
   #names(alleles)
   # [1] "FID"                 "IID"                 "CSRV"
   # [4] "SSRV"                "w3FA"                "w3FA_TFAP"
