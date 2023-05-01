@@ -281,6 +281,8 @@ x <- matrix(x, ncol = 5, byrow = TRUE)
 
 #Remove outlier
 alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
+names(alleles3)[names(alleles3) == "CSRV"] <- "Self-ID"
+names(alleles3)[names(alleles3) == "SSRV"] <- "Strict"
 
 for (i in 1:nrow(x)) {
   print(x[i, ])
