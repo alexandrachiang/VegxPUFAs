@@ -183,7 +183,7 @@ for (i in 1:nrow(x)) {
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
   print(phenoavg)
   
-  genofreq <- data.frame(table(phenoavg$Genotype))
+  genofreq <- data.frame(table(phenoavg$Genotype[!is.na(phenoavg$Exposure)]))
   xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
   #should these be split by exposure too
   
