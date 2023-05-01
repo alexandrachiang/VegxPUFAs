@@ -126,6 +126,10 @@ bothQC6 %>% select(SSRV, pop) %>% table(useNA="always")
 #  <NA>    16   3 119   6   3    0
 
 
+bothQC7 <- bothQC6 %>% filter(pop == "CSA") %>% mutate(GEM = TRUE) %>% select(IID, GEM) 
+write.table(bothQC7, file = paste("/scratch/ahc87874/Replication/CSAGEMlist.txt", sep = ""),
+                sep = "\t", row.names = FALSE, quote = FALSE)
+
 #Difference
 #CSRV NonVeg = 166944
 #CSRV Veg = 6917
