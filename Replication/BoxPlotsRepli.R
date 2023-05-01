@@ -6,8 +6,7 @@ reso <- 135
 if (TRUE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load pheno
-
-  pheno <- as_tibble(read.table("/scratch/ahc87874/Replication/GEMphenoRepli.txt", sep = "\t", 
+  pheno <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", "wKeep", ".txt", sep = ""), sep = "\t", 
                                   header = TRUE, stringsAsFactors = FALSE))
   
   cc <- c("IID", "Sex", "Age", "Townsend") #, "PC1"
@@ -23,11 +22,23 @@ if (TRUE) {
   pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
 
   alleles <- pheno
+  
+  pan <- read_tsv("/scratch/ahc87874/Fall2022/pheno/all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
+  pan <- as_tibble(pan)
+  pan$s <- as.integer(pan$s)
+  table(pan$pop, useNA = "always")
+
+  bridge <- read.table("/scratch/ahc87874/Fall2022/pheno/ukb48818bridge31063.txt")
+  bridge <- as_tibble(bridge)
+  colnames(bridge) <- c("IID", "panID")
+  pan2 <- pan %>% select(s, pop) %>% left_join(bridge, by = c("s" = "panID"))
+  
+  alleles <- left_join(pheno, pan2, by = c("s" = "panID"))
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load geno
-  alleledir <- "/scratch/ahc87874/Fall2022/alleles/"
+  alleledir <- "/scratch/ahc87874/Replication/alleles"
   pgendir <- "/scratch/ahc87874/Fall2022/pgen/"
-  chrs <- c(3, 9, 11, 13)
+  chrs <- c(9, 11)
 
   for (i in chrs) {
     geno <- as_tibble(read_delim(paste(alleledir, "chr", i, "SNP.raw", sep = "")))
