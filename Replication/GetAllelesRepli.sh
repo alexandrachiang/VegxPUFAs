@@ -26,6 +26,7 @@ plink2 \
 --bgen $genoindir/ukb_imp_chr"$i"_v3.bgen ref-first \
 --sample $genoindir/ukb_imp_v3.sample \
 --snps rs72880701, rs1817457, rs149996902 \
+--keep /scratch/ahc87874/Replication/phenoQC_NonEur.txt \
 --export A \
 --out "$outdir"/chr"$i"
 
