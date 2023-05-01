@@ -3,7 +3,7 @@ library(tidyverse)
 setwd("/scratch/ahc87874/Replication/")
 reso <- 135
 
-if (TRUE) {
+if (FALSE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load pheno
   pheno <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", "wKeep", ".txt", sep = ""), sep = "\t", 
@@ -21,18 +21,15 @@ if (TRUE) {
   pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "0", "NonVeg")
   pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
   
-  pan <- read_tsv("/scratch/ahc87874/Fall2022/pheno/all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
-  pan <- as_tibble(pan)
-  pan$s <- as.integer(pan$s)
-  table(pan$pop, useNA = "always")
-
-  bridge <- read.table("/scratch/ahc87874/Fall2022/pheno/ukb48818bridge31063.txt")
-  bridge <- as_tibble(bridge)
-  colnames(bridge) <- c("IID", "panID")
-  pan2 <- pan %>% select(s, pop) %>% left_join(bridge, by = c("s" = "panID"))
+  #GEM <- as_tibble(read.table("/scratch/ahc87874/Replication/CSAGEMlist.txt", sep = "\t", 
+  #                                header = TRUE, stringsAsFactors = FALSE))
+  phenoQC <- as_tibble(read.table("/scratch/ahc87874/Replication/phenoQC_CSA.txt", 
+                                  header = TRUE, stringsAsFactors = FALSE))
+  #GEM <- GEM %>% select(IID)
+  phenoQC <- phenoQC %>% select(IID)
+  #allelesGEM <- inner_join(pheno, GEM, by = "IID")
+  alleles <- inner_join(pheno, phenoQC, by = "IID")
   
-  alleles <- left_join(pheno, pan2, by = "IID")
-  alleles <- alleles %>% select(-s)
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load geno
   alleledir <- "/scratch/ahc87874/Replication/alleles/"
@@ -44,18 +41,16 @@ if (TRUE) {
     geno <- geno %>% select(IID, starts_with("rs"), contains(":"))
     alleles <- left_join(alleles, geno)
   }
-
-  alleles2 <- alleles
-  alleles <- alleles %>% filter(pop == "CSA")
+  
   #names(alleles)
   # [1] "FID"                 "IID"                 "CSRV"
-  # [4] "SSRV"                "w3FA"                "w3FA_TFAP"
-  # [7] "w6FA"                "w6FA_TFAP"           "w6_w3_ratio"
-  #[10] "DHA"                 "DHA_TFAP"            "LA"
-  #[13] "LA_TFAP"             "PUFA"                "PUFA_TFAP"
-  #[16] "MUFA"                "MUFA_TFAP"           "PUFA_MUFA_ratio"
-  #[19] "rs62255849_C"        "9:140508031_A_G_G"   "rs72880701_T"
-  #[22] "rs1817457_A"         "rs149996902_C"       "rs67393898_T"
+  # [4] "SSRV"                "w3FA_NMR"            "w3FA_NMR_TFAP"
+  # [7] "w6FA_NMR"            "w6FA_NMR_TFAP"       "w6_w3_ratio_NMR"
+  #[10] "DHA_NMR"             "DHA_NMR_TFAP"        "LA_NMR"
+  #[13] "LA_NMR_TFAP"         "PUFA_NMR"            "PUFA_NMR_TFAP"
+  #[16] "MUFA_NMR"            "MUFA_NMR_TFAP"       "PUFA_MUFA_ratio_NMR"
+  #[19] "9:140508031_A_G_A"   "rs72880701_G"        "rs1817457_A"
+  #[22] "rs149996902_C"
 
   #Check major and minor alleles
   rsIDs <- c("rs62255849", "9:140508031_A_G", "rs72880701", "rs1817457", "rs149996902", "rs67393898")
@@ -69,34 +64,32 @@ if (TRUE) {
   SNPs
   #  `#CHROM`       POS ID              REF   ALT
   #     <dbl>     <dbl> <chr>           <chr> <chr>
-  #1        3  24215321 rs62255849      T     C
   #2        9 140508031 9:140508031_A_G A     G
   #3       11  24685414 rs72880701      G     T
-  #4       11  36945182 rs1817457       A     G #Different for Europeans, switch for major/minor
-  #5       11  36953685 rs149996902     C     CT #Different for Europeans, switch for major/minor
-  #6       13  98799253 rs67393898      G     T
+  #4       11  36945182 rs1817457       A     G
+  #5       11  36953685 rs149996902     C     CT
   
   #majorallele_minorallele
-  names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
-                                                         "rs1817457_G_A", "rs149996902_CT_C", "rs67393898_G_T")
+  names(alleles)[(ncol(alleles) - 3):ncol(alleles)] <- c("rs34249205_A_G", "rs72880701_G_T", 
+                                                         "rs1817457_A_G", "rs149996902_C_CT")
   
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Complete cases
   #colSums(is.na(df))
-  alleles <- alleles[complete.cases(alleles$w3FA), ]
-  alleles <- alleles[complete.cases(alleles$rs62255849_T_C), ]
+  alleles <- alleles[complete.cases(alleles$w3FA_NMR), ]
+  alleles <- alleles[complete.cases(alleles$rs34249205_A_G), ]
   
   #alleles %>% select(CSRV,SSRV) %>% table(useNA="always")
-  #          SSRV
-  #CSRV     NonVeg   Veg  <NA>
-  #  NonVeg  35780     0     0
-  #  Veg         0   568   758
-  #  <NA>        0     0     0
+  #           SSRV
+  #CSRV     NonVeg Veg <NA>
+  #  NonVeg    460   0    0
+  #  Veg         0  45  119
+  #  <NA>        0   0    0
   
-  write.table(alleles, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno.txt", sep = ""),
+  write.table(alleles, file = paste("/scratch/ahc87874/Replication/alleles/PhenoGeno.txt", sep = ""),
               sep = "\t", row.names = FALSE, quote = FALSE)
 } else {
-  alleles <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno.txt", 
+  alleles <- as_tibble(read.table("/scratch/ahc87874/Replication/alleles/PhenoGeno.txt", 
                                   header = TRUE, stringsAsFactors = FALSE))
 }
 
@@ -104,12 +97,10 @@ if (FALSE) {
   alleles2 <- alleles
 
   #Range for all SNPs is 0 to 2
-  alleles2$rs62255849_T_C = round(alleles2$rs62255849_T_C, digits = 0)
   alleles2$rs34249205_A_G = round(alleles2$rs34249205_A_G, digits = 0)
   alleles2$rs72880701_G_T = round(alleles2$rs72880701_G_T, digits = 0)
-  alleles2$rs1817457_G_A = round(alleles2$rs1817457_G_A, digits = 0)
-  alleles2$rs149996902_CT_C = round(alleles2$rs149996902_CT_C, digits = 0)
-  alleles2$rs67393898_G_T = round(alleles2$rs67393898_G_T, digits = 0)
+  alleles2$rs1817457_A_G = round(alleles2$rs1817457_A_G, digits = 0)
+  alleles2$rs149996902_C_CT = round(alleles2$rs149996902_C_CT, digits = 0)
 
   #Get minor allele %
   test <- alleles2 %>% select(starts_with("rs"))
@@ -119,49 +110,35 @@ if (FALSE) {
     print(table(test[, i]))
     print(round((sum(test[, i]) / (nrow(test) * 2)), digits = 4))
   }
-  #"rs62255849_T_C"
-  #    0     1     2
-  #34755  2309    42
-  #0.0322
-  #"rs34249205_A_G"
-  #    0     1     2
-  #28419  8096   591
-  #0.125
-  #"rs72880701_G_T"
-  #    0     1     2
-  #31909  4985   212
-  #0.0729
-  #"rs1817457_G_A"
-  #    0     1     2
-  #18776 15201  3129
-  #0.2892
-  #"rs149996902_CT_C"
-  #    0     1     2
-  #18812 15170  3124
-  #0.2886
-  #"rs67393898_G_T"
-  #    0     1     2
-  #28544  8003   559
-  #0.1229
+  #[1] "rs34249205_A_G"
+  #  0   1   2
+  # 28 158 438
+  #[1] 0.8285
+  
+  #[1] "rs72880701_G_T"
+  #  0   1   2
+  #  4  32 588
+  #[1] 0.9679
+  
+  #[1] "rs1817457_A_G"
+  #  0   1   2
+  #196 315 113
+  #[1] 0.4335
+  
+  #[1] "rs149996902_C_CT"
+  #  0   1   2
+  #196 312 116
+  #[1] 0.4359
 
-  alleles3 <- alleles2 %>% mutate(rs62255849_T_C = ifelse(rs62255849_T_C == 0, "TT", ifelse(rs62255849_T_C == 2, "CC", "TC")),
-                                  rs34249205_A_G = ifelse(rs34249205_A_G == 0, "AA", ifelse(rs34249205_A_G == 2, "GG", "AG")),
-                                  rs72880701_G_T = ifelse(rs72880701_G_T == 0, "GG", ifelse(rs72880701_G_T == 2, "TT", "GT")),
-                                  rs1817457_G_A = ifelse(rs1817457_G_A == 0, "GG", ifelse(rs1817457_G_A == 2, "AA", "GA")),
-                                  rs149996902_CT_C = ifelse(rs149996902_CT_C == 0, "CTCT", ifelse(rs149996902_CT_C == 2, "CC", "CCT")),
-                                  rs67393898_G_T = ifelse(rs67393898_G_T == 0, "GG", ifelse(rs67393898_G_T == 2, "TT", "GT")))
+  alleles3 <- alleles2 %>% mutate(rs34249205_A_G = ifelse(rs34249205_A_G == 0, "GG", ifelse(rs34249205_A_G == 2, "AA", "AG")),
+                                  rs72880701_G_T = ifelse(rs72880701_G_T == 0, "TT", ifelse(rs72880701_G_T == 2, "GG", "GT")),
+                                  rs1817457_A_G = ifelse(rs1817457_A_G == 0, "GG", ifelse(rs1817457_A_G == 2, "AA", "AG")),
+                                  rs149996902_C_CT = ifelse(rs149996902_C_CT == 0, "CTCT", ifelse(rs149996902_C_CT == 2, "CC", "CCT")))
 
-  #alleles3 %>% select(rs1817457_G_A, rs149996902_CT_C) %>% table()
-  #             rs149996902_CT_C
-  #rs1817457_G_A    CC   CCT  CTCT
-  #           AA  3073    53     3
-  #           GA    51 15000   150
-  #           GG     0   117 18659
-
-  write.table(alleles3, file = paste("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", sep = ""),
+  write.table(alleles3, file = paste("/scratch/ahc87874/Replication/alleles/PhenoGeno2.txt", sep = ""),
                 sep = "\t", row.names = FALSE, quote = FALSE)
 } else {
-  alleles3 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2.txt", 
+  alleles3 <- as_tibble(read.table("/scratch/ahc87874/Replication/alleles/PhenoGeno2.txt", 
                                   header = TRUE, stringsAsFactors = FALSE))
 }
 #x <- c("CSRV", "w6_w3_ratio", "mmol ratio", "rs67393898", 
@@ -171,9 +148,7 @@ if (FALSE) {
 #       "SSRV", "LA_TFAP", "%", "rs149996902",
 #       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
-x <- c("Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs67393898", "w6/w3 Ratio",
-       "Self-ID", "w6_w3_ratio_NMR", "mmol ratio", "rs62255849", "w6/w3 Ratio",
-       "Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701", "w6/w3 Ratio",
+x <- c("Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs72880701", "w6/w3 Ratio",
        "Strict", "LA_NMR_TFAP", "%", "rs1817457", "LA %",
        "Strict", "LA_NMR_TFAP", "%", "rs149996902", "LA %",
        "Strict", "w3FA_NMR_TFAP", "%", "rs34249205", "w3 %")
@@ -204,26 +179,10 @@ for (i in 1:nrow(x)) {
   
   Expose <- x[i, 1]
   
-  avgplot <- ggplot(phenoavg) + 
-               geom_bar(aes(x = Genotype, y = Mean, fill = Exposure), color = "black", stat = "identity", position = position_dodge(), alpha = 0.7) +
-               geom_errorbar(aes(x = Genotype, ymin = PhenoMin, ymax = PhenoMax, fill = Exposure), colour = "black", width = 0.3, 
-                             position = position_dodge(0.9), stat = "identity") + 
-               scale_fill_manual(values = c("#00BA38", "#F8766D")) +
-               labs(title = paste("Average", x[i, 5], "Levels\nby", x[i, 4]),
-                    x = paste(x[i, 4], "Genotype"),
-                    y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
-                    fill = paste(Expose, "Exposure")) + 
-               scale_x_discrete(labels = xlabs) + 
-               coord_cartesian(ylim = c(min(phenoavg$PhenoMin) - 0.5, max(phenoavg$PhenoMax) + 0.5))
-               
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 600, height = 700)
-  print(avgplot)
-  dev.off()
-  
   #Remove outlier
-  if (x[i, 2] == "w6_w3_ratio_NMR") {
-    alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
-  }
+  #if (x[i, 2] == "w6_w3_ratio_NMR") {
+  #  alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
+  #}
   
   alleles4 <- alleles3 %>% select(x[i, 1], x[i, 2], contains(x[i, 4]))
   alleles4 <- alleles4[complete.cases(alleles4), ]
@@ -234,14 +193,14 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels\nby", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nby", x[i, 4], "In CSA"),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
                scale_x_discrete(labels = xlabs) + 
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotCSA.png", sep = ""), 
       type = "cairo", width = 600, height = 700, res = reso)
   print(boxp)
   dev.off()
@@ -251,7 +210,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels\nbyy", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nbyy", x[i, 4], "In CSA"),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
@@ -259,7 +218,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHorizCSA.png", sep = ""), 
       type = "cairo", width = 600, height = 700, res = reso)
   print(boxp2)
   dev.off()
@@ -269,7 +228,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4], "In CSA"),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
@@ -277,7 +236,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="right", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2CSA.png", sep = ""), 
       type = "cairo", width = 600, height = 700, res = reso)
   print(boxp3)
   dev.off()
