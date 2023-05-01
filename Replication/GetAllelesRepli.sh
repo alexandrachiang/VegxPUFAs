@@ -15,16 +15,17 @@
 ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
 
 genoindir=("/scratch/ahc87874/Replication/geno")
+genoindir=("/scratch/ahc87874/Fall2022/bgen_v1.2_UKBsource")
 outdir=("/scratch/ahc87874/Replication/alleles")
 mkdir -p $outdir
-i=("13")
+i=("11")
 #13:rs67393898 11:rs72880701 11:rs1817457 11:rs149996902 9:140508031_A_G/9:rs34249205 3:rs62255849 
 #11:rs174583 FADS2
 
 plink2 \
---bgen $genoindir/chr"$i".bgen ref-first \
---sample $genoindir/chr"$i".sample \
---snp rs67393898 \
+--bgen $genoindir/ukb_imp_chr"$i"_v3.bgen ref-first \
+--sample $genoindir/ukb_imp_v3.sample \
+--snps rs72880701, rs1817457, rs149996902 \
 --export A \
 --out "$outdir"/chr"$i"
 
