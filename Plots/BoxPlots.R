@@ -205,7 +205,7 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs) + 
                coord_cartesian(ylim = c(min(phenoavg$PhenoMin) - 0.5, max(phenoavg$PhenoMax) + 0.5))
                
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 600, height = 700)
+  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 700, height = 700)
   print(avgplot)
   dev.off()
   
@@ -231,7 +231,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp)
   dev.off()
   
@@ -240,7 +240,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels\nbyy", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nby", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
@@ -249,7 +249,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp2)
   dev.off()
 
@@ -258,7 +258,7 @@ for (i in 1:nrow(x)) {
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
                scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
                scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
+               labs(title = paste("Distribution of", x[i, 5], "Levels\nby", x[i, 4]),
                     x = paste(x[i, 4], "Genotype"),
                     y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
                     fill = paste("Exposure")) + 
@@ -267,7 +267,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp3)
   dev.off()
 }
