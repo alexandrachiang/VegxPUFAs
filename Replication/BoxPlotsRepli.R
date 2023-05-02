@@ -197,7 +197,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotCSA.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp)
   dev.off()
   
@@ -215,7 +215,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHorizCSA.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp2)
   dev.off()
 
@@ -233,7 +233,7 @@ for (i in 1:nrow(x)) {
                coord_flip()
   
   png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2CSA.png", sep = ""), 
-      type = "cairo", width = 600, height = 700, res = reso)
+      type = "cairo", width = 700, height = 700, res = reso)
   print(boxp3)
   dev.off()
 }
