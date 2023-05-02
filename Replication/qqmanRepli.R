@@ -63,16 +63,21 @@ for (i in phenos) {
         phe <- "LA %"
         SNPs <- c("rs1817457", "rs149996902")
       }
-	   
-      print("Manhattan")
-      #Make manhattan plot
-      outdirman = "/scratch/ahc87874/Replication/manplots/"
-      png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
-      manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), col = c("#141a17", "#7b998a"),
-                   main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, -log10(1e-08)), 
-                   annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, 
-		   highlightcol = "#ff0000", highlighttextcol = "#ff0000")
+	    
+
+	    png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+      qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
       dev.off()
+	   
+      #print("Manhattan")
+      #Make manhattan plot
+      #outdirman = "/scratch/ahc87874/Replication/manplots/"
+      #png(filename = paste(outdirman, "FINAL", i, "man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
+      #manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), col = c("#141a17", "#7b998a"),
+      #             main = paste("Manhattan Plot of", phe, "GWIS", sep = " "), annotatePval = 5e-5, ylim = c(0, -log10(1e-08)), 
+      #             annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, 
+		  # highlightcol = "#ff0000", highlighttextcol = "#ff0000")
+      #dev.off()
 
       #print("QQ")
       #Make qq plot
