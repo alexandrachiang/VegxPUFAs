@@ -100,6 +100,7 @@ bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356950
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
+QCkeepparticipants <- QCkeepparticipants %>% distinct()
 #write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_NonEur.txt",
 #            row.names = FALSE, quote = FALSE)
 write.table(QCkeepparticipants, file = "/scratch/ahc87874/Replication/phenoQC_CSA.txt",
