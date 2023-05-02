@@ -87,7 +87,6 @@ for (i in phenos) {
       #qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
       #dev.off()
     }  
-  } #j exposures
 } #i phenos
 
 
