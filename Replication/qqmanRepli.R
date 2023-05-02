@@ -42,14 +42,13 @@ for (i in phenos) {
         } #k chr number
 
         #Save data table of all chr for pheno x exposure
-        outdirFUMA = "/scratch/ahc87874/Fall2022/FUMA/"
+        outdirFUMA = "/scratch/ahc87874/Replication/FUMA/"
         write.table(infileall, paste(outdirFUMA, i, "x", j, suffix, "all.txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
       } else {
-        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/Combined", suffix, "/", i, "x", j, "alltab.txt", sep = ""), 
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Replication/Combined", suffix, "/", i, "x", j, "alltab.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
-	    }
-      
+      }
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
@@ -82,9 +81,9 @@ for (i in phenos) {
       #png(filename = paste(outdirqq, "FINAL", i, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       #qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
       #dev.off()
-      }  
-    } #j exposures
-  } #i phenos
+    }  
+  } #j exposures
+} #i phenos
 
 
 #Colors
