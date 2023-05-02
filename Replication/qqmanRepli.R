@@ -63,9 +63,9 @@ for (i in phenos) {
         phe <- "LA %"
         SNPs <- c("rs1817457", "rs149996902")
       }
-	    
 
-	    png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+	    outdirman = "/scratch/ahc87874/Replication/qqplots/"
+      png(filename = paste(outdirqq, i, "x", j, suffix, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
       dev.off()
 	   
