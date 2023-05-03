@@ -24,7 +24,7 @@ echo "-=-=-=-=-=-=-=-STEP 1-=-=-=-=-=-=-=-\n\n"
 
 genoindir=("/scratch/ahc87874/Fall2022/bgen_v1.2_UKBsource")
 mfiscoredir=("/scratch/ahc87874/Fall2022/mfi/info0.5")
-outdir=("/scratch/ahc87874/Replication/geno")
+outdir=("/scratch/ahc87874/Replication/genoCSA")
 mkdir -p $outdir
 
 plink2 \
@@ -38,6 +38,6 @@ plink2 \
 --autosome \
 --maj-ref \
 --max-alleles 2 \
---keep /scratch/ahc87874/Replication/phenoQC_NonEur.txt \
+--keep /scratch/ahc87874/Replication/phenoQC_CSA.txt \
 --export bgen-1.2 bits=8 \
 --out "$outdir"/chr"$i"
