@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=batch
+#SBATCH --partition=highmem_p
 #SBATCH --job-name=TestQC
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=144:00:00
-#SBATCH --mem=30000
+#SBATCH --mem=300000
 #SBATCH --output=TestQC.%j.out
 #SBATCH --error=TestQC.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
