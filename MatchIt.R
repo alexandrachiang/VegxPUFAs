@@ -1,4 +1,4 @@
-# Do I need to add other pheno columns besides PUFAs? Probably join veg status and original ukb pheno data
+# Do I need to add other pheno columns besides PUFAs? Probably join GEMphenowKeep2.csv and original ukb pheno data
 suppressMessages(silent <- lapply(
     c("sandwich", "lmtest", "tidyverse", "MatchIt", "forestplot", "kableExtra"),
     library, character.only = T))
@@ -41,3 +41,10 @@ png(filename = paste(outdir, "LovePlot.png", sep = ""), type = "cairo", width = 
 plot(summary(match.nearest))
 dev.off()
 
+summary(match.nearest)
+
+md <- match.data(match.nearest)
+tab4 <- tab %>% select(everything(), -FID, -Sex, -Age, -Townsend, -(PC1:PC10), -SelfID, -Strict)
+md <- left_join(md, tab4)
+
+#Run glm with same covariates as matching
