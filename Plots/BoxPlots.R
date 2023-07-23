@@ -224,6 +224,9 @@ for (i in 1:nrow(x)) {
   alleles4 <- alleles4[complete.cases(alleles4), ]
   names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
   
+  *medNonVeg <- signif(median(alleles4$TotalCholesterol[pheno$CSRV=="Non-Vegetarian"], na.rm=TRUE), digits = 5)
+  *medVeg <- signif(median(alleles4$TotalCholesterol[pheno$CSRV=="Vegetarian"], na.rm=TRUE), digits = 5)
+  
   #vertical
   boxp <- ggplot(alleles4) +
                geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
