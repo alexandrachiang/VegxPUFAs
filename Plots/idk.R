@@ -6,9 +6,9 @@ alleles3 %>%
     min = min(w6_w3_ratio_NMR), 
     max = max(w6_w3_ratio_NMR), 
     mean = mean(w6_w3_ratio_NMR), 
-    quantile1 = quantile(w6_w3_ratio_NMR)[[2]], 
+    q1 = quantile(w6_w3_ratio_NMR)[[2]], 
     median = median(w6_w3_ratio_NMR), 
-    quantile3 = quantile(w6_w3_ratio_NMR)[[4]]) %>%
+    q3 = quantile(w6_w3_ratio_NMR)[[4]]) %>%
   as.data.frame()
 
 
@@ -20,9 +20,9 @@ alleles3 %>%
     min = min(LA_NMR_TFAP), 
     max = max(LA_NMR_TFAP), 
     mean = mean(LA_NMR_TFAP), 
-    quantile1 = quantile(LA_NMR_TFAP)[[2]], 
+    q1 = quantile(LA_NMR_TFAP)[[2]], 
     median = median(LA_NMR_TFAP), 
-    quantile3 = quantile(LA_NMR_TFAP)[[4]]) %>%
+    q3 = quantile(LA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
 
 
@@ -34,9 +34,9 @@ alleles3 %>%
     min = min(LA_NMR_TFAP), 
     max = max(LA_NMR_TFAP), 
     mean = mean(LA_NMR_TFAP), 
-    quantile1 = quantile(LA_NMR_TFAP)[[2]], 
+    q1 = quantile(LA_NMR_TFAP)[[2]], 
     median = median(LA_NMR_TFAP), 
-    quantile3 = quantile(LA_NMR_TFAP)[[4]]) %>%
+    q3 = quantile(LA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
 
 
@@ -48,7 +48,7 @@ alleles3 %>%
     min = min(w3FA_NMR_TFAP), 
     max = max(w3FA_NMR_TFAP), 
     mean = mean(w3FA_NMR_TFAP), 
-    quantile1 = quantile(w3FA_NMR_TFAP)[[2]], 
+    q1 = quantile(w3FA_NMR_TFAP)[[2]], 
     median = median(w3FA_NMR_TFAP), 
-    quantile3 = quantile(w3FA_NMR_TFAP)[[4]]) %>%
+    q3 = quantile(w3FA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
