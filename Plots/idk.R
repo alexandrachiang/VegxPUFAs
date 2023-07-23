@@ -1,4 +1,6 @@
-alleles3 %>% 
+setwd("/scratch/ahc87874/Fall2022/alleleplots")
+
+x <- alleles3 %>% 
   filter(!is.na(Strict)) %>% 
   group_by(rs72880701_G_T, Strict) %>% 
   summarise(
@@ -9,10 +11,11 @@ alleles3 %>%
     q1 = quantile(w6_w3_ratio_NMR)[[2]], 
     median = median(w6_w3_ratio_NMR), 
     q3 = quantile(w6_w3_ratio_NMR)[[4]]) %>%
-  as.data.frame()
+  as.data.frame() 
 
+write.csv(x, file = "rs72880701_alleles.csv", row.names = FALSE, quote = FALSE)
 
-alleles3 %>% 
+x <- alleles3 %>% 
   filter(!is.na(Strict)) %>% 
   group_by(rs1817457_G_A, Strict) %>% 
   summarise(
@@ -25,8 +28,9 @@ alleles3 %>%
     q3 = quantile(LA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
 
+write.csv(x, file = "rs1817457_alleles.csv", row.names = FALSE, quote = FALSE)
 
-alleles3 %>% 
+x <- alleles3 %>% 
   filter(!is.na(Strict)) %>% 
   group_by(rs149996902_CT_C, Strict) %>% 
   summarise(
@@ -39,8 +43,9 @@ alleles3 %>%
     q3 = quantile(LA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
 
+write.csv(x, file = "rs149996902_alleles.csv", row.names = FALSE, quote = FALSE)
 
-alleles3 %>% 
+x <- alleles3 %>% 
   filter(!is.na(Strict)) %>% 
   group_by(rs34249205_A_G, Strict) %>% 
   summarise(
@@ -52,3 +57,5 @@ alleles3 %>%
     median = median(w3FA_NMR_TFAP), 
     q3 = quantile(w3FA_NMR_TFAP)[[4]]) %>%
   as.data.frame()
+
+write.csv(x, file = "rs34249205_alleles.csv", row.names = FALSE, quote = FALSE)
