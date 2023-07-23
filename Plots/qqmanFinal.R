@@ -57,23 +57,17 @@ for (i in phenos) {
         phe <- "w3 %"
       	infileall$SNP[infileall$SNP == "9:140508031_A_G"] <- "rs34249205"
       	SNPs <- "rs34249205"
-      } else if (i == "w6_w3_ratio_NMR") {
-        phe <- "w6/w3 Ratio"
-        SNPs <- "rs72880701"
+        colors <- c("#ACBFA1", "#E6FFD7")
       } else if (i == "LA_NMR_TFAP") {
         phe <- "LA %"
         SNPs <- c("rs1817457", "rs149996902")
-      }
-
-      #Colors
-      if (i == "w3FA_NMR_TFAP") {
-        colors = c()
-      } else if (i == "") {
-        colors = c()
-      } else if (i == "") {
-        colors = c()
-      }
-	   
+	      colors <- c("#A1A9BF","#D7E1FF")
+      } else if (i == "w6_w3_ratio_NMR") {
+        phe <- "w6/w3 Ratio"
+        SNPs <- "rs72880701"
+        colors <- c("#BFA1BA", "#FFD7F8")
+      } 
+	    
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
