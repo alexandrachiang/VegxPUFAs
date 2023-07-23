@@ -176,6 +176,12 @@ names(alleles3)[names(alleles3) == "SSRV"] <- "Strict"
 
 alleles3$'Self-ID' <- factor(alleles3$'Self-ID', c("Veg", "NonVeg"))
 alleles3$Strict <- factor(alleles3$Strict, c("Veg", "NonVeg"))
+alleles3$rs62255849_T_C <- factor(alleles3$rs62255849_T_C, c("TT", "TC", "CC"))
+alleles3$rs34249205_A_G <- factor(alleles3$rs34249205_A_G, c("AA", "AG", "GG"))
+alleles3$rs72880701_G_T <- factor(alleles3$rs72880701_G_T, c("GG", "GT", "TT"))
+alleles3$rs1817457_G_A <- factor(alleles3$rs1817457_G_A, c("GG", "GA", "AA"))
+alleles3$rs149996902_CT_C <- factor(alleles3$rs149996902_CT_C, c("CTCT", "CCT", "CC"))
+alleles3$rs67393898_G_T <- factor(alleles3$rs67393898_G_T, c("GG", "GT", "TT"))
 
 for (i in 1:nrow(x)) {
   print(x[i, ])
