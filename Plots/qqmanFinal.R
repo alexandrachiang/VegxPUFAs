@@ -79,13 +79,12 @@ for (i in phenos) {
       dev.off()
 
       print("QQ")
-      Make qq plot
+      #Make qq plot
       outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
 	    
       png(filename = paste(outdirqq, "FINAL", i, "qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       qq(infileall$P, main = paste("Q-Q Plot of", phe, "P-Values", sep = " "))
       dev.off()
-      
       
       print("MAGMA")
       #Make MAGMA plot
