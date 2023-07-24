@@ -97,7 +97,7 @@ for (i in phenos) {
 	    if (i == "w3FA_NMR_TFAP") {
 	      SNPs <- c("C9orf37", "ARRDC1")
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
-        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 2000, height = 800, res = 100)
+        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 100)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = colors,
                    main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                    annotatePval = 2.619e-4, ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
@@ -105,7 +105,7 @@ for (i in phenos) {
         dev.off() 
       } else {
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
-        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 2000, height = 800, res = 100)
+        png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 100)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = colors,
                    main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                    annotatePval = 2.619e-4, ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
