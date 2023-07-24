@@ -93,8 +93,13 @@ for (i in phenos) {
 
       magma <- magma %>% mutate(MIDDLE = (START + STOP)/2) %>% select(CHR, MIDDLE, P, SYMBOL)
       colnames(magma) <- c("CHR", "BP", "P", "SNP")
-      SNPs <- c("C9orf37", "ARRDC1")
-
+      
+	    if (i == "w3FA_NMR_TFAP") {
+	      SNPs <- c("C9orf37", "ARRDC1")
+      } else {
+        SNPs <- c()
+      }
+      
       outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
       png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1000, height = 400, res = 105)
       manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), col = colors,
