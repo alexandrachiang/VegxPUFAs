@@ -15,8 +15,8 @@ write.csv(pheno2, file = "INTpheno.csv", row.names = FALSE, quote = FALSE)
 
 for (i in 1:13) {
   phenoname <- names(pheno2)[i]
-  phenolist <- as.vector(pheno2[, i])
-  write.table(phenolist, paste(phenoname, "INT.txt", sep = ""), row.names = FALSE, quote = FALSE)
+  phenolist <- pheno2[, i]
+  write.table(phenolist, paste(phenoname, "INT.txt", sep = ""), row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 
 #png(filename = "pheno.png", type = "cairo", width = 700, height = 700)
