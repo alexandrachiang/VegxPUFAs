@@ -4,7 +4,7 @@
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=70:00:00
-#SBATCH --mem=300000G
+#SBATCH --mem=300000
 #SBATCH --output=vQTL.%j.out
 #SBATCH --error=vQTL.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
