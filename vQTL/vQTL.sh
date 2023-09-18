@@ -13,16 +13,17 @@
 
 i=$SLURM_ARRAY_TASK_ID
 
+genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
 
 cd /scratch/ahc87874/Fall2022
 
 osca \
 --vqtl \
---bfile mydata \
+--bfile $genodir/chr"$i".bgen \
 --pheno $phenodir/INTpheno.csv \
---cis-wind 2000 \
+--vqtl-mtd 0
 --task-num 1000 \
 --task-id 1 \
 --thread-num 10 \
---out myvqtl
+--out vQTL_Bartlett_chr"$i"
