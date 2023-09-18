@@ -16,7 +16,7 @@ i=$SLURM_ARRAY_TASK_ID
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
 
-cd /scratch/ahc87874/Fall2022
+cd /scratch/ahc87874/Fall2022/vQTL
 
 osca \
 --vqtl \
