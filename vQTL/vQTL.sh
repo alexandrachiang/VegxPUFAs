@@ -4,7 +4,7 @@
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=70:00:00
-#SBATCH --mem=300000
+#SBATCH --mem=500000
 #SBATCH --output=vQTL.%j.out
 #SBATCH --error=vQTL.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
@@ -14,11 +14,11 @@
 i=$SLURM_ARRAY_TASK_ID
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
-phenodir=("/scratch/ahc87874/Fall2022/pheno")
+phenodir=("/scratch/ahc87874/Fall2022/vQTL")
 
 cd /scratch/ahc87874/Fall2022/vQTL
 
-osca \
+./osca-0.46.1 \
 --vqtl \
 --bfile $genodir/chr"$i".bgen \
 --pheno $phenodir/INTpheno.csv \
