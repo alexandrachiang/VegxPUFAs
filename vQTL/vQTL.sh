@@ -31,6 +31,6 @@ for j in ${phenotypes[@]}
 --task-num 1000 \
 --task-id 1 \
 --thread-num 10 \
---out vQTL_Bartlett_chr"$i"
+--out vQTL_Bartlett_chr"$i"_"$j"
 
 done
