@@ -14,7 +14,7 @@ for (i in 1:13) {
 write.csv(pheno2, file = "INTpheno.csv", row.names = FALSE, quote = FALSE)
 
 for (i in 1:13) {
-  phenoname <- name(pheno2)[i]
+  phenoname <- names(pheno2)[i]
   phenolist <- as.vector(pheno2[, i])
   write.table(phenolist, paste(phenoname, "INT.txt", sep = ""), row.names = FALSE, quote = FALSE)
 }
