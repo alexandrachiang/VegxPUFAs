@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
 #SBATCH --job-name=vQTL
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=16
 #SBATCH --time=70:00:00
-#SBATCH --mem=300000
+#SBATCH --mem=300000G
 #SBATCH --output=vQTL.%j.out
 #SBATCH --error=vQTL.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
@@ -22,7 +22,7 @@ osca \
 --vqtl \
 --bfile $genodir/chr"$i".bgen \
 --pheno $phenodir/INTpheno.csv \
---vqtl-mtd 0
+--vqtl-mtd 0 \
 --task-num 1000 \
 --task-id 1 \
 --thread-num 10 \
