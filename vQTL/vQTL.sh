@@ -1,9 +1,8 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
 #SBATCH --job-name=vQTL
-#SBATCH --nodes=1
 #SBATCH --ntasks=16
-#SBATCH --ntasks-per-node=16
+#SBATCH --nodes=1
 #SBATCH --time=70:00:00
 #SBATCH --mem=300000G
 #SBATCH --output=vQTL.%j.out
