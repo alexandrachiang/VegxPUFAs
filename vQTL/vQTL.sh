@@ -9,7 +9,7 @@
 #SBATCH --error=vQTL.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
-#SBATCH --array=1-22
+#SBATCH --array=1-2
 
 i=$SLURM_ARRAY_TASK_ID
 
