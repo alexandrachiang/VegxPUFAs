@@ -22,9 +22,8 @@ phenodir=("/scratch/ahc87874/Fall2022/pheno")
 outdir=("/scratch/ahc87874/Fall2022/bed")
 mkdir -p $outdir
 
-GEM \
+plink2 \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
 --make-bed \
---thread 16 \
 --out $outdir/chr"$i"
