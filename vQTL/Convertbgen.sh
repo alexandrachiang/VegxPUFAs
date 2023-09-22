@@ -2,7 +2,7 @@
 #SBATCH --partition=batch
 #SBATCH --job-name=Convertbgen
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks=16
 #SBATCH --time=70:00:00
 #SBATCH --mem=30000
 #SBATCH --output=Convertbgen.%j.out
@@ -15,7 +15,7 @@ i=$SLURM_ARRAY_TASK_ID
 
 cd /scratch/ahc87874/Fall2022
 
-ml GEM/1.4.3-intel-2020b
+ml GEM/1.5.1-foss-2022a
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
