@@ -23,7 +23,7 @@ outdir=("/scratch/ahc87874/Fall2022/bed")
 mkdir -p $outdir
 
 plink2 \
---bgen $genodir/chr"$i".bgen \
+--bgen $genodir/chr"$i".bgen ref-first \
 --sample $genodir/chr"$i".sample \
 --make-bed \
 --recode \
