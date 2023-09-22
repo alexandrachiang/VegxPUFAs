@@ -15,7 +15,7 @@ i=$SLURM_ARRAY_TASK_ID
 
 cd /scratch/ahc87874/Fall2022
 
-ml GEM/1.5.1-foss-2022a
+ml PLINK/2.00a4-GCC-11.2.0
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno")
