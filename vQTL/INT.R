@@ -11,11 +11,13 @@ for (i in 1:13) {
   pheno2[, i] <- qnorm((rank(pheno2[, i],na.last="keep")-0.5)/sum(!is.na(pheno2[, i])))
 }
 
-write.csv(pheno2, file = "INTpheno.csv", row.names = FALSE, quote = FALSE)
+pheno3 <- cbind (pheno$FID, pheno$IID, pheno2)
+names(pheno3)[1:2] <- c("FID", "IID")
+write.csv(pheno3, file = "INTpheno.csv", row.names = FALSE, quote = FALSE)
 
-for (i in 1:13) {
-  phenoname <- names(pheno2)[i]
-  phenolist <- pheno2[, i]
+for (i in 3:15) {
+  phenoname <- names(pheno3)[i]
+  phenolist <- pheno3[, c(1, 2, i)]
   write.table(phenolist, paste(phenoname, "INT.txt", sep = ""), row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 
