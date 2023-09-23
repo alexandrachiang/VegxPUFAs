@@ -26,6 +26,4 @@ plink2 \
 --bgen $genodir/chr"$i".bgen ref-first \
 --sample $genodir/chr"$i".sample \
 --make-bed \
---recode \
---export A \
 --out $outdir/chr"$i"
