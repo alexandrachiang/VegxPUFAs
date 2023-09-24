@@ -41,24 +41,26 @@ for (j in types) {
         } #k chr number
 
         #Save data table of all chr for pheno x exposure
-        outdir = "/scratch/ahc87874/Fall2022/vQTLdup/"
+        outdir = paste("/scratch/ahc87874/Fall2022/vQTL/", j, sep="")
         
         write.table(infileall, paste(outdir, "vQTL_", i, "_", j, ".txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
       } else {
-        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/vQTLdup/vQTL_", i, "_", j, ".txt", sep = ""), 
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/vQTL/", j, "/vQTL_", i, "_", j, ".txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
 	    }
       
 	    #infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    #colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
+      infileall$P[infileall$P > ] <- 
+
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
       png(filename = paste(outdirman, "vQTL_", i, "_", j, "_man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), #col = colors,
-                   main = paste("Manhattan Plot of", i, "GWIS", sep = " "), annotatePval = 5e-5, #ylim = c(0, -log10(1e-08)), 
+                   main = paste("Manhattan Plot of", i, "GWIS", sep = " "), annotatePval = 5e-5, #ylim = c(0, -log10(1e-32)), 
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
       dev.off()
 
