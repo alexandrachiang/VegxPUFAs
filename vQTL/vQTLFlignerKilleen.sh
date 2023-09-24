@@ -18,7 +18,7 @@ phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_N
 "DHA_NMR" "DHA_NMR_TFAP" "LA_NMR" "LA_NMR_TFAP" "PUFA_NMR" "PUFA_NMR_TFAP" "MUFA_NMR"
 "MUFA_NMR_TFAP" "PUFA_MUFA_ratio_NMR")
 
-genodir=("/scratch/ahc87874/Fall2022/geno")
+genodir=("/scratch/ahc87874/Fall2022/beddup")
 phenodir=("/scratch/ahc87874/Fall2022/pheno/INT")
 outdir=("/scratch/ahc87874/Fall2022/vQTL/FlignerKilleen")
 mkdir -p outdir
@@ -28,7 +28,7 @@ for j in ${phenotypes[@]}
 
 ./osca-0.46.1 \
 --vqtl \
---bfile $genodir/chr"$i".bgen \
+--bfile $genodir/chr"$i" \
 --pheno $phenodir/"$j"INT.txt \
 --covar $phenodir/covarsINT.txt \
 --qcovar $phenodir/qcovarsINT.txt \
