@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --partition=batch
 #SBATCH --job-name=vQTLMan
+#SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
 #SBATCH --time=20:00:00
 #SBATCH --mem=122GB
 #SBATCH --output=vQTLMan.%j.out
