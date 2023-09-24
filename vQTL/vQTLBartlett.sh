@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
-#SBATCH --job-name=vQTL
+#SBATCH --job-name=vQTLBartlett
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=70:00:00
 #SBATCH --mem=500000
-#SBATCH --output=vQTL.%j.out
-#SBATCH --error=vQTL.%j.err
+#SBATCH --output=vQTLBartlett.%j.out
+#SBATCH --error=vQTLBartlett.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
