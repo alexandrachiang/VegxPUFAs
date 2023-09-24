@@ -16,7 +16,7 @@ phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_rat
 type <- "Bartlett"
 
 for (i in phenos) {
-    dir <- "/scratch/ahc87874/Fall2022/vQTLdup/"
+    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
     print(paste("pheno:", i))
 
       if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
