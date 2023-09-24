@@ -20,7 +20,7 @@ phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_N
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/Fall2022/pheno/INT")
-outdir=("/scratch/ahc87874/Fall2022/vQTL/Levene")
+outdir=("/scratch/ahc87874/Fall2022/vQTL/Bartlett")
 mkdir -p outdir
 
 for j in ${phenotypes[@]}
@@ -32,8 +32,8 @@ for j in ${phenotypes[@]}
 --pheno $phenodir/"$j"INT.txt \
 --covar $phenodir/covarsINT.txt \
 --qcovar $phenodir/qcovarsINT.txt \
---vqtl-mtd 1 \
+--vqtl-mtd 0 \
 --thread-num 20 \
---out $outdir/vQTL_Levene_chr"$i"_"$j"
+--out $outdir/vQTL_Bartlett_chr"$i"_"$j"
 
 done
