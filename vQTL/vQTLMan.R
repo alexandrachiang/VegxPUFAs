@@ -13,16 +13,17 @@ setwd("/scratch/ahc87874/Fall2022/")
 phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", 
             "DHA_NMR", "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP",
             "MUFA_NMR", "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
-type <- "Bartlett"
+type <- c("Bartlett", "LeveneMean", "LeveneMed", "FlignerKilleen")
 
-for (i in phenos) {
-    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
-    print(paste("pheno:", i))
+for (j in types) {
+	for (i in phenos) {
+	    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
+	    print(paste("pheno:", i))
 
       if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
         for (k in 1:22) {
           print(paste("chr:", k))
-          infile <- as_tibble(read.table(paste(dir, "vQTL_", type, "_chr", k, "_", i, ".vqtl", sep = ""), 
+          infile <- as_tibble(read.table(paste(dir, "vQTL_", j, "_chr", k, "_", i, ".vqtl", sep = ""), 
                                          header = TRUE, stringsAsFactors = FALSE))
 
           #Subset data
@@ -42,10 +43,10 @@ for (i in phenos) {
         #Save data table of all chr for pheno x exposure
         outdir = "/scratch/ahc87874/Fall2022/vQTLdup/"
         
-        write.table(infileall, paste(outdir, "vQTL_", i, "_", type, ".txt", sep = ""), 
+        write.table(infileall, paste(outdir, "vQTL_", i, "_", j, ".txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
       } else {
-        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/vQTLdup/vQTL_", i, "_", type, ".txt", sep = ""), 
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/vQTLdup/vQTL_", i, "_", j, ".txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
 	    }
       
@@ -55,7 +56,7 @@ for (i in phenos) {
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-      png(filename = paste(outdirman, "vQTL_", i, "_man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
+      png(filename = paste(outdirman, "vQTL_", i, "_", j, "_man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), #col = colors,
                    main = paste("Manhattan Plot of", i, "GWIS", sep = " "), annotatePval = 5e-5, #ylim = c(0, -log10(1e-08)), 
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
@@ -65,8 +66,9 @@ for (i in phenos) {
       #Make qq plot
       outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
 	    
-      png(filename = paste(outdirqq, "vQTL_", i, "_qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+      png(filename = paste(outdirqq, "vQTL_", i, "_", j, "_qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       qq(infileall$P, main = paste("Q-Q Plot of", i, "P-Values", sep = " "))
       dev.off()
       
   } #i phenos
+} #j types
