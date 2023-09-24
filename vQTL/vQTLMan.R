@@ -41,8 +41,6 @@ for (i in phenos) {
 
         #Save data table of all chr for pheno x exposure
         outdir = "/scratch/ahc87874/Fall2022/vQTLdup/"
-
-        vQTL_Bartlett_chr9_PUFA_NMR_TFAP.vqtl
         
         write.table(infileall, paste(outdir, "vQTL_", i, "_", type, ".txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
