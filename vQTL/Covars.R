@@ -8,6 +8,6 @@ pheno <- as_tibble(read.csv("/scratch/ahc87874/Fall2022/pheno/GEMphenowKeep.csv"
 covars <- pheno[, c(1:4)]
 write.table(covars, "covarsINT.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
-#qcovars - quantitative - townsend and pca
-qcovars <- pheno[, c(1, 2, 5:15)]
+#qcovars - quantitative - pca
+qcovars <- pheno[, c(1, 2, 5:15)] # remove ts
 write.table(qcovars, "qcovarsINT.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
