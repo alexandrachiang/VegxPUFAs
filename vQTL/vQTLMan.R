@@ -53,7 +53,7 @@ for (j in types) {
 	    #infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    #colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
-      infileall$P[infileall$P > 1e-32] <- 1e-32
+      infileall$P[infileall$P < 1e-32] <- 1e-32
 
       print("Manhattan")
       #Make manhattan plot
