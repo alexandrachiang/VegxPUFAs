@@ -54,6 +54,7 @@ for (j in types) {
 	    #colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
       infileall$P[infileall$P < 1e-32] <- 1e-32
+		  infileall$P[is.na(infileall$P)] <- 1e-32
 
       print("Manhattan")
       #Make manhattan plot
