@@ -58,7 +58,7 @@ for (j in types) {
 
       print("Manhattan")
       #Make manhattan plot
-      outdirman = "/scratch/ahc87874/Fall2022/manplots/"
+      outdirman = paste("/scratch/ahc87874/Fall2022/manplots/", j, "/", sep = "")
       png(filename = paste(outdirman, "vQTL_", i, "_", j, "_man.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 110)
       manhattancex(infileall, suggestiveline = -log10(5e-05), genomewideline = -log10(5e-08), #col = colors,
                    main = paste("Manhattan Plot of", i, "GWIS", sep = " "), annotatePval = 5e-5, #ylim = c(0, -log10(1e-32)), 
@@ -67,7 +67,7 @@ for (j in types) {
 
       print("QQ")
       #Make qq plot
-      outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
+      outdirqq = paste("/scratch/ahc87874/Fall2022/qqplots/", j, "/", sep = "")
 	    
       png(filename = paste(outdirqq, "vQTL_", i, "_", j, "_qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       qq(infileall$P, main = paste("Q-Q Plot of", i, "P-Values", sep = " "))
