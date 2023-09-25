@@ -20,7 +20,7 @@ for (j in types) {
 	    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
 	    print(paste("pheno:", i))
 
-      if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+      if (FALSE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
         for (k in 1:22) {
           print(paste("chr:", k))
           infile <- as_tibble(read.table(paste(dir, "vQTL_", j, "_chr", k, "_", i, ".vqtl", sep = ""), 
