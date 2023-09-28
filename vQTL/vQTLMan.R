@@ -20,7 +20,7 @@ for (j in types) {
 	    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
 	    print(paste("pheno:", i))
 
-      if (FALSE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
+      if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
         for (k in 1:22) {
           print(paste("chr:", k))
           infile <- as_tibble(read.table(paste(dir, "vQTL_", j, "_chr", k, "_", i, ".vqtl", sep = ""), 
@@ -56,6 +56,7 @@ for (j in types) {
       infileall$P[infileall$P < 1e-20] <- 1e-20
       infileall <- infileall[complete.cases(infileall),]
 
+      print(j)
       print("Manhattan")
       #Make manhattan plot
       outdirman = paste("/scratch/ahc87874/Fall2022/manplots/", j, "/", sep = "")
