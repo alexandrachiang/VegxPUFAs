@@ -13,7 +13,7 @@ setwd("/scratch/ahc87874/Fall2022/")
 phenos <- c("w3FA_NMR", "w3FA_NMR_TFAP", "w6FA_NMR", "w6FA_NMR_TFAP", "w6_w3_ratio_NMR", 
             "DHA_NMR", "DHA_NMR_TFAP", "LA_NMR", "LA_NMR_TFAP", "PUFA_NMR", "PUFA_NMR_TFAP",
             "MUFA_NMR", "MUFA_NMR_TFAP", "PUFA_MUFA_ratio_NMR")
-types <- c("Bartlett", "LeveneMean", "LeveneMed") #, "FlignerKilleen")
+types <- c("LeveneMean", "LeveneMed") #"Bartlett", "FlignerKilleen")
 
 for (j in types) {
 	for (i in phenos) {
