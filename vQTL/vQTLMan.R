@@ -18,12 +18,13 @@ types <- c("LeveneMean", "LeveneMed") #"Bartlett", "FlignerKilleen")
 for (j in types) {
 	for (i in phenos) {
 	    dir <- "/scratch/ahc87874/Fall2022/vQTL/"
+		  print(paste("type:", j))
 	    print(paste("pheno:", i))
 
       if (TRUE) { #Combine GEM output for pheno and exposure from chr 1-22 into one data frame
         for (k in 1:22) {
           print(paste("chr:", k))
-          infile <- as_tibble(read.table(paste(dir, "vQTL_", j, "_chr", k, "_", i, ".vqtl", sep = ""), 
+          infile <- as_tibble(read.table(paste(dir, "/", j, "/vQTL_", j, "_chr", k, "_", i, ".vqtl", sep = ""), 
                                          header = TRUE, stringsAsFactors = FALSE))
 
           #Subset data
