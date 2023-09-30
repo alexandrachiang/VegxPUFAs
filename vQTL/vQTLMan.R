@@ -42,7 +42,7 @@ for (j in types) {
         } #k chr number
 
         #Save data table of all chr for pheno x exposure
-        outdir = paste("/scratch/ahc87874/Fall2022/vQTL/", j, sep="")
+        outdir = paste("/scratch/ahc87874/Fall2022/vQTL/", j, "/", sep="")
         
         write.table(infileall, paste(outdir, "vQTL_", i, "_", j, ".txt", sep = ""), 
                     row.names = FALSE, quote = FALSE)
@@ -57,7 +57,7 @@ for (j in types) {
       infileall$P[infileall$P < 1e-20] <- 1e-20
       infileall <- infileall[complete.cases(infileall),]
 
-      print(j)
+      print(paste(j, i)
       print("Manhattan")
       #Make manhattan plot
       outdirman = paste("/scratch/ahc87874/Fall2022/manplots/", j, "/", sep = "")
