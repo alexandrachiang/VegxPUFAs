@@ -57,7 +57,7 @@ for (j in types) {
       infileall$P[infileall$P < 1e-20] <- 1e-20
       infileall <- infileall[complete.cases(infileall),]
 
-      print(paste(j, i)
+      print(paste(j, i))
       print("Manhattan")
       #Make manhattan plot
       outdirman = paste("/scratch/ahc87874/Fall2022/manplots/", j, "/", sep = "")
