@@ -1,11 +1,6 @@
 library(tidyverse)
 library(qqman)
 
-#Download FUMA MAGMA files
-#Extract zip files
-#Cmd Prompt cd into folder and run > ren *.out *.txt
-#Rename magma.genes file
-
 source("/work/kylab/alex/Fall2022/ManhattanCex.R")
 
 setwd("/scratch/ahc87874/Fall2022/")
