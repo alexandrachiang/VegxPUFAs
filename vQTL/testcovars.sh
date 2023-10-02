@@ -18,7 +18,7 @@ phenotypes=("w3FA_NMR")
 
 genodir=("/scratch/ahc87874/Fall2022/beddup")
 phenodir=("/scratch/ahc87874/Fall2022/pheno/INT")
-outdir=("/scratch/ahc87874/Fall2022/vQTL/Bartlett")
+outdir=("/scratch/ahc87874/Fall2022/vQTL/Bartlett2")
 mkdir -p outdir
 
 for j in ${phenotypes[@]}
