@@ -49,3 +49,7 @@ Results
 - ComparePvalsBetas.R/.sh
 - GetAlleles.sh
 - AllelePhenos.R
+
+Replication
+- Replication
+- vQTL
