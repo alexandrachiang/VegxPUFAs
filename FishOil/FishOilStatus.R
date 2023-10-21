@@ -17,11 +17,10 @@ ukb <- ukb_df("/scratch/ahc87874/Fall2022/pheno/ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
-NMR <- ukb_df("/scratch/ahc87874/FishOil/673621/ukb673621")
-NMR <- as_tibble(NMR)
-
 #Load auxillary datasets
-if (FALSE) {                 
+if (FALSE) {
+  NMR <- ukb_df("/scratch/ahc87874/FishOil/673621/ukb673621")
+  NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
                           f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0, 
@@ -40,17 +39,13 @@ if (FALSE) {
   write.table(PUFAs, file = "/scratch/ahc87874/FishOil/PUFAs.txt",
               row.names = FALSE, quote = FALSE)
 } else {
-  BMI <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/BMI.txt", header = TRUE))
   PUFAs <- as_tibble(read.table("/scratch/ahc87874/FishOil/PUFAs.txt", header = TRUE))
-  LipidMeds <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/LipidMeds.txt", header = TRUE))
-  Statins <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/Statins.txt", header = TRUE))
 }
 
+FishOil <-as_tibble(read.table("/scratch/ahc87874/FishOil/ID_fish_oil_status.txt", header = TRUE))
 
 ?
 #Select necessary columns
-#Need to add BMI and pheno columns
-#Change to contains?
 colnames(ukb)[1] <- "IID"
 ukb <- ukb %>% mutate(FID = IID)
 
@@ -69,14 +64,11 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        starts_with("daily_dietary_data_credible"))
 
 #Join baskets to main data set
-ukb3 <- left_join(ukb2, BMI)
 ukb3 <- left_join(ukb3, PUFAs)
-ukb3 <- left_join(ukb3, LipidMeds)
-ukb3 <- left_join(ukb3, Statins)
 #123 cols
 
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
+withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
 ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 
 #Add Age^2 column
