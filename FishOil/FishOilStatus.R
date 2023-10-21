@@ -21,11 +21,10 @@ if (TRUE) {
 }
 ukb <- as_tibble(ukb)
 
-setwd("/scratch/ahc87874/FishOil/673621/")
-
 #Load auxillary datasets
 if (FALSE) {
-  NMR <- ukb_df("ukb673621")
+  setwd("/scratch/ahc87874/FishOil/673621/")
+  NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
   NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
@@ -42,10 +41,10 @@ if (FALSE) {
                        "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")  
   
   #Save datasets
-  write.table(PUFAs, file = "/scratch/ahc87874/FishOil/PUFAs.txt",
+  write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsnew.txt",
               row.names = FALSE, quote = FALSE)
 } else {
-  PUFAs <- as_tibble(read.table("/scratch/ahc87874/FishOil/PUFAs.txt", header = TRUE))
+  PUFAs <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/PUFAsnew.txt", header = TRUE))
 }
 
 setwd("/scratch/ahc87874/FishOil/")
