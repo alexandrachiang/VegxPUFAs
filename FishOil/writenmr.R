@@ -6,7 +6,7 @@ suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
 setwd("/scratch/ahc87874/FishOil/673621/")
-  NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
+  NMR <- ukb_df("ukb673621", n_threads = "max")
   NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
