@@ -15,7 +15,7 @@ setwd("/scratch/ahc87874/Fall2022/pheno/")
 
 if (TRUE) {
   ukb <- ukb_df("ukb34137")
-  write.csv(ukb, file ="/scratch/ahc87874/Fall2022/pheno/ukb34137.csv" row.names = FALSE, quote = FALSE)
+  write.csv(ukb, file ="/scratch/ahc87874/Fall2022/pheno/ukb34137.csv", row.names = FALSE, quote = FALSE)
 } else {
   ukb <- import("ukb34137.csv")
 }
@@ -52,7 +52,6 @@ setwd("/scratch/ahc87874/FishOil/")
 
 FishOil <-as_tibble(read.table("/scratch/ahc87874/FishOil/ID_fish_oil_status.txt", header = TRUE))
 
-?
 #Select necessary columns
 colnames(ukb)[1] <- "IID"
 ukb <- ukb %>% mutate(FID = IID)
@@ -63,13 +62,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        genotype_measurement_batch_f22000_0_0, uk_biobank_assessment_centre_f54_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, used_in_genetic_principal_components_f22020_0_0,
-                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""),
-                       starts_with(c("dayofweek_questionnaire_completed", "type_of_special_diet_followed", 
-                                     "meat_consumers", "fish_consumer")),
-                       oily_fish_intake_f1329_0_0, nonoily_fish_intake_f1339_0_0, processed_meat_intake_f1349_0_0,
-                       poultry_intake_f1359_0_0, beef_intake_f1369_0_0, lambmutton_intake_f1379_0_0, pork_intake_f1389_0_0,
-                       age_when_last_ate_meat_f3680_0_0, major_dietary_changes_in_the_last_5_years_f1538_0_0,
-                       starts_with("daily_dietary_data_credible"))
+                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), Fish_oil_baseline)
 
 #Join baskets to main data set
 ukb3 <- left_join(ukb3, PUFAs)
@@ -82,6 +75,13 @@ ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 #Add Age^2 column
 ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
                  select(FID, IID, starts_with("age_when_attended_assessment_centre"), everything())
+
+#Add Age*Sex column
+ukb3[sex_f31_0_0 == "Female"] <- 0
+ukb3[sex_f31_0_0 == "Male"] <- 1
+ukb3 <- ukb3 %>% mutate(agesex = age_when_attended_assessment_centre_f21003_0_0*sex_f31_0_0)
+ukb3[sex_f31_0_0 == 0] <- "Female"
+ukb3[sex_f31_0_0 == 1] <- "Male"
 
 #Remove participants that never answered 20086/never did a dietary survey
 ukb4 <- ukb3[rowSums(is.na(ukb3[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
