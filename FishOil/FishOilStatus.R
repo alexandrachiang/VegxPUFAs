@@ -79,7 +79,6 @@ ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended
                  select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
 
 #Save dataset
-write.table(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.txt",
-            sep = "\t", row.names = FALSE, quote = FALSE)
+write.table(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.txt", sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
 write.csv(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.csv", row.names = FALSE, quote = FALSE)
