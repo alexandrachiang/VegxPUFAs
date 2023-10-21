@@ -64,7 +64,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        paste("genetic_principal_components_f22009_0_", 1:10, sep = ""))
 
 #Join baskets to main data set
-ukb3 <- left_join(ukb3, PUFAs)
+ukb3 <- left_join(ukb2, PUFAs)
 #123 cols
 
 #Remove withdrawn participants from dataset
@@ -75,12 +75,8 @@ ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2)
 
 #Add Age*Sex column
-ukb3[sex_f31_0_0 == "Female"] <- 0
-ukb3[sex_f31_0_0 == "Male"] <- 1
-ukb3 <- ukb3 %>% mutate(agesex = age_when_attended_assessment_centre_f21003_0_0*sex_f31_0_0) %>% 
+ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended_assessment_centre_f21003_0_0, 0) %>% 
                  select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
-ukb3[sex_f31_0_0 == 0] <- "Female"
-ukb3[sex_f31_0_0 == 1] <- "Male"
 
 #Save dataset
 write.table(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.txt",
