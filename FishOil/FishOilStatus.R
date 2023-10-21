@@ -10,16 +10,17 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(ukbtools)) #<3
 suppressMessages(library(rio))
 
-setwd("/scratch/ahc87874/FishOil/pheno")
-
 #Load dataset
-ukb <- ukb_df("/scratch/ahc87874/Fall2022/pheno/ukb34137")
+setwd("/scratch/ahc87874/Fall2022/pheno/")
+ukb <- ukb_df("ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
+setwd("/scratch/ahc87874/FishOil/673621/")
+
 #Load auxillary datasets
 if (FALSE) {
-  NMR <- ukb_df("/scratch/ahc87874/FishOil/673621/ukb673621")
+  NMR <- ukb_df("ukb673621")
   NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
@@ -41,6 +42,8 @@ if (FALSE) {
 } else {
   PUFAs <- as_tibble(read.table("/scratch/ahc87874/FishOil/PUFAs.txt", header = TRUE))
 }
+
+setwd("/scratch/ahc87874/FishOil/")
 
 FishOil <-as_tibble(read.table("/scratch/ahc87874/FishOil/ID_fish_oil_status.txt", header = TRUE))
 
