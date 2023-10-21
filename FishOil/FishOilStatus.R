@@ -15,7 +15,7 @@ setwd("/scratch/ahc87874/Fall2022/pheno/")
 
 if (TRUE) {
   ukb <- ukb_df("ukb34137")
-  write.csv(ukb, file ="/scratch/ahc87874/Fall2022/pheno/ukb34137.csv", row.names = FALSE, quote = FALSE)
+  #write.csv(ukb, file ="/scratch/ahc87874/Fall2022/pheno/ukb34137.csv", row.names = FALSE, quote = FALSE)
 } else {
   ukb <- import("ukb34137.csv")
 }
