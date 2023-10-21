@@ -26,12 +26,13 @@ if (FALSE) {
   setwd("/scratch/ahc87874/FishOil/673621/")
   NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
   NMR <- as_tibble(NMR)
-  PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
-                          f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
-                          f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0, 
-                          f.23744.0.0, f.23751.0.0, f.23745.0.0, f.23752.0.0, f.23759.0.0, 
-                          f.23750.0.0, f.23757.0.0, f.23749.0.0, f.23756.0.0, f.23746.0.0, 
-                          f.23753.0.0, f.23747.0.0, f.23754.0.0, f.23758.0.0) %>% as_tibble() 
+  PUFAs <- NMR %>% select(eid, contains("f23444_0_0"), contains("f23451_0_0"), contains("f23445_0_0"), contains("f23452_0_0"), 
+                          contains("f23459_0_0"), contains("f23450_0_0"), contains("f23457_0_0"), contains("f23449_0_0"), 
+                          contains("f23456_0_0"), contains("f23446_0_0"), contains("f23453_0_0"), contains("f23447_0_0"), 
+                          contains("f23454_0_0"), contains("f23458_0_0"), contains("f23744_0_0"), contains("f23751_0_0"), 
+                          contains("f23745_0_0"), contains("f23752_0_0"), contains("f23759_0_0"), contains("f23750_0_0"), 
+                          contains("f23757_0_0"), contains("f23749_0_0"), contains("f23756_0_0"), contains("f23746_0_0"), 
+                          contains("f23753_0_0"), contains("f23747_0_0"), contains("f23754_0_0"), contains("f23758_0_0")) %>% as_tibble() 
 
   colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",	
                        "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", "LA_TFAP",
@@ -41,10 +42,9 @@ if (FALSE) {
                        "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")  
   
   #Save datasets
-  write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsnew.txt",
-              row.names = FALSE, quote = FALSE)
+  write.csv(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsnew.csv", row.names = FALSE, quote = FALSE)
 } else {
-  PUFAs <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/PUFAsnew.txt", header = TRUE))
+  PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsnew.csv")
 }
 
 setwd("/scratch/ahc87874/FishOil/")
@@ -72,289 +72,18 @@ withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", h
 ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 
 #Add Age^2 column
-ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
-                 select(FID, IID, starts_with("age_when_attended_assessment_centre"), everything())
+ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2)
 
 #Add Age*Sex column
 ukb3[sex_f31_0_0 == "Female"] <- 0
 ukb3[sex_f31_0_0 == "Male"] <- 1
-ukb3 <- ukb3 %>% mutate(agesex = age_when_attended_assessment_centre_f21003_0_0*sex_f31_0_0)
+ukb3 <- ukb3 %>% mutate(agesex = age_when_attended_assessment_centre_f21003_0_0*sex_f31_0_0) %>% 
+                 select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
 ukb3[sex_f31_0_0 == 0] <- "Female"
 ukb3[sex_f31_0_0 == 1] <- "Male"
 
-#Remove participants that never answered 20086/never did a dietary survey
-ukb4 <- ukb3[rowSums(is.na(ukb3[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
-#nrow(ukb3)
-#210967 rows
-
-#Get first answered recall survey
-ukb5 <- ukb4 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
-  mutate(first_instance_1 = !is.na(dayofweek_questionnaire_completed_f20080_1_0) & !first_instance_0) %>% 
-  mutate(first_instance_2 = !is.na(dayofweek_questionnaire_completed_f20080_2_0) & !first_instance_0 & !first_instance_1) %>% 
-  mutate(first_instance_3 = !is.na(dayofweek_questionnaire_completed_f20080_3_0) & !first_instance_0 & !first_instance_1 & !first_instance_2) %>% 
-  mutate(first_instance_4 = !is.na(dayofweek_questionnaire_completed_f20080_4_0) & !first_instance_0 & !first_instance_1 & !first_instance_2 & !first_instance_3)
-
-ukb5 <- ukb5 %>% mutate(first_instance = ifelse(first_instance_0, 0, 
-                                                      ifelse(first_instance_1, 1, 
-                                                             ifelse(first_instance_2, 2, 
-                                                                    ifelse(first_instance_3, 3, 
-                                                                           ifelse(first_instance_4, 4, NA))))))
-
-#sapply(ukb5 %>% select(contains(c("f20080", "first_instance"))), table)
-#$first_instance
-#    0     1     2     3     4
-#70692 79599 27105 19639 13932
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
-#Diet QC
-#Should remove people who are NA for intake, not credible diet data
-
-#Remove non-credible diet data if ever not credible in any answered survey
-#ukb6 <- ukb5[rowSums(is.na(ukb4[, paste("daily_dietary_data_credible_f100026", 0:4, "0", sep = "_")])) == 5,]
-#removes 3171
-
-#Remove if not credible in first answered survey
-ukb6 <- ukb5
-for (i in 0:4) { #instance
-  took <- paste("first_instance", i, sep = "_")
-  check <- paste("is_not_credible", i, sep = "_")
-  cred <- paste("daily_dietary_data_credible_f100026", i, "0", sep = "_")
-  
-  ukb6[, check] <- NA
-  ukb6[, check][ukb5[, cred] == "No" & ukb6[, took] == TRUE] <- "NotCredible"
-}
-#ukb5 %>% select(contains("daily_dietary_data_credible_f100026")) %>% sapply(table)
-#    daily_dietary_data_credible_f100026_0_0
-#No                                      677
-#    daily_dietary_data_credible_f100026_1_0
-#No                                      710
-#    daily_dietary_data_credible_f100026_2_0
-#No                                      633
-#    daily_dietary_data_credible_f100026_3_0
-#No                                      670
-#    daily_dietary_data_credible_f100026_4_0
-#No                                      804
-#ukb5 %>% select(contains("is_not_credible")) %>% sapply(table)
-#is_not_credible_0.NotCredible is_not_credible_1.NotCredible
-#                          676                           570
-#is_not_credible_2.NotCredible is_not_credible_3.NotCredible
-#                          201                           154
-#is_not_credible_4.NotCredible
-#                          145
-
-ukb6[, "is_not_credible"] <- NA
-for (i in 0:4) { #instance
-  check <- paste("is_not_credible", i, sep="_")
-  ukb6[, "is_not_credible"][ukb6[, check] == "NotCredible"] <- "NotCredible"
-} #Does not remove anyone
-#ukb5 <- ukb5[ukb5$is_not_credible != "NotCredible", ]
-#removes 1746 not credible
-
-#ukb6 <- ukb6 %>% filter(!is.na(oily_fish_intake_f1329_0_0) & !is.na(nonoily_fish_intake_f1339_0_0) & 
-#                           !is.na(processed_meat_intake_f1349_0_0) & !is.na(poultry_intake_f1359_0_0) & 
-#                           !is.na(beef_intake_f1369_0_0) & !is.na(lambmutton_intake_f1379_0_0) & 
-#                           !is.na(pork_intake_f1389_0_0))
-#nrow(ukb5)
-#207731 removes 82
-
-#Move to pheno qc?
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
-#CSRV
-ukbCSRV <- ukb6
-
-#Get all participants that self-IDed as vegetarian/vegan at least once in the initial and recall surveys
-ukbCSRV %>% filter(if_any(starts_with("type_of_special_diet_followed"), ~ . %in% c("Vegetarian", "Vegan")))
-#9450 rows
-
-#For each first instance, get Veg status
-for (i in 0:4) { #instance
-  took <- paste("first_instance", i, sep = "_")
-  check <- paste("is_CSRV_vegetarian", i, sep = "_")
-  ukbCSRV[, check] <- NA #initialize NA columns
-  ukbCSRV[, check][ukbCSRV[, took] == TRUE] <- "NonVeg" #participant first answered in that instance
-  
-  for (j in 0:5) { #instance array for 20086
-    inst <- paste("type_of_special_diet_followed_f20086", i, j, sep = "_")
-    ukbCSRV[, check][(ukbCSRV[, inst] == "Vegetarian" | ukbCSRV[, inst] == "Vegan") & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
-    #ukbCSRV[, check][ukbCSRV[, inst] == "Vegetarian" & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
-  }
-}
-
-#ukbCSRV %>% select(contains(c("first_instance", "is_CSRV_vegetarian")))
-#sapply(ukbCSRV %>% select(contains("is_CSRV_vegetarian")), table)
-
-#Get CSRV
-ukbCSRV[, "CSRV"] <- NA
-for (i in 0:4) { #instance
-  check <- paste("is_CSRV_vegetarian", i, sep="_")
-  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "Veg"] <- "Veg"
-  ukbCSRV[, "CSRV"][ukbCSRV[, check] == "NonVeg"] <- "NonVeg"
-}
-
-table(ukbCSRV$CSRV)
-#NonVeg    Veg
-#202724   8243 withdraw, vegetarian and vegan
-#Michael had 7788??
-
-#ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
-#                            CSRV
-#ethnic_background_f21000_0_0 NonVeg    Veg
-#  Prefer not to answer          580     45
-#  Do not know                    60      2
-#  White                         154     11
-#  Mixed                          13      1
-#  Asian or Asian British          9      2
-#  Black or Black British          4      1
-#  Chinese                       582     14
-#  Other ethnic group           1432    109
-#  British                    181108   6530
-#  Irish                        4943    228
-#  Any other white background   7877    396
-#  White and Black Caribbean     233     14
-#  White and Black African       138     10
-#  White and Asian               387     26
-#  Any other mixed background    404     26
-#  Indian                       1363    602
-#  Pakistani                     325     23
-#  Bangladeshi                    33      3
-#  Any other Asian background    510     74
-#  Caribbean                    1490     67
-#  African                       965     49
-#  Any other Black background     36      3
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
-#SSRV
-ukbSSRV <- ukbCSRV
-
-#For each first instance, get Veg status for meat/fish consumption yesterday
-for (i in 0:4) { #instance
-  took <- paste("first_instance", i, sep = "_")
-  check <- paste("is_SSRV_vegetarian", i, sep = "_")
-  ukbSSRV[, check] <- NA #initialize NA columns
-  
-  #Check if never ate meat/fish
-  meatinst <- paste("meat_consumers_f103000", i, 0, sep = "_")
-  fishinst <- paste("fish_consumer_f103140", i, 0, sep = "_")
-  ukbSSRV[, check][(ukbSSRV[, meatinst] == "Yes" | ukbSSRV[, fishinst] == "Yes") & ukbCSRV[, took] == TRUE] <- "NonVeg" #participant is nonveg for that instance
-  ukbSSRV[, check][ukbSSRV[, meatinst] == "No" & ukbSSRV[, fishinst] == "No"  & ukbCSRV[, took] == TRUE] <- "Veg" #participant is veg for that instance
-}
-#sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
-#ukbSSRV %>% mutate(TestSSRV = coalesce(is_SSRV_vegetarian_0, is_SSRV_vegetarian_1, is_SSRV_vegetarian_2, is_SSRV_vegetarian_3, is_SSRV_vegetarian_4)) %>% 
-#             select(TestSSRV, CSRV) %>% table()
-
-
-#Additional columns to filter for diet intake taken at first instance
-intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
-#There are like 84? 85? participants who are NA for these columns
-ukbSSRV[, "specific_intake_0"] <- "NonVeg"
-ukbSSRV[, "specific_intake_0"][(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7) & 
-                           (!is.na(rowSums(ukbSSRV[, intake] == rep("Never", length(intake))))), ] <- "Veg"
-ukbSSRV[, "specific_intake_0"][rowSums(is.na(ukbSSRV[, intake])) > 0, ] <- NA
-#table(ukbSSRV$specific_intake_0, useNA = "always")
-
-#ukbSSRV[rowSums(ukbSSRV[, intake] == rep("Never", length(intake))) == 7,] %>% select(contains("intake"))
-
-#for (i in 1:length(intake)) {
-#  ukbSSRV[, "meat_intake_0"][ukbSSRV[, intake[i]] != "Never" | is.na(ukbSSRV[, intake[i]])] <- "NonVeg"
-#}
-#print(n = 50, ukbSSRV %>% select(contains("intake")))
-#ukbSSRV %>% select(IID, contains("intake")) %>% filter(IID == 1013495)
-
-#Get SSRV
-ukbSSRV[, "SSRV"] <- NA
-for (i in 0:4) { #instance
-  check <- paste("is_SSRV_vegetarian", i, sep="_")
-  ukbSSRV[, "SSRV"][ukbSSRV[, check] == "Veg"] <- "Veg"
-  ukbSSRV[, "SSRV"][ukbSSRV[, check] == "NonVeg"] <- "NonVeg"
-}
-ukbSSRV[, "SSRV"][ukbSSRV[, "specific_intake_0"] == "NonVeg"] <- "NonVeg"
-
-#ukbSSRV %>% select(CSRV, SSRV) %>% table()
-#        SSRV
-#CSRV     NonVeg    Veg
-#  NonVeg 202534    190
-#  Veg      3751   4492
-
-#Take CSRV into account for SSRV
-ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg" #Make CSRV NonVeg/SSRV Veg participants into SSRV NonVeg
-ukbSSRV$SSRV[(ukbSSRV$CSRV == "Veg" & ukbSSRV$SSRV == "NonVeg")] <- NA #Remove CSRV Veg/SSRV NonVeg participants
-
-#ukbSSRV %>% select(CSRV, SSRV) %>% table()
-#        SSRV
-#CSRV     NonVeg    Veg
-#  NonVeg 202724      0
-#  Veg         0   4492
-
-table(ukbSSRV$SSRV, useNA = "always")
-#NonVeg    Veg
-#202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
-
-#NA if any major dietary changes in the last 5 years
-if (keepNonVeg) {
-  ukbSSRV$SSRV[(ukbSSRV$SSRV == "Veg" & ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No") |
-             (ukbSSRV$SSRV == "Veg" & is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0))] <- NA
-} else {
-  ukbSSRV$SSRV[ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0 != "No" |
-             is.na(ukbSSRV$major_dietary_changes_in_the_last_5_years_f1538_0_0)] <- NA
-}
-
-#table(ukbSSRV$SSRV, useNA = "always")
-#NonVeg    Veg   <NA>
-#125456   3271  82240
-
-#NA if not credible in first answered survey
-#ukbSSRV %>% select(SSRV, is_not_credible) %>% table(useNA = "always")
-#        is_not_credible
-#SSRV     NotCredible   <NA>
-#  NonVeg         930 124526
-#  Veg             41   3230
-#  <NA>           775  81465
-if (isCredible) {
-  ukbSSRV$SSRV[ukbSSRV$is_not_credible == "NotCredible"] <- NA
-}
-#table(ukbSSRV$SSRV, useNA = "always")
-#NonVeg    Veg   <NA>
-#124526   3230  83211
-
-#ukbSSRV %>% select(ethnic_background_f21000_0_0, SSRV) %>% table()
-#                            SSRV
-#ethnic_background_f21000_0_0 NonVeg    Veg
-#  Prefer not to answer          323     17
-#  Do not know                    38      1
-#  White                          80      5
-#  Mixed                           4      1
-#  Asian or Asian British          4      1
-#  Black or Black British          2      0
-#  Chinese                       383      4
-#  Other ethnic group            701     22
-#  British                    112454   2704
-#  Irish                        2962     86
-#  Any other white background   4775    124
-#  White and Black Caribbean     140      6
-#  White and Black African        71      1
-#  White and Asian               217     12
-#  Any other mixed background    219      5
-#  Indian                        702    217
-#  Pakistani                     144      0
-#  Bangladeshi                    16      0
-#  Any other Asian background    254     14
-#  Caribbean                     601      7
-#  African                       423      3
-#  Any other Black background     13      0
-
 #Save dataset
-if (FALSE) {
-  
-  if (!isCredible) {
-    suffix <- "woCred"
-  } else if (keepNonVeg) {
-    suffic <- "wKeep"
-  } else {
-    suffix <- ""
-  }
-  write.table(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".txt", sep = ""),
+write.table(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.txt",
             sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-  write.csv(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
-}                                                           
+write.csv(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.csv", row.names = FALSE, quote = FALSE)
