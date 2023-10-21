@@ -61,7 +61,7 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0, 
                        genotype_measurement_batch_f22000_0_0, uk_biobank_assessment_centre_f54_0_0, 
                        townsend_deprivation_index_at_recruitment_f189_0_0, used_in_genetic_principal_components_f22020_0_0,
-                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), Fish_oil_baseline)
+                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""))
 
 #Join baskets to main data set
 ukb3 <- left_join(ukb3, PUFAs)
