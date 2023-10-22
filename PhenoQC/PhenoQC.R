@@ -26,7 +26,7 @@ setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
+withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #502413
 
 pan <- read_tsv("all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
