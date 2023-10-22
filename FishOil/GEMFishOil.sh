@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=batch
+#SBATCH --partition=highmem_p
 #SBATCH --job-name=GEM
+#SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
-#SBATCH --time=70:00:00
-#SBATCH --mem=30000
+#SBATCH --time=20:00:00
+#SBATCH --mem=300GB
 #SBATCH --output=GEM.%j.out
 #SBATCH --error=GEM.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
@@ -15,16 +15,16 @@ i=$SLURM_ARRAY_TASK_ID
 
 cd /scratch/ahc87874/Fall2022
 
-ml GEM/1.4.3-intel-2020b
+ml GEM/1.5.1-foss-2022a
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
-phenodir=("/scratch/ahc87874/Fall2022/pheno")
+phenodir=("/scratch/ahc87874/FishOil/pheno")
 outdir=("/scratch/ahc87874/FishOil/GEM")
 mkdir -p $outdir
 
-phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_NMR" 
-"DHA_NMR" "DHA_NMR_TFAP" "LA_NMR" "LA_NMR_TFAP" "PUFA_NMR" "PUFA_NMR_TFAP" "MUFA_NMR" 
-"MUFA_NMR_TFAP" "PUFA_MUFA_ratio_NMR")
+phenotypes=("w3FA" "w3FA_TFAP" "w6FA" "w6FA_TFAP" "w6_w3_ratio" 
+"DHA" "DHA_TFAP" "LA" "LA_TFAP" "PUFA" "PUFA_TFAP" "MUFA" 
+"MUFA_TFAP" "PUFA_MUFA_ratio")
 
 exposures=("Fish_oil_baseline")
 
@@ -41,10 +41,10 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GEMphenowKeep.csv \
+--pheno-file $phenodir/GEMphenoFishOil.csv \
 --sampleid-name IID \
 --pheno-name $j \
---covar-names Sex Age Townsend \
+--covar-names Sex Age AgeSex \
 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 \
 --robust 1 \
 --exposure-names "$e" \
