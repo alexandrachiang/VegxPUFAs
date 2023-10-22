@@ -13,12 +13,7 @@ suppressMessages(library(rio))
 #Load dataset
 setwd("/scratch/ahc87874/Fall2022/pheno/")
 
-if (TRUE) {
-  ukb <- ukb_df("ukb34137")
-  #write.csv(ukb, file ="/scratch/ahc87874/Fall2022/pheno/ukb34137.csv", row.names = FALSE, quote = FALSE)
-} else {
-  ukb <- import("ukb34137.csv")
-}
+ukb <- ukb_df("ukb34137")
 ukb <- as_tibble(ukb)
 
 #Load auxillary datasets
@@ -46,6 +41,7 @@ if (FALSE) {
 } else {
   PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsnew.csv")
 }
+PUFAs <- as_tibble(PUFAs)
 
 setwd("/scratch/ahc87874/FishOil/")
 
@@ -64,7 +60,8 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        paste("genetic_principal_components_f22009_0_", 1:10, sep = ""))
 
 #Join baskets to main data set
-ukb3 <- left_join(ukb2, PUFAs)
+ukb3 <- left_join(ukb2, PUFAs, by = "IID")
+ukb3 <- left_join(ukb3, FishOil, by = c("FID", "IID"))
 #123 cols
 
 #Remove withdrawn participants from dataset
@@ -75,7 +72,7 @@ ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2)
 
 #Add Age*Sex column
-ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended_assessment_centre_f21003_0_0, 0) %>% 
+ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended_assessment_centre_f21003_0_0, 0)) %>% 
                  select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
 
 #Save dataset
