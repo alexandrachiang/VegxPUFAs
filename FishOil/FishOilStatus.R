@@ -18,7 +18,7 @@ ukb <- as_tibble(ukb)
 
 #Load auxillary datasets
 if (FALSE) {
-  setwd("/scratch/ahc87874/FishOil/673621/")
+  setwd("/scratch/ahc87874/FishOil/pheno/673621/")
   NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
   NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(eid, contains("f23444_0_0"), contains("f23451_0_0"), contains("f23445_0_0"), contains("f23452_0_0"), 
@@ -43,9 +43,9 @@ if (FALSE) {
 }
 PUFAs <- as_tibble(PUFAs)
 
-setwd("/scratch/ahc87874/FishOil/")
+setwd("/scratch/ahc87874/FishOil/pheno/")
 
-FishOil <-as_tibble(read.table("/scratch/ahc87874/FishOil/ID_fish_oil_status.txt", header = TRUE))
+FishOil <-as_tibble(read.table("/scratch/ahc87874/FishOil/pheno/ID_fish_oil_status.txt", header = TRUE))
 
 #Select necessary columns
 colnames(ukb)[1] <- "IID"
@@ -76,6 +76,6 @@ ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended
                  select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
 
 #Save dataset
-write.table(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+write.table(ukb3, file = "/scratch/ahc87874/FishOil/pheno/phenosfish.txt", sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-write.csv(ukb3, file = "/scratch/ahc87874/FishOil/phenosfish.csv", row.names = FALSE, quote = FALSE)
+write.csv(ukb3, file = "/scratch/ahc87874/FishOil/pheno/phenosfish.csv", row.names = FALSE, quote = FALSE)
