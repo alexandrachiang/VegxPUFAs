@@ -3,7 +3,7 @@
 #SBATCH --job-name=FishOilCombined
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --time=1:00:00
+#SBATCH --time=24:00:00
 #SBATCH --mem=130GB
 #SBATCH --output=FishOilCombined.%j.out
 #SBATCH --error=FishOilCombined.%j.err
