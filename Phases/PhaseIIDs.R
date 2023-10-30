@@ -18,11 +18,15 @@ phase1 <- phase1 %>% filter(!is.na(w3FA_NMR)) %>% select(IID)
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
 phasecomb <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
 phasecomb <- as_tibble(phasecomb)
-phasecomb %>% select(eid, contains("f23444_0_0")) %>% head()
+phasecomb <- phasecomb %>% filter(!is.na(omega3_fatty_acids_f23444_0_0)) %>% select(eid)
+names(phasecomb) <- "IID"
+phasecomb <- phasecomb[!(phasecomb$IID %in% withdrawn$V1), ]
 
-#phasecomb <- phasecomb %>% filter(!is.na(w3FA)) %>% select(eid)
-#phasecomb <- phasecomb[!(phasecomb$eid %in% withdrawn$V1), ]
-#names(phasecomb) <- "IID"
-#phase2 <- subset(phasecomb, !(IID %in% phase1$IID))
+phase2 <- subset(phasecomb, !(IID %in% phase1$IID))
+print("phase1:", nrow(phase1))
+print("phase1:", nrow(phase2))
+print("phasecomb:", nrow(phasecomb))
 
-#write.csv(phasecomb, file = "/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv", row.names = FALSE, quote = FALSE)
+write.csv(phase1, file = "/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", row.names = FALSE, quote = FALSE)
+write.csv(phase2, file = "/scratch/ahc87874/Phase/pheno/phase2IIDs.csv", row.names = FALSE, quote = FALSE)
+write.csv(phasecomb, file = "/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv", row.names = FALSE, quote = FALSE)
