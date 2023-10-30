@@ -49,7 +49,7 @@ PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10 \
 --robust 1 \
 --exposure-names "$e" \
 --thread 16 \
---out $outdir/$j/"$j"x"$e"-chr"$i"-phase1
+--out $outdir/$j/"$j"x"$e"-chr"$i"
 
 done
 done
