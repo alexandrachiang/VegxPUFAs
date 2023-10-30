@@ -13,8 +13,6 @@ phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA",
 exposures <- c("Fish_oil_baseline")
 
 for (i in phenos) {
-    GEMdir <- "/scratch/ahc87874/FishOil/GEM"
-
     print(paste("pheno:", i))
 
     for (j in exposures) {
