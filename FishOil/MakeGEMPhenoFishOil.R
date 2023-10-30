@@ -5,6 +5,8 @@ library(fastDummies)
 
 fishoil <- as_tibble(read.table("/scratch/ahc87874/FishOil/pheno/phenosfish.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
+phase1 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv"))
+phase2 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv"))
 
 GEMpheno <- fishoil %>% select(FID, IID, 
                                sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,                                 ,
@@ -28,7 +30,16 @@ GEMpheno3 <- GEMpheno2
   #Remove if NA for covars
   #GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
 
-suffix <- "FishOil"
-write.table(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMpheno", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+suffix <- "comb"
+write.table(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 
-write.csv(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMpheno", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+suffix <- "phase1"
+GEMphenophase1 <- subset(GEMpheno3, (IID %in% phase1$IID))
+write.table(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+
+suffix <- "phase2"
+GEMphenophase2 <- subset(GEMpheno3, (IID %in% phase2$IID))
+write.table(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
