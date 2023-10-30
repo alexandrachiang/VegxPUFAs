@@ -41,7 +41,7 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GEMphenoFishOil.csv \
+--pheno-file $phenodir/GEMphenoFishOilcomb.csv \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age AgeSex \
