@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
-#SBATCH --job-name=GEM
+#SBATCH --job-name=GEMFishOil
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=20:00:00
 #SBATCH --mem=300GB
-#SBATCH --output=GEM.%j.out
-#SBATCH --error=GEM.%j.err
+#SBATCH --output=GEMFishOil.%j.out
+#SBATCH --error=GEMFishOil.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
