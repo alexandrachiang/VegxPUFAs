@@ -10,10 +10,12 @@ phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", "DHA
 
 exposures <- c("Fish_oil_baseline")
 
+suffix <- c("comb", "phase1", "phase2")
+
 #Combine chr into pheno x exposure
-for (i in phenos) {
-	  suffix <- "comb" #"phase1" "phase2"
-    GEMdir <- paste("/scratch/ahc87874/FishOil/GEM", suffix, sep = "")
+for (m in suffix) {
+  for (i in phenos) {
+    GEMdir <- paste("/scratch/ahc87874/FishOil/GEM", m, sep = "")
 
     print(paste("pheno:", i))
 
@@ -38,13 +40,12 @@ for (i in phenos) {
 
         #Save data table of all chr for pheno x exposure
         outdir = "/scratch/ahc87874/FishOil/Combined/"
-        write.table(infileall, paste(outdir, i, "x", j, suffix, "alltab.txt", sep = ""), 
+        write.table(infileall, paste(outdir, i, "x", j, "FishOil", m, ".txt", sep = ""), 
                     row.names = FALSE, quote = FALSE, sep = "\t")
-	#write.table(infileall, paste(outdir, i, "x", j, suffix, "all.txt", sep = ""), 
-        #            row.names = FALSE, quote = FALSE)
       } else {
-        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/FishOil/Combined/", i, "x", j, suffix, "alltab.txt", sep = ""), 
+        infileall <- as_tibble(read.table(paste("/scratch/ahc87874/FishOil/Combined/", i, "x", j, "FishOil", m, ".txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
       } 
     } #exposures
   } #phenos
+} #suffix
