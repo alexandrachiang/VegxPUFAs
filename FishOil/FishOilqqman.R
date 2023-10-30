@@ -18,7 +18,7 @@ for (i in phenos) {
     for (j in exposures) {
       print(paste("exposure:", j))
      
-      infileall <- as_tibble(read.table(paste("/scratch/ahc87874/FishOil/Combined/", i, "x", j, "all.txt", sep = ""), 
+      infileall <- as_tibble(read.table(paste("/scratch/ahc87874/FishOil/Combined/", i, "x", j, "alltab.txt", sep = ""), 
                                           header = TRUE, stringsAsFactors = FALSE))
 	    
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
