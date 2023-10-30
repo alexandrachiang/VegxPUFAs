@@ -24,23 +24,21 @@ for (i in phenos) {
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
-      if (FALSE) {
-        print("SNPs")
-        #Make table of sig SNPs (P < 1e-5)
-        outdirSNPs = "/scratch/ahc87874/FishOil/SNPs/"
-        sigSNPs <- infileall %>% filter(P <= 1e-5)
-        write.table(sigSNPs, paste(outdirSNPs, i, "x", j, suffix, "sigSNPs.txt", sep = ""),
-                    row.names = FALSE, quote = FALSE)
+      print("SNPs")
+      #Make table of sig SNPs (P < 1e-5)
+      outdirSNPs = "/scratch/ahc87874/FishOil/SNPs/"
+      sigSNPs <- infileall %>% filter(P <= 1e-5)
+      write.table(sigSNPs, paste(outdirSNPs, i, "x", j, "sigSNPs.txt", sep = ""),
+                  row.names = FALSE, quote = FALSE)
   
-        #Make table of top 10 SNPs
-        newdata <- infileall[order(infileall$P), ]
-        newdata <- newdata[1:10, ]
-        write.table(newdata, paste(outdirSNPs, i, "x", j, suffix, "topSNPs.txt", sep = ""),
-                    row.names = FALSE, quote = FALSE)
+      #Make table of top 10 SNPs
+      newdata <- infileall[order(infileall$P), ]
+      newdata <- newdata[1:10, ]
+      write.table(newdata, paste(outdirSNPs, i, "x", j, "topSNPs.txt", sep = ""),
+                  row.names = FALSE, quote = FALSE)
   
-        pvalue <- newdata$P[10]
-      }
-      
+      pvalue <- newdata$P[10]
+            
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/FishOil/manplots/"
