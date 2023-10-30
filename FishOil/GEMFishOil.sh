@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
-#SBATCH --job-name=GEMFishOil
+#SBATCH --job-name=GEMFishOil1
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=20:00:00
 #SBATCH --mem=300GB
-#SBATCH --output=GEMFishOil.%j.out
-#SBATCH --error=GEMFishOil.%j.err
+#SBATCH --output=GEMFishOil1.%j.out
+#SBATCH --error=GEMFishOil1.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
@@ -41,7 +41,7 @@ echo running "$j" and "$e"
 GEM \
 --bgen $genodir/chr"$i".bgen \
 --sample $genodir/chr"$i".sample \
---pheno-file $phenodir/GEMphenoFishOilcomb.csv \
+--pheno-file $phenodir/GEMphenoFishOilphase1.csv \
 --sampleid-name IID \
 --pheno-name $j \
 --covar-names Sex Age AgeSex \
