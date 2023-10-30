@@ -18,7 +18,7 @@ ukb <- as_tibble(ukb)
 
 #Load auxillary datasets
 if (FALSE) {
-  setwd("/scratch/ahc87874/FishOil/pheno/673621/")
+  setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
   NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
   NMR <- as_tibble(NMR)
   PUFAs <- NMR %>% select(eid, contains("f23444_0_0"), contains("f23451_0_0"), contains("f23445_0_0"), contains("f23452_0_0"), 
