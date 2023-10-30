@@ -19,7 +19,7 @@ ml GEM/1.5.1-foss-2022a
 
 genodir=("/scratch/ahc87874/Fall2022/geno")
 phenodir=("/scratch/ahc87874/FishOil/pheno")
-outdir=("/scratch/ahc87874/FishOil/GEM")
+outdir=("/scratch/ahc87874/FishOil/GEMphase1")
 mkdir -p $outdir
 
 phenotypes=("w3FA" "w3FA_TFAP" "w6FA" "w6FA_TFAP" "w6_w3_ratio" 
