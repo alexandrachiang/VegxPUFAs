@@ -23,9 +23,9 @@ names(phasecomb) <- "IID"
 phasecomb <- phasecomb[!(phasecomb$IID %in% withdrawn$V1), ]
 
 phase2 <- subset(phasecomb, !(IID %in% phase1$IID))
-print("phase1:", nrow(phase1))
-print("phase1:", nrow(phase2))
-print("phasecomb:", nrow(phasecomb))
+print(paste("phase1:", nrow(phase1)))
+print(paste("phase1:", nrow(phase2)))
+print(paste("phasecomb:", nrow(phasecomb)))
 
 write.csv(phase1, file = "/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", row.names = FALSE, quote = FALSE)
 write.csv(phase2, file = "/scratch/ahc87874/Phase/pheno/phase2IIDs.csv", row.names = FALSE, quote = FALSE)
