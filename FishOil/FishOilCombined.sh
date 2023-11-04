@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=highmem_p
+#SBATCH --partition=batch
 #SBATCH --job-name=FishOilCombined
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --time=24:00:00
-#SBATCH --mem=130GB
+#SBATCH --time=6:00:00
+#SBATCH --mem=90GB
 #SBATCH --output=FishOilCombined.%j.out
 #SBATCH --error=FishOilCombined.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
