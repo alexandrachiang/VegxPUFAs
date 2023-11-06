@@ -7,9 +7,9 @@ suppressMessages(library(rio))
 
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
 
-phase1 <- read.csv("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", header = FALSE)
-phase2 <- read.csv("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv", header = FALSE)
-comb <- read.csv("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv", header = FALSE)
+phase1 <- read.csv("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", header = TRUE)
+phase2 <- read.csv("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv", header = TRUE)
+comb <- read.csv("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv", header = TRUE)
 
 NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
 NMR <- as_tibble(NMR)
@@ -28,9 +28,9 @@ colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",
                      "DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
                      "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")  
 
-PUFAs1 <- subset(PUFAs, (IID %in% phase1$V1))
-PUFAs2 <- subset(PUFAs, (IID %in% phase2$V1))
-PUFAsINTcomb <- subset(PUFAs, (IID %in% comb$V1))
+PUFAs1 <- subset(PUFAs, (IID %in% phase1$IID))
+PUFAs2 <- subset(PUFAs, (IID %in% phase2$IID))
+PUFAsINTcomb <- subset(PUFAs, (IID %in% comb$IID))
 
 #Save datasets
 write.csv(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.csv", row.names = FALSE, quote = FALSE)
