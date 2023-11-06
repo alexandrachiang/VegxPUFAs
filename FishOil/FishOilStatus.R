@@ -42,8 +42,8 @@ ukb3 <- left_join(ukb3, FishOil, by = c("FID", "IID"))
 #123 cols
 
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
-ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
+#withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
+#ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 
 #Add Age^2 column
 ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2)
