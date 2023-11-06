@@ -1,4 +1,8 @@
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
+
+IID1 <- read.csv("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", header = FALSE)
+IID2 <- read.csv("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv", header = FALSE)
+
 NMR <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
 NMR <- as_tibble(NMR)
 PUFAs <- NMR %>% select(eid, contains("f23444_0_0"), contains("f23451_0_0"), contains("f23445_0_0"), contains("f23452_0_0"), 
@@ -16,16 +20,22 @@ colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",
                      "DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
                      "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")  
 
-PUFAsINT <- PUFAs
+PUFAsINT1 <- PUFAs[(PUFAs$IID %in% IID1$V1), ]
+PUFAsINT2 <- PUFAs[(PUFAs$IID %in% IID2$V1), ]
+PUFAsINTcomb <- PUFAs
 
 for (i in 2:15) {
-  print(names(PUFAsINT)[i])
-  PUFAsINT[, i] <- qnorm((rank(PUFAsINT[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT[, i])))
+  print(names(PUFAsINTcomb)[i])
+  PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
+  PUFAsINT2[, i] <- qnorm((rank(PUFAsINT2[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT2[, i])))
+  PUFAsINTcomb[, i] <- qnorm((rank(PUFAsINTcomb[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINTcomb[, i])))
 }
 
 #Save datasets
 write.csv(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.csv", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINT, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINT.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT1, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINT1.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT2, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINT2.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINTcomb, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINTcomb.csv", row.names = FALSE, quote = FALSE)
 
 #PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAs.csv")
-#PUFAsINT <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsINT.csv")
+#PUFAsINTcomb <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsINTcomb.csv")
