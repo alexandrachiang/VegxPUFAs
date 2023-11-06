@@ -1,4 +1,4 @@
-#Subset necessary columns, change to numeric 
+#Subset necessary columns, change to numeric, remove incomplete cases, INT
 
 library(tidyverse)
 library(fastDummies)
