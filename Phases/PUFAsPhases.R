@@ -1,3 +1,5 @@
+# Subsets only IID and PUFA columns, separates into phase IIDs
+
 suppressMessages(library(plyr))
 suppressMessages(library(dplyr))
 suppressMessages(library(data.table))
