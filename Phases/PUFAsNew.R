@@ -1,3 +1,10 @@
+suppressMessages(library(plyr))
+suppressMessages(library(dplyr))
+suppressMessages(library(data.table))
+suppressMessages(library(tidyverse))
+suppressMessages(library(ukbtools)) #<3
+suppressMessages(library(rio))
+
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
 
 IID1 <- read.csv("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv", header = FALSE)
@@ -20,8 +27,8 @@ colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",
                      "DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
                      "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")  
 
-PUFAsINT1 <- PUFAs[(PUFAs$IID %in% IID1$V1), ]
-PUFAsINT2 <- PUFAs[(PUFAs$IID %in% IID2$V1), ]
+PUFAsINT1 <- subset(PUFAs, (IID %in% IID1$V1))
+PUFAsINT2 <- subset(PUFAs, (IID %in% IID2$V1))
 PUFAsINTcomb <- PUFAs
 
 for (i in 2:15) {
