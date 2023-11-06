@@ -13,7 +13,7 @@ phase2 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv"))
 phasecomb <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv"))
 
 #Remove withdrawn participants from dataset
-withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
+withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
 fishoil <- fishoil[!(fishoil$IID %in% withdrawn$V1), ]
 
 # Select columns
