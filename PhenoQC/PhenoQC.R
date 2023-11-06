@@ -16,17 +16,17 @@ ukb <- ukb_df("ukb34137")
 #ukb <- import("ukb34137.tsv")
 ukb <- as_tibble(ukb)
 
-setwd("/scratch/ahc87874/Fall2022/pheno/48364")
-ukbNMR <- as_tibble(ukb_df("ukb48364"))
+setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
+#ukbNMR <- as_tibble(ukb_df("ukb673621"))
 
-ukbNMR <- as_tibble(read.table("48364/ukb48364.tab",
+ukbNMR <- as_tibble(read.table("ukb673621.tab",
                     header=TRUE, sep="\t"))
 
 setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
+withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
 ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #502413
 
 pan <- read_tsv("all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
