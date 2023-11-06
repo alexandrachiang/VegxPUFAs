@@ -17,7 +17,7 @@ ukb <- ukb_df("ukb34137")
 ukb <- as_tibble(ukb)
 
 #Load auxillary datasets
-PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsINT.csv")
+PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAs.csv")
 PUFAs <- as_tibble(PUFAs)
 
 setwd("/scratch/ahc87874/FishOil/pheno/")
