@@ -4,7 +4,7 @@
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=24:00:00
-#SBATCH --mem=120GB
+#SBATCH --mem=20GB
 #SBATCH --output=FishOilqqman.%j.out
 #SBATCH --error=FishOilqqman.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
