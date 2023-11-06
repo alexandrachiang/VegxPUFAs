@@ -5,8 +5,10 @@ library(fastDummies)
 
 fishoil <- as_tibble(read.table("/scratch/ahc87874/FishOil/pheno/phenosfish.txt", sep = "\t", 
                                 header = TRUE, stringsAsFactors = FALSE))
+
 phase1 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv"))
 phase2 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv"))
+phasecomb <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv"))
 
 GEMpheno <- fishoil %>% select(FID, IID, 
                                sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,                                 ,
@@ -26,20 +28,29 @@ GEMpheno2$Sex <- replace(GEMpheno2$Sex, GEMpheno2$Sex == "Female", 0)
 GEMpheno2$Sex <- replace(GEMpheno2$Sex, GEMpheno2$Sex == "Male", 1)
 GEMpheno2$Sex <- as.numeric(GEMpheno2$Sex)
 
+# Remove non complete cases
 GEMpheno3 <- GEMpheno2
-  #Remove if NA for covars
-  #GEMpheno3 <- GEMpheno2[complete.cases(GEMpheno2[, covars]), ] #206,639
+
+# Subset by Phase IID
+PUFAsINTcomb <- subset(GEMpheno3, (IID %in% phasecomb$IID))
+PUFAsINT1 <- subset(GEMpheno3, (IID %in% phase1$IID))
+PUFAsINT2 <- subset(GEMpheno3, (IID %in% phase2$IID))
+
+for (i in 2:15) {
+  print(names(PUFAsINTcomb)[i])
+  PUFAsINTcomb[, i] <- qnorm((rank(PUFAsINTcomb[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINTcomb[, i])))
+  PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
+  PUFAsINT2[, i] <- qnorm((rank(PUFAsINT2[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT2[, i])))
+}
 
 suffix <- "comb"
-write.table(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(GEMpheno3, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 
 suffix <- "phase1"
-GEMphenophase1 <- subset(GEMpheno3, (IID %in% phase1$IID))
-write.table(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINT1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 
 suffix <- "phase2"
-GEMphenophase2 <- subset(GEMpheno3, (IID %in% phase2$IID))
-write.table(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(GEMphenophase1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINT2, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
