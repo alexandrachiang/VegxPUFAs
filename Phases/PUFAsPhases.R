@@ -34,9 +34,9 @@ PUFAsINTcomb <- subset(PUFAs, (IID %in% comb$IID))
 
 #Save datasets
 write.csv(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.csv", row.names = FALSE, quote = FALSE)
-write.csv(PUFAs1, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINT1.csv", row.names = FALSE, quote = FALSE)
-write.csv(PUFAs2, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINT2.csv", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINTcomb, file = "/scratch/ahc87874/Fall2022/pheno/PUFAsINTcomb.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAs1, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs1.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAs2, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs2.csv", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINTcomb, file = "/scratch/ahc87874/Fall2022/pheno/PUFAscomb.csv", row.names = FALSE, quote = FALSE)
 
 #PUFAs <- import("/scratch/ahc87874/Fall2022/pheno/PUFAs.csv")
 #PUFAsINTcomb <- import("/scratch/ahc87874/Fall2022/pheno/PUFAsINTcomb.csv")
