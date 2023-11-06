@@ -19,8 +19,8 @@ ukb <- as_tibble(ukb)
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
 #ukbNMR <- as_tibble(ukb_df("ukb673621"))
 
-ukbNMR <- as_tibble(read.table("ukb673621.tab",
-                    header=TRUE, sep="\t"))
+#ukbNMR <- as_tibble(read.table("ukb673621.tab",
+#                    header=TRUE, sep="\t"))
 
 setwd("/scratch/ahc87874/Fall2022/pheno")
 
