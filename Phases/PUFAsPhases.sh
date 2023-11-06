@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=highmem_p
+#SBATCH --partition=batch
 #SBATCH --job-name=PUFAsPhases
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=24:00:00
-#SBATCH --mem=300GB
+#SBATCH --mem=250GB
 #SBATCH --output=PUFAsPhases.%j.out
 #SBATCH --error=PUFAsPhases.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
