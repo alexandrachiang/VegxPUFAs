@@ -43,15 +43,24 @@ GEMpheno3 <- subset(GEMpheno2, (IID %in% phenoQCgenoQC$IID))
 GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.na(PC1))
 
 # Remove if missing phenotype data
-GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Fish_oil_baseline), !is.na(w3FA))
+GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Fish_oil_baseline)) #, !is.na(w3FA)
+
+for (i in 1:ncol(GEMpheno3)) {
+  print(names(GEMpheno3)[i])
+  print(sum(is.na(GEMpheno3[, i])))
+}
+
+GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP, 
+                                  LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
+GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
 
 # Subset by Phase IID
-PUFAsINTcomb <- subset(GEMpheno3, (IID %in% phasecomb$IID))
-PUFAsINT1 <- subset(GEMpheno3, (IID %in% phase1$IID))
-PUFAsINT2 <- subset(GEMpheno3, (IID %in% phase2$IID))
+PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID))
+PUFAsINT1 <- subset(GEMpheno5, (IID %in% phase1$IID))
+PUFAsINT2 <- subset(GEMpheno5, (IID %in% phase2$IID))
 
 # INT
-for (i in 2:15) {
+for (i in 17:30) {
   print(names(PUFAsINTcomb)[i])
   PUFAsINTcomb[, i] <- qnorm((rank(PUFAsINTcomb[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINTcomb[, i])))
   PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
