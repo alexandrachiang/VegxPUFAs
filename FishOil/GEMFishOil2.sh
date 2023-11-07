@@ -4,7 +4,7 @@
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=144:00:00
-#SBATCH --mem=300GB
+#SBATCH --mem=50GB
 #SBATCH --output=GEMFishOil2.%j.out
 #SBATCH --error=GEMFishOil2.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
