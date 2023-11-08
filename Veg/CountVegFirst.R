@@ -95,10 +95,10 @@ if (FALSE) {
   write.table(Statins, file = "/scratch/ahc87874/Fall2022/pheno/Statins.txt",
               row.names = FALSE, quote = FALSE)
 } else {
-  BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
-  PUFAs <- as_tibble(read.table("PUFAs.txt", header = TRUE))
-  LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
-  Statins <- as_tibble(read.table("Statins.txt", header = TRUE))
+  #BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
+  PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.csv"))
+  #LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
+  #Statins <- as_tibble(read.table("Statins.txt", header = TRUE))
 }
 
 #Select necessary columns
@@ -122,15 +122,16 @@ ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0,
                        starts_with("daily_dietary_data_credible"))
 
 #Join baskets to main data set
-ukb3 <- left_join(ukb2, BMI)
-ukb3 <- left_join(ukb3, PUFAs)
-ukb3 <- left_join(ukb3, LipidMeds)
-ukb3 <- left_join(ukb3, Statins)
+ukb3 <- left_join(ukb2, PUFAs)
+#ukb3 <- left_join(ukb2, BMI)
+#ukb3 <- left_join(ukb3, LipidMeds)
+#ukb3 <- left_join(ukb3, Statins)
 #123 cols
 
 #Remove withdrawn participants from dataset
-withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
-ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
+#withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
+#ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
+
 
 #Add Age^2 column
 ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
