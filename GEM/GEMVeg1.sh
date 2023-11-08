@@ -3,7 +3,7 @@
 #SBATCH --job-name=GEMVegphase1
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --time=144:00:00
+#SBATCH --time=168:00:00
 #SBATCH --mem=50GB
 #SBATCH --output=GEMVegphase1.%j.out
 #SBATCH --error=GEMVegphase1.%j.err
