@@ -45,6 +45,7 @@ GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.
 # Remove if missing phenotype data
 GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Fish_oil_baseline)) #, !is.na(w3FA)
 
+# Remove if missing all phenotypes
 for (i in 1:ncol(GEMpheno3)) {
   print(names(GEMpheno3)[i])
   print(sum(is.na(GEMpheno3[, i])))
