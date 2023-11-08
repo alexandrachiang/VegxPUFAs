@@ -132,10 +132,12 @@ ukb3 <- left_join(ukb2, PUFAs)
 #withdrawn <-read.csv("w48818_20220222.csv", header = FALSE)
 #ukb3 <- ukb3[!(ukb3$IID %in% withdrawn$V1), ] #Removes 114
 
-
 #Add Age^2 column
-ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2) %>% 
-                 select(FID, IID, starts_with("age_when_attended_assessment_centre"), everything())
+ukb3 <- ukb3 %>% mutate(age_when_attended_assessment_centre_squared = age_when_attended_assessment_centre_f21003_0_0^2)
+
+#Add Age*Sex column
+ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended_assessment_centre_f21003_0_0, 0)) %>% 
+                 select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, everything())
 
 #Remove participants that never answered 20086/never did a dietary survey
 ukb4 <- ukb3[rowSums(is.na(ukb3[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
@@ -399,8 +401,7 @@ if (isCredible) {
 #  Any other Black background     13      0
 
 #Save dataset
-if (FALSE) {
-  
+if (FALSE) { 
   if (!isCredible) {
     suffix <- "woCred"
   } else if (keepNonVeg) {
@@ -413,3 +414,10 @@ if (FALSE) {
                                                                                   
   write.csv(ukbSSRV, file = paste("/scratch/ahc87874/Fall2022/pheno/CSRVSSRV", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 }                                                           
+
+if (TRUE) {
+  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+                                                                                  
+  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.csv", row.names = FALSE, quote = FALSE)
+}          
