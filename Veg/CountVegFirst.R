@@ -425,8 +425,9 @@ if (TRUE) {
 
   ukbNew2 <- left_join(ukbNew, PUFAs, by = "IID")
   
-  write.table(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt",
-            sep = "\t", row.names = FALSE, quote = FALSE)
-                                                                                  
+  write.table(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
   write.csv(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.csv", row.names = FALSE, quote = FALSE)
+
+  VegIIDs <- ukbNew2 %>% select(IID, CSRV, SSRV)
+  write.table(VegIIDs, file = "/scratch/ahc87874/Fall2022/pheno/VegIIDs.txt", sep = "\t", row.names = FALSE, quote = FALSE)
 }          
