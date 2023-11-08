@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --partition=batch
-#SBATCH --job-name=GEM
+#SBATCH --partition=highmem_p
+#SBATCH --job-name=GEMVeg
+#SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
-#SBATCH --time=70:00:00
-#SBATCH --mem=30000
-#SBATCH --output=GEM.%j.out
-#SBATCH --error=GEM.%j.err
+#SBATCH --time=144:00:00
+#SBATCH --mem=50GB
+#SBATCH --output=GEMVeg.%j.out
+#SBATCH --error=GEMVeg.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
 #SBATCH --mail-type=ALL
 #SBATCH --array=1-22
@@ -30,7 +30,7 @@ phenotypes=("w3FA_NMR" "w3FA_NMR_TFAP" "w6FA_NMR" "w6FA_NMR_TFAP" "w6_w3_ratio_N
 "DHA_NMR" "DHA_NMR_TFAP" "LA_NMR" "LA_NMR_TFAP" "PUFA_NMR" "PUFA_NMR_TFAP" "MUFA_NMR" 
 "MUFA_NMR_TFAP" "PUFA_MUFA_ratio_NMR")
 
-exposures=("CSRV" "SSRV")
+exposures=("SSRV")
 
 for j in ${phenotypes[@]} 
         do
