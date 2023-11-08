@@ -13,7 +13,7 @@ phasecomb <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv")
 withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
 veg <- veg[!(veg$IID %in% withdrawn$V1), ]
 
-GEMpheno <- fishoil %>% select(FID, IID, 
+GEMpheno <- veg %>% select(FID, IID, 
                                sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,                                 ,
                                contains("genetic_principal_components_f22009_0_"), 
                                SSRV, 
@@ -21,7 +21,7 @@ GEMpheno <- fishoil %>% select(FID, IID,
                                LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
 
 #Rename columns and change order
-covars <- c("Sex", "Age", "Townsend", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "Vegetarian")
+covars <- c("Sex", "Age", "AgeSex", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "Vegetarian")
 names(GEMpheno)[3:(2 + length(covars))] <- covars
   
 #Change to numerical columns
@@ -55,9 +55,9 @@ GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio,
 GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
 
 # Subset by Phase IID
-PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID))
-PUFAsINT1 <- subset(GEMpheno5, (IID %in% phase1$IID))
-PUFAsINT2 <- subset(GEMpheno5, (IID %in% phase2$IID))
+PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID)) # 83,375
+PUFAsINT1 <- subset(GEMpheno5, (IID %in% phase1$IID)) # 36,391
+PUFAsINT2 <- subset(GEMpheno5, (IID %in% phase2$IID)) # 46,984
   
 # INT
 for (i in 17:30) {
@@ -66,6 +66,18 @@ for (i in 17:30) {
   PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
   PUFAsINT2[, i] <- qnorm((rank(PUFAsINT2[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT2[, i])))
 }
+
+#table(PUFAsINTcomb$Vegetarian)
+#    0     1
+#82085  1290
+
+#table(PUFAsINT1$Vegetarian)
+#    0     1
+#35823   568
+
+#table(PUFAsINT2$Vegetarian)
+#    0     1
+#46262   722
 
 suffix <- "comb"
 write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
