@@ -56,9 +56,9 @@ GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio,
 GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
 
 # Subset by Phase IID
-PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID))
-PUFAsINT1 <- subset(GEMpheno5, (IID %in% phase1$IID))
-PUFAsINT2 <- subset(GEMpheno5, (IID %in% phase2$IID))
+PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID)) # 200,162
+PUFAsINT1 <- subset(GEMpheno5, (IID %in% phase1$IID)) # 85,731
+PUFAsINT2 <- subset(GEMpheno5, (IID %in% phase2$IID)) # 114,431
 
 # INT
 for (i in 17:30) {
@@ -67,6 +67,18 @@ for (i in 17:30) {
   PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
   PUFAsINT2[, i] <- qnorm((rank(PUFAsINT2[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT2[, i])))
 }
+
+#table(PUFAsINTcomb$Fish_oil_baseline)
+#     0      1
+#136518  63644
+
+#table(PUFAsINT1$Fish_oil_baseline)
+#    0     1
+#58563 27168
+
+#table(PUFAsINT2$Fish_oil_baseline)
+#    0     1
+#77955 36476
 
 suffix <- "comb"
 write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoFishOil", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
