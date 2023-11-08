@@ -80,13 +80,13 @@ for (i in 17:30) {
 #46262   722
 
 suffix <- "comb"
-write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
   
 suffix <- "phase1"
-write.table(PUFAsINT1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
   
 suffix <- "phase2"
-write.table(PUFAsINT2, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/FishOil/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
