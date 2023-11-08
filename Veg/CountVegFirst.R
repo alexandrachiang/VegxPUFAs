@@ -416,8 +416,17 @@ if (FALSE) {
 }                                                           
 
 if (TRUE) {
-  write.table(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt",
+   ukbNew <- ukbSSRV %>% select(FID, IID, starts_with("age_when_attended_assessment_centre"), agesex, sex_f31_0_0, genetic_sex_f22001_0_0,
+                       ethnic_background_f21000_0_0, outliers_for_heterozygosity_or_missing_rate_f22027_0_0,
+                       sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0,
+                       genotype_measurement_batch_f22000_0_0, uk_biobank_assessment_centre_f54_0_0,
+                       townsend_deprivation_index_at_recruitment_f189_0_0, used_in_genetic_principal_components_f22020_0_0,
+                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), CSRV, SSRV)
+
+  ukbNew2 <- left_join(ukbNew, PUFAs, by = "IID")
+  
+  write.table(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt",
             sep = "\t", row.names = FALSE, quote = FALSE)
                                                                                   
-  write.csv(ukbSSRV, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.csv", row.names = FALSE, quote = FALSE)
+  write.csv(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.csv", row.names = FALSE, quote = FALSE)
 }          
