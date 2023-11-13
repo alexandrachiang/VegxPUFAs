@@ -3,7 +3,7 @@
 #SBATCH --job-name=GEMFishOil1
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --time=144:00:00
+#SBATCH --time=168:00:00
 #SBATCH --mem=50GB
 #SBATCH --output=GEMFishOil1.%j.out
 #SBATCH --error=GEMFishOil1.%j.err
