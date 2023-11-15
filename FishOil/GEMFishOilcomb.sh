@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=highmem_p
+#SBATCH --partition=batch-30d
 #SBATCH --job-name=GEMFishOilcomb
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
-#SBATCH --time=168:00:00
-#SBATCH --mem=50GB
+#SBATCH --time=240:00:00
+#SBATCH --mem=25GB
 #SBATCH --output=GEMFishOilcomb.%j.out
 #SBATCH --error=GEMFishOilcomb.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
