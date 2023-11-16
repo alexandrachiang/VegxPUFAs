@@ -2,7 +2,7 @@
 library(tidyverse)
 library(qqman)
 
-source("ManhattanCex.R")
+source("/work/kylab/alex/Fall2022/ManhattanCex.R")
 
 setwd("/scratch/ahc87874/FishOil/")
 	
