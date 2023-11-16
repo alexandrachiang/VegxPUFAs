@@ -7,7 +7,7 @@ setwd("/scratch/ahc87874/FishOil/")
 	
 phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", 
 	    "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio")
-
+phenos <- c("w3FA")
 exposures <- c("Fish_oil_baseline")
 
 suffix <- c("comb", "phase1", "phase2")
