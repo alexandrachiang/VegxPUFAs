@@ -14,6 +14,8 @@ suffix <- c("comb", "phase1", "phase2")
 
 #Combine chr into pheno x exposure
 for (m in suffix) {
+	print(paste("suffix:", m))
+  
   for (i in phenos) {
     GEMdir <- paste("/scratch/ahc87874/FishOil/GEM", m, sep = "")
 
