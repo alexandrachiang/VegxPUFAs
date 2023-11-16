@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --partition=batch-30d
+#SBATCH --partition=batch
 #SBATCH --job-name=GEMVegcomb
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
