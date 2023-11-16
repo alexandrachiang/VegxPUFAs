@@ -29,9 +29,13 @@ for (k in suffix) {
 	    infileall <- infileall %>% select(CHR, POS, robust_P_Value_Interaction, RSID)
 	    colnames(infileall) <- c("CHR", "BP", "P", "SNP")
 
-      print("SNPs")
-      #Make table of sig SNPs (P < 1e-5)
+      print("SNPs")	    
       outdirSNPs = "/scratch/ahc87874/FishOil/SNPs/"
+
+      write.table(infileall, paste(outdirSNPs, i, "x", j, k, "allSNPs.txt", sep = ""),
+                  row.names = FALSE, quote = FALSE)
+      
+      #Make table of sig SNPs (P < 1e-5)
       sigSNPs <- infileall %>% filter(P <= 1e-5)
       write.table(sigSNPs, paste(outdirSNPs, i, "x", j, k, "sigSNPs.txt", sep = ""),
                   row.names = FALSE, quote = FALSE)
