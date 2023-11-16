@@ -15,6 +15,8 @@ exposures <- c("Fish_oil_baseline")
 suffix <- c("comb", "phase1", "phase2")
 
 for (k in suffix) {
+  print(paste("suffix:", m))
+
 	for (i in phenos) {
     print(paste("pheno:", i))
 
