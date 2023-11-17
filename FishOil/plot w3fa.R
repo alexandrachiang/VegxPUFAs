@@ -3,7 +3,7 @@ library(qqman)
 
 source("/work/kylab/alex/Fall2022/ManhattanCex.R")
 
-setwd("/scratch/ahc87874/FishOil/")
+setwd("/scratch/ahc87874/FishOil/manplots")
 	
 i <- c("w3FA")
 j <- c("Fish_oil_baseline")
