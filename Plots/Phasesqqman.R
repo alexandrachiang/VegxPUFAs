@@ -58,7 +58,7 @@ for (k in suffix) {
         maxy <- -log10(newdata$P[1])
       }
 	    
-      png(filename = paste(outdirman, i, "x", j, "_Veg_", k, "_man.png", sep = ""), type = "cairo", width = 1200, height = 600)
+      png(filename = paste(outdirman, k, "/", i, "x", j, "_Veg_", k, "_man.png", sep = ""), type = "cairo", width = 1200, height = 600)
       manhattancex(infileall, suggestiveline = -log10(1e-05), genomewideline = -log10(5e-08),
                    main = paste("Manhattan Plot of ", i, " x ", expo, " GWIS", sep = ""), annotatePval = 1e-5, ylim = c(0, maxy + 0.15), 
                    annofontsize = 1, cex.axis = 1.3, cex.lab = 1.3, cex.main = 1.7)
@@ -68,7 +68,7 @@ for (k in suffix) {
       #Make qq plot
       outdirqq = "/scratch/ahc87874/Fall2022/qqplots/"
 	    
-      png(filename = paste(outdirqq, i, "x", j, "_Veg_", k, "_qq.png", sep = ""), type = "cairo", width = 600, height = 600)
+      png(filename = paste(outdirqq, k, "/", i, "x", j, "_Veg_", k, "_qq.png", sep = ""), type = "cairo", width = 600, height = 600)
       qq(infileall$P, main = paste("Q-Q plot of ", i, " x ", expo, " GWIS p-values", sep = ""))
       dev.off()
      
