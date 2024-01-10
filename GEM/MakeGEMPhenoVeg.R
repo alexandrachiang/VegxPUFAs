@@ -1,6 +1,7 @@
 #Subset necessary columns, change to numeric 
 
 library(tidyverse)
+library(rio)
 
 veg <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", header = TRUE, stringsAsFactors = FALSE))
 phenoQCgenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", header = TRUE, stringsAsFactors = FALSE))
