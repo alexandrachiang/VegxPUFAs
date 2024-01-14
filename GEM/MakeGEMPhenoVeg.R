@@ -15,7 +15,7 @@ withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header =
 veg <- veg[!(veg$IID %in% withdrawn$V1), ]
 
 GEMpheno <- veg %>% select(FID, IID, 
-                               sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,                                 ,
+                               sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,
                                contains("genetic_principal_components_f22009_0_"), 
                                SSRV, 
                                w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP,
