@@ -9,7 +9,7 @@ suppressMessages(library(rio))
 #Load dataset
 setwd("/scratch/ahc87874/Phase/pheno/")
 
-withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/w48818_2023-04-25.csv", header = FALSE)
+withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
 
 phase1 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt", header = TRUE))
 phase1 <- phase1[!(phase1$IID %in% withdrawn$V1), ] 
