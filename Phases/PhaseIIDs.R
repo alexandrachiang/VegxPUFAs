@@ -16,8 +16,8 @@ phase1 <- phase1[!(phase1$IID %in% withdrawn$V1), ]
 phase1 <- phase1 %>% filter(!is.na(w3FA_NMR)) %>% select(IID)
 
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
-phasecomb <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
-phasecomb <- as_tibble(phasecomb)
+ukb673621 <- ukb_df("ukb673621", n_threads = "max", data.pos = 2)
+phasecomb <- as_tibble(ukb673621)
 phasecomb <- phasecomb %>% filter(!is.na(omega3_fatty_acids_f23444_0_0)) %>% select(eid)
 names(phasecomb) <- "IID"
 phasecomb <- phasecomb[!(phasecomb$IID %in% withdrawn$V1), ]
