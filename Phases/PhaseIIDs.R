@@ -23,9 +23,13 @@ names(phasecomb) <- "IID"
 phasecomb <- phasecomb[!(phasecomb$IID %in% withdrawn$V1), ]
 
 phase2 <- subset(phasecomb, !(IID %in% phase1$IID))
-#phase1 <- subset(phase1, (IID %in% phasecomb$IID)) #Remove 4 people that no longer have NMR data
+phase1 <- subset(phase1, (IID %in% phasecomb$IID)) #Remove 4 people that no longer have NMR data
 
-print(paste("phase1:", nrow(phase1))) #117920
+phasecomb <- phasecomb[!(phasecomb$IID %in% withdrawn$V1), ]
+phase1 <- phase1[!(phase1$IID %in% withdrawn$V1), ]
+phase2 <- phase2[!(phase2$IID %in% withdrawn$V1), ]
+
+print(paste("phase1:", nrow(phase1))) #117926
 print(paste("phase2:", nrow(phase2))) #156205
 print(paste("phasecomb:", nrow(phasecomb))) #274121
 
