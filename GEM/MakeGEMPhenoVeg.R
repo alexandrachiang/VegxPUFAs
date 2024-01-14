@@ -35,25 +35,27 @@ GEMpheno2$Vegetarian <- replace(GEMpheno2$Vegetarian, GEMpheno2$Vegetarian == "N
 GEMpheno2$Vegetarian <- replace(GEMpheno2$Vegetarian, GEMpheno2$Vegetarian == "Veg", 1)
 GEMpheno2$Vegetarian <- as.numeric(GEMpheno2$Vegetarian)
 
-# Remove if missing genetic data or doesnt pass geno/pheno QC
-phenoQCgenoQC <- phenoQCgenoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
-GEMpheno3 <- subset(GEMpheno2, (IID %in% phenoQCgenoQC$IID))
-
-# Remove if missing covariate data
-GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.na(PC1))
+if (FALSE) {
+  # Remove if missing genetic data or doesnt pass geno/pheno QC
+  phenoQCgenoQC <- phenoQCgenoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
+  GEMpheno3 <- subset(GEMpheno2, (IID %in% phenoQCgenoQC$IID))
   
-# Remove if missing phenotype data
-GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Vegetarian))
-
-# Remove if missing all phenotypes
-for (i in 1:ncol(GEMpheno3)) {
-  print(names(GEMpheno3)[i])
-  print(sum(is.na(GEMpheno3[, i])))
+  # Remove if missing covariate data
+  GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.na(PC1))
+    
+  # Remove if missing phenotype data
+  GEMpheno3 <- GEMpheno3 %>% filter(!is.na(Vegetarian))
+  
+  # Remove if missing all phenotypes
+  for (i in 1:ncol(GEMpheno3)) {
+    print(names(GEMpheno3)[i])
+    print(sum(is.na(GEMpheno3[, i])))
+  }
+    
+  GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP, 
+                                    LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
+  GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
 }
-  
-GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP, 
-                                  LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
-GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
 
 # Subset by Phase IID
 PUFAsINTcomb <- subset(GEMpheno5, (IID %in% phasecomb$IID)) # 83,375
