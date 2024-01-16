@@ -15,7 +15,7 @@ Alexphase1 <- veg %>% filter(veg$IID %in% phase1$IID) # 49,821 rows
 Alexphase2 <- veg %>% filter(veg$IID %in% phase2$IID) # 63,882 rows
 Alexphasecomb <- veg %>% filter(veg$IID %in% phasecomb$IID) # 113,702 rows
 
-#complete for phenos
+#complete for w3FA SOME PEOPLE HAVE SOME BUT NOT ALL PHENOS
 Alexphase1 %>% filter(!is.na(w3FA)) # 49,820 rows
 Alexphase2 %>% filter(!is.na(w3FA)) # 63,882 rows
 Alexphasecomb %>% filter(!is.na(w3FA)) # 113,702 rows
