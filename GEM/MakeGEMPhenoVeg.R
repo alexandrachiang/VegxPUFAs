@@ -86,7 +86,7 @@ for (i in 17:30) {
 #    0     1
 #46262   722
 
-If (CompCase) {
+if (CompCase) {
   suffix <- "comb"
   write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
   write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
