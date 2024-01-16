@@ -35,7 +35,9 @@ GEMpheno2$Vegetarian <- replace(GEMpheno2$Vegetarian, GEMpheno2$Vegetarian == "N
 GEMpheno2$Vegetarian <- replace(GEMpheno2$Vegetarian, GEMpheno2$Vegetarian == "Veg", 1)
 GEMpheno2$Vegetarian <- as.numeric(GEMpheno2$Vegetarian)
 
-if (FALSE) {
+CompCase <- FALSE
+
+if (CompCase) {
   # Remove if missing genetic data or doesnt pass geno/pheno QC
   phenoQCgenoQC <- phenoQCgenoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
   GEMpheno3 <- subset(GEMpheno2, (IID %in% phenoQCgenoQC$IID))
@@ -82,14 +84,28 @@ for (i in 17:30) {
 #    0     1
 #46262   722
 
-suffix <- "comb"
-write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
-  
-suffix <- "phase1"
-write.table(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
-  
-suffix <- "phase2"
-write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+If (CompCase) {
+  suffix <- "comb"
+  write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+  suffix <- "phase1"
+  write.table(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+  suffix <- "phase2"
+  write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+} else {
+  suffix <- "combTEST"
+  write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+  suffix <- "phase1TEST"
+  write.table(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+  suffix <- "phase2TEST"
+  write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+  write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+}
