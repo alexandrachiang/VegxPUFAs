@@ -57,6 +57,8 @@ if (CompCase) {
   GEMpheno4 <- GEMpheno3 %>% select(w3FA, w3FA_TFAP, w6FA, w6FA_TFAP, w6_w3_ratio, DHA, DHA_TFAP, 
                                     LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
   GEMpheno5 <- GEMpheno3[rowSums(!is.na(GEMpheno4)) > 0, ]
+} else {
+  GEMpheno5 <- GEMpheno2
 }
 
 # Subset by Phase IID
