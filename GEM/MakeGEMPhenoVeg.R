@@ -104,10 +104,6 @@ if (CompCase) {
   # Remove if missing genetic data or doesnt pass geno/pheno QC
   phenoQCgenoQC <- phenoQCgenoQC %>% mutate(IID = ID_1, hasGenoData = TRUE) %>% select(IID, hasGenoData)
   GEMpheno6 <- subset(GEMpheno5, (IID %in% phenoQCgenoQC$IID))
-
-  GEMpheno6 %>% filter(GEMpheno6$IID %in% phase1$IID) # 36,391 rows
-  GEMpheno6 %>% filter(GEMpheno6$IID %in% phase2$IID) # 46,973 rows
-  GEMpheno6 %>% filter(GEMpheno6$IID %in% phasecomb$IID) # 83,364 rows
 } else {
   GEMpheno6 <- GEMpheno2
 }
