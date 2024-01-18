@@ -137,6 +137,11 @@ for (i in 17:30) {
 #    0     1
 #82075  1289
 
+# GEM Output
+# Phase 1: 36391
+# Phase 2: 46984
+# Comb: 83375
+
 if (CompCase) {
   suffix <- "comb"
   write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
