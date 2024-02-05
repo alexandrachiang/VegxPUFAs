@@ -12,4 +12,4 @@ for (i in 1:length(GEMfiles)) {
 }
 
 #In Linux
-gzip *reducedcomb.txt
+#gzip *reducedcomb.txt
