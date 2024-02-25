@@ -6,9 +6,9 @@ reso <- 135
 if (FALSE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load pheno
-  suffix <- "comb"
+  suffix <- "wKeep" #Not normalized
 
-  pheno <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", suffix, ".txt", sep = ""), sep = "\t", 
+  pheno <- as_tibble(read.csv(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", suffix, ".csv", sep = ""), 
                                   header = TRUE, stringsAsFactors = FALSE))
   
   cc <- c("IID", "Sex", "Age", "Townsend") #, "PC1"
