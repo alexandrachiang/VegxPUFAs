@@ -74,7 +74,7 @@ for (i in 1:ncol(GEMpheno2)) {
 # "MUFA_TFAP" 97243
 # "PUFA_MUFA_ratio" 97244
 
-CompCase <- FALSE
+CompCase <- TRUE
 
 if (CompCase) { 
   # Remove if missing all phenotypes
