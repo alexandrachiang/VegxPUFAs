@@ -47,3 +47,4 @@ for (i in suffix) {
 outdir <- "/scratch/ahc87874/Fall2022/Combined"
 write.table(allData, paste(outdir, "MAGMASNPs.txt", sep = "/"), 
             row.names = FALSE, quote = FALSE, sep = "\t")
+write.csv(allData, file = paste(outdir, "MAGMASNPs.csv", sep = "/"), row.names = FALSE, quote = FALSE)
