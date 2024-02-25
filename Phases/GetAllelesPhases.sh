@@ -22,6 +22,8 @@ i=("8")
 #rs80103778	2:85067224_G/C
 #rs4873543	8:52231394_G/A
 #rs6985833	8:52486885_T/G
+#--snps rs4873543, rs6985833 \
+#--snp rs80103778 \
 
 plink2 \
 --bgen $genoindir/chr"$i".bgen ref-first \
@@ -29,6 +31,3 @@ plink2 \
 --snps rs4873543, rs6985833 \
 --export A \
 --out "$outdir"/chr"$i"SNP_Comb
-
-#--snps rs4873543, rs6985833 \
-#--snp rs80103778 \
