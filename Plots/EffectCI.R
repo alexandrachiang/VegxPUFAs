@@ -39,7 +39,7 @@ for (i in suffix) {
   print(paste("w3FA", i))
   w3FAData <- as_tibble(read.table(paste("w3FA", "xVegetarianVeg", i, ".txt", sep = ""), 
                                          header = TRUE, stringsAsFactors = FALSE))
-  temp <- w3FAData %>% filter(CHR == 8, POS == 52486885) %>% mutate(Pheno = "w3FA_TFAP", Phase = i) %>% select(Pheno, Phase, everything()) 
+  temp <- w3FAData %>% filter(CHR == 8, POS == 52486885) %>% mutate(Pheno = "w3FA", Phase = i) %>% select(Pheno, Phase, everything()) 
   temp %>% print(width=Inf)
   allData <- rbind(allData, temp)
 }
