@@ -6,48 +6,39 @@ reso <- 135
 if (FALSE) {
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load pheno
-  suffix <- "wKeep" #Not normalized
+  suffix <- "combRAW" #Not normalized
 
-  pheno <- as_tibble(read.csv(paste("/scratch/ahc87874/Fall2022/pheno/GEMpheno", suffix, ".csv", sep = ""), 
+  pheno <- as_tibble(read.table(paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), 
                                   header = TRUE, stringsAsFactors = FALSE))
   
-  cc <- c("IID", "Sex", "Age", "Townsend") #, "PC1"
-  pheno <- pheno[complete.cases(pheno[, cc]), ]
-  
-  pheno <- pheno %>% select(-Sex, -Age, -Townsend, -starts_with("PC"))
+  pheno <- pheno %>% select(-Sex, -Age, -AgeSex, -starts_with("PC"))
 
-  pheno$CSRV <- as.character(pheno$CSRV)
-  pheno$SSRV <- as.character(pheno$SSRV)
-  pheno$CSRV <- replace(pheno$CSRV, pheno$CSRV == "0", "NonVeg")
-  pheno$CSRV <- replace(pheno$CSRV, pheno$CSRV == "1", "Veg")
-  pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "0", "NonVeg")
-  pheno$SSRV <- replace(pheno$SSRV, pheno$SSRV == "1", "Veg")
+  pheno$Vegetarian <- as.character(pheno$Vegetarian)
+  pheno$Vegetarian <- replace(pheno$Vegetarian, pheno$Vegetarian == "0", "NonVeg")
+  pheno$Vegetarian <- replace(pheno$Vegetarian, pheno$Vegetarian == "1", "Veg")
 
   alleles <- pheno
   #---------------------------------------------------------------------------------------------------------------------------------------
   #Load geno
   alleledir <- "/scratch/ahc87874/Fall2022/alleles/"
   pgendir <- "/scratch/ahc87874/Fall2022/pgen/"
-  chrs <- c(3, 9, 11, 13)
+  chrs <- c(2, 8)
 
   for (i in chrs) {
-    geno <- as_tibble(read_delim(paste(alleledir, "chr", i, "SNP.raw", sep = "")))
+    geno <- as_tibble(read_delim(paste(alleledir, "chr", i, "SNP_Comb.raw", sep = "")))
     geno <- geno %>% select(IID, starts_with("rs"), contains(":"))
     alleles <- left_join(alleles, geno)
   }
 
   #names(alleles)
-  # [1] "FID"                 "IID"                 "CSRV"
-  # [4] "SSRV"                "w3FA"                "w3FA_TFAP"
-  # [7] "w6FA"                "w6FA_TFAP"           "w6_w3_ratio"
-  #[10] "DHA"                 "DHA_TFAP"            "LA"
-  #[13] "LA_TFAP"             "PUFA"                "PUFA_TFAP"
-  #[16] "MUFA"                "MUFA_TFAP"           "PUFA_MUFA_ratio"
-  #[19] "rs62255849_C"        "9:140508031_A_G_G"   "rs72880701_T"
-  #[22] "rs1817457_A"         "rs149996902_C"       "rs67393898_T"
+  # [1] "FID"             "IID"             "Vegetarian"      "w3FA"
+  # [5] "w3FA_TFAP"       "w6FA"            "w6FA_TFAP"       "w6_w3_ratio"
+  # [9] "DHA"             "DHA_TFAP"        "LA"              "LA_TFAP"
+  #[13] "PUFA"            "PUFA_TFAP"       "MUFA"            "MUFA_TFAP"
+  #[17] "PUFA_MUFA_ratio" "rs80103778_C"    "rs4873543_A"     "rs6985833_G"
 
   #Check major and minor alleles
-  rsIDs <- c("rs62255849", "9:140508031_A_G", "rs72880701", "rs1817457", "rs149996902", "rs67393898")
+  rsIDs <- c("rs80103778_C", "rs4873543_A", "rs6985833_G")
   SNPs <- as_tibble(matrix(ncol = 5))
   names(SNPs) <- c("#CHROM", "POS", "ID", "REF", "ALT")
   for (i in chrs) {
@@ -64,6 +55,13 @@ if (FALSE) {
   #4       11  36945182 rs1817457       A     G #Different for Europeans, switch for major/minor
   #5       11  36953685 rs149996902     C     CT #Different for Europeans, switch for major/minor
   #6       13  98799253 rs67393898      G     T
+
+  #RSID	      CHR	POS	    Non_Effect_Allele	Effect_Allele
+  #rs4873543	8	52231394	A	G
+  #rs80103778	2	85067224	C	G
+  #rs4873543	8	52231394	A	G
+  #rs6985833	8	52486885	G	T
+
   
   #majorallele_minorallele
   names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
