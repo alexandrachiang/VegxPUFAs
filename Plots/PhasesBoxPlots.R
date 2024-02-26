@@ -179,14 +179,9 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs) + 
                coord_cartesian(ylim = c(min(phenoavg$PhenoMin) - 0.5, max(phenoavg$PhenoMax) + 0.5))
                
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 700, height = 700)
+  png(filename = paste("alleleplotsComb/", x[i, 2], "x", x[i, 1], "-", x[i, 4], ".png", sep = ""), type = "cairo", width = 700, height = 700)
   print(avgplot)
   dev.off()
-  
-  #Remove outlier
-  if (x[i, 2] == "w6_w3_ratio_NMR") {
-    alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
-  }
   
   alleles4 <- alleles3 %>% select(x[i, 1], x[i, 2], contains(x[i, 4]))
   alleles4 <- alleles4[complete.cases(alleles4), ]
@@ -207,7 +202,7 @@ for (i in 1:nrow(x)) {
                scale_x_discrete(labels = xlabs) + 
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5))
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
+  png(filename = paste("alleleplotsComb/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlot.png", sep = ""), 
       type = "cairo", width = 700, height = 700, res = reso)
   print(boxp)
   dev.off()
@@ -225,7 +220,7 @@ for (i in 1:nrow(x)) {
                theme(legend.position="bottom", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
+  png(filename = paste("alleleplotsComb/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz.png", sep = ""), 
       type = "cairo", width = 700, height = 700, res = reso)
   print(boxp2)
   dev.off()
@@ -243,58 +238,9 @@ for (i in 1:nrow(x)) {
                theme(legend.position="right", plot.title = element_text(hjust = 0.5)) + 
                coord_flip()
   
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
+  png(filename = paste("alleleplotsComb/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "BoxPlotHoriz2.png", sep = ""), 
       type = "cairo", width = 700, height = 700, res = reso)
   print(boxp3)
-  dev.off()
-}
-
-#FADS2
-alleles3 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/alleles/PhenoGeno2FADS2.txt", 
-                                  header = TRUE, stringsAsFactors = FALSE))
-
-x <- c("Strict", "w6_w3_ratio_NMR", "mmol ratio", "rs174583", "w6/w3 Ratio")
-x <- matrix(x, ncol = 5, byrow = TRUE)
-
-#Remove outlier
-alleles3 <- alleles3 %>% filter(w6_w3_ratio_NMR < 90)
-names(alleles3)[names(alleles3) == "CSRV"] <- "Self-ID"
-names(alleles3)[names(alleles3) == "SSRV"] <- "Strict"
-
-for (i in 1:nrow(x)) {
-  print(x[i, ])
-  phenoavg <- alleles3 %>% select(contains(x[i, ]))
-  colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
-  print(phenoavg)
-  
-  genofreq <- data.frame(table(phenoavg$Genotype))
-  xlabs <- paste(genofreq$Var1, "\n(n=", genofreq$Freq, ")", sep = "")
-  #should these be split by exposure too
-  
-  phenoavg <- phenoavg %>% filter(!is.na(Exposure)) %>% group_by(Exposure, Genotype) %>% summarise_at(vars(Phenotype), list(Mean = mean, StdE = stderror))
-  phenoavg <- phenoavg %>% mutate(PhenoMax = Mean + StdE, PhenoMin = Mean - StdE)
-  print(phenoavg)
-  
-  Expose <- x[i, 1]
-  
-  alleles4 <- alleles3 %>% select(x[i, 1], x[i, 2], contains(x[i, 4]))
-  alleles4 <- alleles4[complete.cases(alleles4), ]
-  names(alleles4) <- c("Exposure", "Phenotype", "Genotype")
-  
-  #vertical
-  boxp <- ggplot(alleles4) +
-               geom_boxplot(aes(x = Genotype, y = Phenotype, fill = Exposure, color = Exposure), alpha = 0.7) +
-               scale_fill_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#00BA38", "#F8766D")) +
-               scale_color_manual(name = "Exposure", labels = c("Veg", "NonVeg"), values = c("#004615", "#5D2C29")) +
-               labs(title = paste("Distribution of", x[i, 5], "Levels by", x[i, 4]),
-                    x = paste(x[i, 4], "Genotype"),
-                    y = paste(x[i, 5], " (", x[i, 3], ")", sep = ""),
-                    fill = paste("Exposure")) + 
-               scale_x_discrete(labels = xlabs)
-  
-  png(filename = paste("alleleplots/", x[i, 2], "x", x[i, 1], "-", x[i, 4], "FADS2BoxPlot.png", sep = ""), 
-      type = "cairo", width = 500, height = 500, res = reso)
-  print(boxp)
   dev.off()
 }
   
