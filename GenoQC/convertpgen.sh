@@ -11,7 +11,7 @@
 #SBATCH --mail-type=ALL
 
 #Load PLINK
-ml PLINK/2.00-alpha2.3-x86_64-20200914-dev
+ml PLINK/2.00a4-GCC-11.2.0
 
 chr=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22)
 
