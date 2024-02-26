@@ -1,7 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=convertpgen         # Job name
 #SBATCH --partition=highmem_p             # Partition (queue) name
-#SBATCH --ntasks=1                    # Run on a single CPU
+#SBATCH --ntasks=16
+#SBATCH --nodes=1
 #SBATCH --mem=400gb                     # Job memory request
 #SBATCH --time=50:00:00               # Time limit hrs:min:sec
 #SBATCH --output=convertpgen.%j.out    # Standard output log
