@@ -62,7 +62,6 @@ if (FALSE) {
   #rs4873543	8	52231394	A	G
   #rs6985833	8	52486885	G	T
 
-  
   #majorallele_minorallele
   names(alleles)[(ncol(alleles) - 5):ncol(alleles)] <- c("rs62255849_T_C", "rs34249205_A_G", "rs72880701_G_T", 
                                                          "rs1817457_G_A", "rs149996902_CT_C", "rs67393898_G_T")
