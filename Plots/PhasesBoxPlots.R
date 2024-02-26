@@ -136,12 +136,12 @@ if (FALSE) {
 #       "SSRV", "LA_TFAP", "%", "rs149996902",
 #       "SSRV", "w3FA_TFAP", "%", "rs34249205")
 
-x <- c("DHA", "mmol/l", "rs4873543", "DHA",
-       "PUFA", "mmol/l	", "rs80103778", "PUFA",
-       "w3FA_TFAP", "%", "rs4873543", "w3 %",
-       "w3FA", "mmol/l	", "rs6985833", "w3")
+x <- c("Vegetarian", "DHA", "mmol/l", "rs4873543", "DHA",
+       "Vegetarian", "PUFA", "mmol/l	", "rs80103778", "PUFA",
+       "Vegetarian", "w3FA_TFAP", "%", "rs4873543", "w3 %",
+       "Vegetarian", "w3FA", "mmol/l	", "rs6985833", "w3")
 
-x <- matrix(x, ncol = 4, byrow = TRUE)
+x <- matrix(x, ncol = 5, byrow = TRUE)
 
 stderror <- function(x) sd(x)/sqrt(length(x))
 
@@ -153,7 +153,7 @@ alleles3$rs6985833_T_G <- factor(alleles3$rs6985833_T_G, c("TT", "TG", "GG"))
 ##########################################################################################
 for (i in 1:nrow(x)) {
   print(x[i, ])
-  phenoavg <- alleles3 %>% select(contains(x[i, ]))
+  phenoavg <- alleles3 %>% select(x[i, c(1,2)], contains(x[i, 4]))
   colnames(phenoavg) <- c("Exposure", "Phenotype", "Genotype")
   print(phenoavg)
   
