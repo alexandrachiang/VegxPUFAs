@@ -112,7 +112,20 @@ if (CompCase) {
 PUFAsINT1 <- subset(GEMpheno6, (IID %in% phase1$IID)) # 36,391
 PUFAsINT2 <- subset(GEMpheno6, (IID %in% phase2$IID)) # 46,973
 PUFAsINTcomb <- subset(GEMpheno6, (IID %in% phasecomb$IID)) # 83,364
-  
+
+#Raw
+suffix <- "combRAW"
+write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+suffix <- "phase1RAW"
+write.table(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+    
+suffix <- "phase2RAW"
+write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+
 # INT
 for (i in 17:30) {
   print(names(PUFAsINTcomb)[i])
