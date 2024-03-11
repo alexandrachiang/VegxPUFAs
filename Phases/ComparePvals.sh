@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=GetAlleles
+#SBATCH --job-name=ComparePvals
 #SBATCH --ntasks=16
 #SBATCH --nodes=1
 #SBATCH --time=144:00:00
