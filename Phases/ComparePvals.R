@@ -9,9 +9,10 @@ setwd("/scratch/ahc87874/Phase/plots")
 
 indir <- "/scratch/ahc87874/Fall2022/Combined/"
 
-phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", 
-              "DHA_TFAP", "LA", "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", 
-              "MUFA_TFAP", "PUFA_MUFA_ratio")
+phenos <- c("w3FA", "w3FA_TFAP", "DHA", "PUFA", 
+            "w6FA", "w6FA_TFAP", "w6_w3_ratio",  
+            "DHA_TFAP", "LA", "LA_TFAP", "PUFA_TFAP", "MUFA", 
+            "MUFA_TFAP", "PUFA_MUFA_ratio")
 
 for (i in phenos) {
   phase1 <- import(paste(indir, i, "xVegetarianVegphase1.txt", sep = ""))
