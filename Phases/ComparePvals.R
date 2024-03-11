@@ -26,7 +26,7 @@ for (i in phenos) {
   colnames(phase1) <- c("P.p1")
 
   phase2 <- phase2 %>% select(robust_P_Value_Interaction)
-  colnames(infileall) <- c("P.p2")
+  colnames(phase2) <- c("P.p2")
   
   pvals <- as_tibble(cbind(comb, phase1, phase2))
 
