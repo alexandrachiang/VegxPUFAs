@@ -11,6 +11,8 @@ phenos <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA",
 
 exposures <- c("VegetarianVeg")
 
+nsig <- matrix(ncol = 8, nrow = 1)
+
 for (suffix in allsuffix) {
   print(paste("phase:", suffix))
   for (i in phenos) {
@@ -32,6 +34,10 @@ for (suffix in allsuffix) {
       write.table(sigSNPs, paste(outdirSNPs, i, "x", j, suffix, "sigSNPs.txt", sep = ""),
                   row.names = FALSE, quote = FALSE)
 
+      temp <- c(i, suffix, sum(sigSNPs$P <= 1e-5), sum(sigSNPs$P <= 5e-5), sum(sigSNPs$P <= 5e-6), 
+                sum(sigSNPs$P <= 5e-7), sum(sigSNPs$P <= 5e-8), min(sigSNPs$P))
+      nsig <- rbind(nsig, temp)
+
       #Make table of top 10 SNPs
       newdata <- infileall[order(infileall$P), ]
       newdata <- newdata[1:10, ]
@@ -41,3 +47,10 @@ for (suffix in allsuffix) {
   } #i phenos
 } #suffix
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+nsig <- as_tibble(nsig)
+colnames(nsig) <- c("Pheno", "Phase", "1e-5", "5e-5", "5e-6", "5e-7", "5e-8", "smallest")
+nsig
+
+write.table(nsig, paste(outdirSNPs, "nsigSNPs.txt", sep = ""),
+                  row.names = FALSE, quote = FALSE)
