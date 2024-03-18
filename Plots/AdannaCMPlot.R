@@ -5,7 +5,7 @@ setwd("/scratch/ahc87874/Fall2022/manplots/Adanna")
 phenos <- c("w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
 SNPs <- as_tibble(read.table("/scratch/ahc87874/Adanna/ResultsforCMplot.txt", 
                                  header = TRUE, stringsAsFactors = FALSE))
-colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP") 
+colnames(SNPs) <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP") 
 
 toHighlight<-list()
 toHighlight[[1]]<-SNPs$RSID[SNPs$w6w3Ratio <= 5e-8]
@@ -26,8 +26,8 @@ CMplot(SNPs, #dataset
        col = c("grey30", "grey60"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
        LOG10 = TRUE, #change P vals into log10
-       threshold = c(5e-8, 5e-5), #significant thresholds
-       threshold.col = c("darkred", "darkgreen"), #threshold line colors
+       threshold = c(5e-5, 5e-8), #significant thresholds
+       threshold.col = c("darkgreen", "darkred"), #threshold line colors
        threshold.lty = c(2, 2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
        #highlight = toHighlight,
@@ -35,7 +35,7 @@ CMplot(SNPs, #dataset
        signal.line = NULL, 
        signal.cex = c(0.7, 0.7), #significant SNP size
        signal.pch = c(20, 20), #significant SNP shape
-       signal.col = c("red", "green3"), #significant SNP colors
+       signal.col = c("green3", "red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        cir.chr.h = 1, #width of chromosome boundary
        cir.legend.cex = 0.7, #legend text size
