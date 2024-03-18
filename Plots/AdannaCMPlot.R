@@ -33,9 +33,9 @@ CMplot(SNPs, #dataset
        #highlight = toHighlight,
        #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
-       signal.cex = c(0.7, 0.7), #significant SNP size
+       signal.cex = c(0.5, 0.5), #significant SNP size
        signal.pch = c(20, 20), #significant SNP shape
-       signal.col = c("green3", "red"), #significant SNP colors
+       signal.col = c("red", "green3",), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        cir.chr.h = 1, #width of chromosome boundary
        cir.legend.cex = 0.7, #legend text size
