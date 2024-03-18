@@ -51,7 +51,7 @@ dev.off()
 
 #Only Significant
 options(bitmapType='cairo')
-png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 1000, height = 1000, res = 110)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
@@ -83,7 +83,7 @@ dev.off()
 
 #Only Significant w/ colors
 options(bitmapType='cairo')
-png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 1000, height = 1000, res = 110)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
