@@ -3,7 +3,7 @@ source("/work/kylab/alex/Fall2022/CMPlot.R")
 setwd("/scratch/ahc87874/Fall2022/manplots")
 
 phenos <- c( "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
-SNPs <- as_tibble(read.table("/work/kylab/adanna/ResultsforCMplot.txt", 
+SNPs <- as_tibble(read.table("/scratch/ahc87874/Adanna/ResultsforCMplot.txt", 
                                  header = TRUE, stringsAsFactors = FALSE, fill = TRUE))
 colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3TFAP", "w3Per", "DHA", "DHATFAP") 
 
