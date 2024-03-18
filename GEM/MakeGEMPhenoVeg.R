@@ -147,9 +147,9 @@ for (i in 17:30) {
 #82075  1289
 
 # GEM Output
-# Phase 1: 36391
-# Phase 2: 46984
-# Comb: 83375
+# Phase 1: 36391 (568 veg, 35823 nonveg)
+# Phase 2: 46984 (721 veg, 46252 nonveg)
+# Comb: 83375 (1289 veg, 82075 nonveg)
 
 if (CompCase) {
   suffix <- "comb"
