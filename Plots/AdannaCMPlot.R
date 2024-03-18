@@ -2,17 +2,17 @@ library(tidyverse)
 source("/work/kylab/alex/Fall2022/CMPlot.R")
 setwd("/scratch/ahc87874/Fall2022/manplots")
 
-phenos <- c("Omega-6:Omega-3 Ratio", "Omega-3", "Omega-3 %", "DHA", "DHA %")
+phenos <- c( "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
 SNPs <- as_tibble(read.table("/work/kylab/adanna/ResultsforCMplot.txt", 
-                                 header = TRUE, stringsAsFactors = FALSE))
-colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3", "w3Per", "DHA", "DHAPer") 
+                                 header = TRUE, stringsAsFactors = FALSE, fill = TRUE))
+colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3TFAP", "w3Per", "DHA", "DHATFAP") 
 
 toHighlight<-list()
 toHighlight[[1]]<-SNPs$RSID[SNPs$w6w3Ratio <= 5e-8]
 toHighlight[[2]]<-SNPs$RSID[SNPs$w3 <= 5e-8]
-toHighlight[[3]]<-SNPs$RSID[SNPs$w3Per <= 5e-08]
+toHighlight[[3]]<-SNPs$RSID[SNPs$w3TFAP <= 5e-08]
 toHighlight[[4]]<-SNPs$RSID[SNPs$DHA <= 5e-08]
-toHighlight[[5]]<-SNPs$RSID[SNPs$DHAPer <= 5e-08]
+toHighlight[[5]]<-SNPs$RSID[SNPs$DHATFAP <= 5e-08]
 toHighlight 
 
 #https://htmlcolorcodes.com/color-picker/
