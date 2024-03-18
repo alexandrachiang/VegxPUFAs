@@ -19,7 +19,7 @@ for (i in phenos) {
   phase2 <- import(paste(indir, i, "xVegetarianVegphase2.txt", sep = ""))
   comb <- import(paste(indir, i, "xVegetarianVegcomb.txt", sep = ""))
 
-  comb <- phase1 %>% select(RSID, robust_P_Value_Interaction)
+  comb <- comb %>% select(RSID, robust_P_Value_Interaction)
   colnames(comb) <- c("SNP", "P.comb")
 
   phase1 <- phase1 %>% select(robust_P_Value_Interaction)
