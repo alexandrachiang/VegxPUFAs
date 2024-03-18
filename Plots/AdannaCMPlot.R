@@ -1,8 +1,8 @@
 library(tidyverse)
 source("/work/kylab/alex/Fall2022/CMPlot.R")
-setwd("/scratch/ahc87874/Fall2022/manplots")
+setwd("/scratch/ahc87874/Fall2022/manplots/Adanna")
 
-phenos <- c( "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
+phenos <- c("w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
 SNPs <- as_tibble(read.table("/scratch/ahc87874/Adanna/ResultsforCMplot.txt", 
                                  header = TRUE, stringsAsFactors = FALSE))
 colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP") 
@@ -19,15 +19,12 @@ toHighlight
 
 #Suggested and Significant
 options(bitmapType='cairo')
-png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 1000, height = 1000, res = 110)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
        col = c("grey30", "grey60"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
-       cir.chr.h = 1, #width of chromosome boundary
-       cir.legend.cex = 0.7, #legend text size
-       cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8, 5e-5), #significant thresholds
        threshold.col = c("darkred", "darkgreen"), #threshold line colors
@@ -36,16 +33,19 @@ CMplot(SNPs, #dataset
        #highlight = toHighlight,
        #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
-       signal.cex = c(0.9, 0.9), #significant SNP size
+       signal.cex = c(0.7, 0.7), #significant SNP size
        signal.pch = c(20, 20), #significant SNP shape
-       signal.col = c("red", "green"), #significant SNP colors
+       signal.col = c("red", "green3"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
        outward = TRUE, #plot from inside out
        file = "jpg", #file type
        memo = "SugSig",
        dpi = 300, #resolution
        file.output = TRUE, #save as file
-       width = 10,
+       width = 13,
        height = 13)
 dev.off()
 
@@ -57,9 +57,6 @@ CMplot(SNPs, #dataset
        r = 1.5, #radius of circle
        col = c("grey30", "grey60"), #regular SNP colors, alternating
        cex = c(0.5, 0.5),
-       cir.chr.h = 1, #width of chromosome boundary
-       cir.legend.cex = 0.7, #legend text size
-       cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8), #significant thresholds
        threshold.col = c("darkred"), #threshold line colors
@@ -72,6 +69,9 @@ CMplot(SNPs, #dataset
        signal.pch = c(20), #significant SNP shape
        signal.col = c("red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
        outward = TRUE, #plot from inside out
        file = "jpg", #file type
        memo = "Sig",
@@ -87,14 +87,7 @@ png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, re
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
-       col = matrix(c("#ACBFA1", "#E6FFD7", #w3 %
-                    "#A1A9BF","#D7E1FF", #LA
-                    "#BFA1BA", "#FFD7F8"), #w6 w3 ratio
-                    nrow = 3, byrow = TRUE),
        cex = c(0.5, 0.5),
-       cir.chr.h = 1, #width of chromosome boundary
-       cir.legend.cex = 0.7, #legend text size
-       cir.legend.col = "black",
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8), #significant thresholds
        threshold.col = c("darkred"), #threshold line colors
@@ -108,6 +101,9 @@ CMplot(SNPs, #dataset
        signal.col = c("red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        outward = TRUE, #plot from inside out
+       cir.chr.h = 1, #width of chromosome boundary
+       cir.legend.cex = 0.7, #legend text size
+       cir.legend.col = "black",
        file = "jpg", #file type
        memo = "Colored",
        dpi = 500, #resolution
@@ -115,6 +111,8 @@ CMplot(SNPs, #dataset
        width = 10,
        height = 13)
 dev.off()
+
+#---------------------------------------------------------------------------------------------------------------------------------------
 
 #Blank plot
 SNPsBlank <- SNPs %>% filter(w3_Percent_P <= 5e-8 | LA_Percent_P <= 5e-8 | w6_w3_Ratio_P <= 5e-8)
