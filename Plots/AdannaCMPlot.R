@@ -45,8 +45,8 @@ CMplot(SNPs, #dataset
        memo = "SugSig",
        dpi = 300, #resolution
        file.output = TRUE, #save as file
-       width = 13,
-       height = 13)
+       width = 10,
+       height = 10)
 dev.off()
 
 #Only Significant
@@ -78,7 +78,7 @@ CMplot(SNPs, #dataset
        dpi = 300, #resolution
        file.output = TRUE, #save as file
        width = 10,
-       height = 13)
+       height = 10)
 dev.off()
 
 #Only Significant w/ colors
