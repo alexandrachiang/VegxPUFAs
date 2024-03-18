@@ -150,6 +150,59 @@ alleles3$rs80103778_G_C <- factor(alleles3$rs80103778_G_C, c("GG", "GC", "CC"))
 alleles3$rs4873543_G_A <- factor(alleles3$rs4873543_G_A, c("GG", "GA", "AA"))
 alleles3$rs6985833_T_G <- factor(alleles3$rs6985833_T_G, c("TT", "TG", "GG"))
 
+lefttemp <- c("rs6985833_T_G", "w3FA", "NonVeg", "TT", 
+          "rs6985833_T_G", "w3FA", "Veg", "TT",
+          "rs6985833_T_G", "w3FA", "NonVeg", "TG",
+          "rs6985833_T_G", "w3FA", "Veg", "TG",
+          "rs6985833_T_G", "w3FA", "NonVeg", "GG",
+          "rs6985833_T_G", "w3FA", "Veg", "GG",
+
+          "rs80103778_G_C", "PUFA", "NonVeg", "GG", 
+          "rs80103778_G_C", "PUFA", "Veg", "GG",
+          "rs80103778_G_C", "PUFA", "NonVeg", "GC",
+          "rs80103778_G_C", "PUFA", "Veg", "GC",
+          "rs80103778_G_C", "PUFA", "NonVeg", "CC",
+          "rs80103778_G_C", "PUFA", "Veg", "CC",
+
+          "rs4873543_G_A", "DHA", "NonVeg", "GG", 
+          "rs4873543_G_A", "DHA", "Veg", "GG",
+          "rs4873543_G_A", "DHA", "NonVeg", "GA",
+          "rs4873543_G_A", "DHA", "Veg", "GA",
+          "rs4873543_G_A", "DHA", "NonVeg", "AA",
+          "rs4873543_G_A", "DHA", "Veg", "AA",
+
+          "rs4873543_G_A", "w3FA_TFAP", "NonVeg", "GG", 
+          "rs4873543_G_A", "w3FA_TFAP", "Veg", "GG",
+          "rs4873543_G_A", "w3FA_TFAP", "NonVeg", "GA",
+          "rs4873543_G_A", "w3FA_TFAP", "Veg", "GA",
+          "rs4873543_G_A", "w3FA_TFAP", "NonVeg", "AA",
+          "rs4873543_G_A", "w3FA_TFAP", "Veg", "AA"
+         )
+
+sumstats <- matrix(lefttemp, ncol = 4, byrow = TRUE)
+for (i in 1:nrow(sumstats)) {
+  SNP <- sumstats[i, 1]
+  Pheno <- sumstats[i, 2]
+  Expose <- sumstats[i, 3]
+  Geno <- sumstats[i, 4]
+  
+  temp <- alleles3 %>% filter(!!as.name(SNP) == Geno & Vegetarian == Expose) %>% pull(!!as.name(Pheno))
+
+  if (i == 1) {
+    righttemp <- c(length(temp), as.vector(summary(temp)))
+  } else {
+    righttemp <- rbind(righttemp, c(length(temp), as.vector(summary(temp))))
+  }
+}
+
+sumstats2 <- cbind(sumstats, righttemp)
+colnames(sumstats2) <- c("SNP", "Pheno", "Exposure", "Geno", "N", "Min", "Q1", "Median", "Mean", "Q3", "Max")
+rownames(sumstats2) <- NULL
+sumstats2 <- as_tibble(sumstats2)
+write.table(sumstats2, file = "/scratch/ahc87874/Fall2022/alleles/AlleleSumStats.txt",
+                sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(sumstats2, file = "/scratch/ahc87874/Fall2022/alleles/AlleleSumStats.csv", row.names = FALSE, quote = FALSE)
+
 ##########################################################################################
 for (i in 1:nrow(x)) {
   print(x[i, ])
