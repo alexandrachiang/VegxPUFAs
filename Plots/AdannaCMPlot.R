@@ -4,8 +4,8 @@ setwd("/scratch/ahc87874/Fall2022/manplots")
 
 phenos <- c( "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP")
 SNPs <- as_tibble(read.table("/scratch/ahc87874/Adanna/ResultsforCMplot.txt", 
-                                 header = TRUE, stringsAsFactors = FALSE, fill = TRUE))
-colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3TFAP", "w3Per", "DHA", "DHATFAP") 
+                                 header = TRUE, stringsAsFactors = FALSE))
+colnames(SNPs)[1:3] <- c("RSID", "CHR", "POS", "w6w3Ratio", "w3", "w3TFAP", "DHA", "DHATFAP") 
 
 toHighlight<-list()
 toHighlight[[1]]<-SNPs$RSID[SNPs$w6w3Ratio <= 5e-8]
@@ -19,7 +19,7 @@ toHighlight
 
 #Suggested and Significant
 options(bitmapType='cairo')
-png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
@@ -51,7 +51,7 @@ dev.off()
 
 #Only Significant
 options(bitmapType='cairo')
-png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
@@ -83,7 +83,7 @@ dev.off()
 
 #Only Significant w/ colors
 options(bitmapType='cairo')
-png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
@@ -126,7 +126,7 @@ SNPsBlank <- SNPsBlank[5:6, ]
 SNPsBlank
 
 options(bitmapType='cairo')
-png(filename = "CMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
+png(filename = "AdannaCMPlot.png", type = "cairo", width = 700, height = 700, res = 100)
 CMplot(SNPsBlank, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
