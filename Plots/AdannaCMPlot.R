@@ -1,4 +1,5 @@
 library(tidyverse)
+library(RColorBrewer)
 source("/work/kylab/alex/Fall2022/CMPlot.R")
 setwd("/scratch/ahc87874/Fall2022/manplots/Adanna")
 
@@ -16,6 +17,15 @@ toHighlight[[5]]<-SNPs$RSID[SNPs$DHATFAP <= 5e-08]
 toHighlight 
 
 #https://htmlcolorcodes.com/color-picker/
+
+colors <- brewer.pal(10,"Paired")
+
+colors_matrix <- matrix(c(rep(c(colors[2],colors[1]), 11),
+                          rep(c(colors[4],colors[3]), 11),
+                          rep(c(colors[6],colors[5]), 11),
+                          rep(c(colors[8],colors[7]), 11),
+                          rep(c(colors[10],colors[9]), 11)),
+                        nrow=5, ncol=22,byrow=TRUE)
 
 #Suggested and Significant
 options(bitmapType='cairo')
