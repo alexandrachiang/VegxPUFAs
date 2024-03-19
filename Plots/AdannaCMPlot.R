@@ -55,24 +55,29 @@ png(filename = "AdannaCMPlot.png", type = "cairo", width = 1000, height = 1000, 
 CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
-       col = c("grey30", "grey60"), #regular SNP colors, alternating
+       #col = c("grey30", "grey60"), #regular SNP colors, alternating
+       col = matrix(c("palegreen1", "palegreen4", #w6w3Ratio - green
+                    "lightsalmon1","lightsalmon4", #w3 - orange
+                    "mediumpurple1", "mediumpurple4", #w3% - purple
+                    "lightgoldenrod1","lightgoldenrod4", #DHA - yellow
+                    "lightblue1", "lightblue4"), #DHA% - blue
+                    nrow = 5, byrow = TRUE),
        cex = c(0.5, 0.5),
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8), #significant thresholds
        threshold.col = c("darkred"), #threshold line colors
        threshold.lty = c(2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
-       #highlight = toHighlight,
-       #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
        signal.cex = c(0.5), #significant SNP size
-       signal.pch = c(20), #significant SNP shape
+       #signal.pch = c(23), #significant SNP shape
        signal.col = c("red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
        cir.chr.h = 1, #width of chromosome boundary
        cir.legend.cex = 0.7, #legend text size
        cir.legend.col = "black",
        outward = TRUE, #plot from inside out
+       ylim = c(0, 23),
        file = "jpg", #file type
        memo = "Sig",
        dpi = 300, #resolution
