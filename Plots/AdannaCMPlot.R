@@ -116,7 +116,7 @@ CMplot(SNPs, #dataset
        threshold.lty = c(2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
        signal.line = NULL, 
-       signal.cex = c(0.5), #significant SNP size
+       signal.cex = c(0.7), #significant SNP size
        signal.pch = c(17), #significant SNP shape
        signal.col = c("black"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
