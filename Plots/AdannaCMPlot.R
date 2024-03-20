@@ -103,12 +103,7 @@ CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
        #col = c("grey30", "grey60"), #regular SNP colors, alternating
-       col = matrix(c("palegreen1", "palegreen4", #w6w3Ratio - green
-                    "lightsalmon1","lightsalmon4", #w3 - orange
-                    "mediumpurple1", "mediumpurple4", #w3% - purple
-                    "lightgoldenrod1","lightgoldenrod4", #DHA - yellow
-                    "lightblue1", "lightblue4"), #DHA% - blue
-                    nrow = 5, byrow = TRUE),
+       col = colors_matrix,
        cex = c(0.4, 0.4),
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8), #significant thresholds
