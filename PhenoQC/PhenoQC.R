@@ -70,7 +70,7 @@ bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448155
 
 #Filter by Genetic ethnicity = Caucasian VIA PAN UKBB
 bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426847
-bd_QC <- bd_QC[bd_QC$pop == "EUR" | bd_QC$Race == "White" | bd_QC$Race == "Any other white background" | bd_QC$Race == "British", ] #426847
+#bd_QC <- bd_QC[bd_QC$pop == "EUR" | bd_QC$Race == "White" | bd_QC$Race == "Any other white background" | bd_QC$Race == "British", ] #426847
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
