@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --partition=highmem_p
 #SBATCH --job-name=genoQC
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=16
 #SBATCH --time=144:00:00
-#SBATCH --mem=300000
+#SBATCH --ntasks=16
+#SBATCH --nodes=1
+#SBATCH --mem=200GB
 #SBATCH --output=genoQC.%j.out
 #SBATCH --error=genoQC.%j.err
 #SBATCH --mail-user=ahc87874@uga.edu
