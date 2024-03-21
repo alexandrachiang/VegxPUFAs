@@ -17,11 +17,32 @@ toHighlight[[5]]<-SNPs$RSID[SNPs$DHATFAP <= 5e-08]
 toHighlight 
 
 #Smallest SNPs
-SNPs[c(1,2,3,4), min(SNPs$w6w3Ratio)]
-SNPs[c(1,2,3,5), min(SNPs$w3)]
-SNPs[c(1,2,3,6), min(SNPs$w3TFAP)]
-SNPs[c(1,2,3,7), min(SNPs$DHA)]
-SNPs[c(1,2,3,8), min(SNPs$DHATFAP)]
+SNPs[which.min(SNPs$w6w3Ratio), c(1,2,3,4)]
+SNPs[which.min(SNPs$w3), c(1,2,3,5)]
+SNPs[which.min(SNPs$w3TFAP), c(1,2,3,6)]
+SNPs[which.min(SNPs$DHA), c(1,2,3,7)]
+SNPs[which.min(SNPs$DHATFAP), c(1,2,3,8)]
+
+# A tibble: 1 × 4
+#  RSID         CHR      POS w6w3Ratio
+#  <chr>      <int>    <int>     <dbl>
+#1 rs35473591    11 61586328  1.09e-20
+# A tibble: 1 × 4
+#  RSID         CHR      POS       w3
+#  <chr>      <int>    <int>    <dbl>
+#1 rs35473591    11 61586328 2.74e-17
+# A tibble: 1 × 4
+#  RSID         CHR      POS   w3TFAP
+#  <chr>      <int>    <int>    <dbl>
+#1 rs35473591    11 61586328 2.50e-23
+# A tibble: 1 × 4
+#  RSID         CHR      POS      DHA
+#  <chr>      <int>    <int>    <dbl>
+#1 rs35473591    11 61586328 1.56e-12
+# A tibble: 1 × 4
+#  RSID       CHR      POS      DHATFAP
+#  <chr>    <int>    <int>        <dbl>
+#1 rs174535    11 61551356 0.000000041
 
 #https://htmlcolorcodes.com/color-picker/
 
