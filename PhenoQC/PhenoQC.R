@@ -26,8 +26,8 @@ setwd("/scratch/ahc87874/Fall2022/pheno")
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 #Remove withdrawn participants from dataset
-withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
-ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #502413
+#withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
+#ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #502413
 
 pan <- read_tsv("all_pops_non_eur_pruned_within_pop_pc_covs.tsv")
 pan <- as_tibble(pan)
@@ -66,11 +66,11 @@ colnames(bd_QC) <- c("IID", "Sex", "Genetic_Sex", "Race",
 #1. Genetic ethnicity = Caucasian VIA PAN UKBB
 #Join UKB cols with with Pan UKBB
 bd_QC <- as_tibble(bd_QC) #502413
-bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448155
+bd_QC <- bd_QC %>% inner_join(pan2, by = "IID") #448193 
 
 #Filter by Genetic ethnicity = Caucasian VIA PAN UKBB
-bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426847
-#bd_QC <- bd_QC[bd_QC$pop == "EUR" | bd_QC$Race == "White" | bd_QC$Race == "Any other white background" | bd_QC$Race == "British", ] #426847
+bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426881
+#bd_QC2 <- bd_QC[bd_QC$pop == "EUR" | bd_QC$Race == "White" | bd_QC$Race == "Any other white background" | bd_QC$Race == "British", ] #426847
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
@@ -78,16 +78,16 @@ bd_QC <- bd_QC %>%
 
 #3. No Sex chromosome aneuploidy
 bd_QC <- bd_QC %>%
-    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #425820 
+    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #426433  
 
 #4. Self-reported sex matches genetic sex
 #If Sex does not equal genetic sex, exclude participant
-bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #425649 
+bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #426101 
 
 #5. Do not have high degree of genetic kinship (Ten or more third-degree relatives identified)
 bd_QC <- bd_QC %>%
     filter(is.na(Genetic_kinship) |
-               Genetic_kinship != "Ten or more third-degree relatives identified") #425476 
+               Genetic_kinship != "Ten or more third-degree relatives identified") #425,928 
                
 #6. Does not appear in "maximum_set_of_unrelated_individuals.MF.pl"
 #Filter related file by those in QC
@@ -96,7 +96,7 @@ relatives <- read.table("ukb48818_rel_s488282.dat", header=T)
 #From maximum_set_of_unrelated_individuals.MF.pl output:
 max_unrelated <- read.table("ukb48818_rel_s488282_output.dat")
 max_unrelated <- as.integer(unlist(max_unrelated))
-bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356950
+bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #357333 
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
@@ -104,4 +104,4 @@ write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.
             row.names = FALSE, quote = FALSE)
             
 #Start with 502527 participants
-#End with 356950 participants, removed 145577
+#End with 357333 participants, removed 145194
