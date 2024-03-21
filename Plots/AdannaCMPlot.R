@@ -62,7 +62,7 @@ CMplot(SNPs, #dataset
        plot.type = "c", #circular
        r = 1.5, #radius of circle
        col = c("grey30", "grey60"), #regular SNP colors, alternating
-       cex = c(0.5, 0.5),
+       cex = c(0.4, 0.4),
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-5, 5e-8), #significant thresholds
        threshold.col = c("darkgreen", "darkred"), #threshold line colors
@@ -71,7 +71,7 @@ CMplot(SNPs, #dataset
        #highlight = toHighlight,
        #highlight.text = unlist(toHighlight), 
        signal.line = NULL, 
-       signal.cex = c(0.5, 0.5), #significant SNP size
+       signal.cex = c(0.7, 0.7), #significant SNP size
        signal.pch = c(20, 20), #significant SNP shape
        signal.col = c("red", "green3"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
@@ -100,14 +100,14 @@ CMplot(SNPs, #dataset
                     "lightgoldenrod1","lightgoldenrod4", #DHA - yellow
                     "lightblue1", "lightblue4"), #DHA% - blue
                     nrow = 5, byrow = TRUE),
-       cex = c(0.5, 0.5),
+       cex = c(0.4, 0.4),
        LOG10 = TRUE, #change P vals into log10
        threshold = c(5e-8), #significant thresholds
        threshold.col = c("darkred"), #threshold line colors
        threshold.lty = c(2), #threshold line types
        amplify = TRUE, #amplify significant SNPs
        signal.line = NULL, 
-       signal.cex = c(0.5), #significant SNP size
+       signal.cex = c(0.7), #significant SNP size
        #signal.pch = c(23), #significant SNP shape
        signal.col = c("red"), #significant SNP colors
        chr.labels = paste("Chr", 1:22, sep = ""), #labels for chromosomes
