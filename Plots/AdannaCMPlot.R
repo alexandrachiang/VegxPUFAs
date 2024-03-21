@@ -16,6 +16,13 @@ toHighlight[[4]]<-SNPs$RSID[SNPs$DHA <= 5e-08]
 toHighlight[[5]]<-SNPs$RSID[SNPs$DHATFAP <= 5e-08]
 toHighlight 
 
+#Smallest SNPs
+SNPs[c(1,2,3,4), min(SNPs$w6w3Ratio)]
+SNPs[c(1,2,3,5), min(SNPs$w3)]
+SNPs[c(1,2,3,6), min(SNPs$w3TFAP)]
+SNPs[c(1,2,3,7), min(SNPs$DHA)]
+SNPs[c(1,2,3,8), min(SNPs$DHATFAP)]
+
 #https://htmlcolorcodes.com/color-picker/
 
 colors <- brewer.pal(10,"Paired")
