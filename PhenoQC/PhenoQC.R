@@ -74,20 +74,20 @@ bd_QC <- bd_QC[bd_QC$pop == "EUR", ] #426881
 
 #2. Not an outlier for heterogeneity and missing genotype rate (poor quality genotype)
 bd_QC <- bd_QC %>%
-    filter(is.na(Outliers_for_het_or_missing) | Outliers_for_het_or_missing != "Yes") #426399 
+    filter(is.na(Outliers_for_het_or_missing) | Outliers_for_het_or_missing != "Yes") #426433 
 
 #3. No Sex chromosome aneuploidy
 bd_QC <- bd_QC %>%
-    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #426433  
+    filter(is.na(SexchrAneuploidy) | SexchrAneuploidy != "Yes") #425854  
 
 #4. Self-reported sex matches genetic sex
 #If Sex does not equal genetic sex, exclude participant
-bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #426101 
+bd_QC <- bd_QC[bd_QC$Sex == bd_QC$Genetic_Sex, ] #425683  
 
 #5. Do not have high degree of genetic kinship (Ten or more third-degree relatives identified)
 bd_QC <- bd_QC %>%
     filter(is.na(Genetic_kinship) |
-               Genetic_kinship != "Ten or more third-degree relatives identified") #425,928 
+               Genetic_kinship != "Ten or more third-degree relatives identified") #425510 
                
 #6. Does not appear in "maximum_set_of_unrelated_individuals.MF.pl"
 #Filter related file by those in QC
@@ -96,7 +96,7 @@ relatives <- read.table("ukb48818_rel_s488282.dat", header=T)
 #From maximum_set_of_unrelated_individuals.MF.pl output:
 max_unrelated <- read.table("ukb48818_rel_s488282_output.dat")
 max_unrelated <- as.integer(unlist(max_unrelated))
-bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #357333 
+bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356980 
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
@@ -104,4 +104,4 @@ write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.
             row.names = FALSE, quote = FALSE)
             
 #Start with 502527 participants
-#End with 357333 participants, removed 145194
+#End with 356980 participants, removed 145547
