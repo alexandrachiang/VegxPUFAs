@@ -51,7 +51,7 @@ for (k in suffix) {
       print("Manhattan")
       #Make manhattan plot
       outdirman = "/scratch/ahc87874/Fall2022/manplots/"
-      expo = "Fish Oil"
+      expo = "Vegetarianism"
 	    
       maxy <- -log10(5e-08)
       if (newdata$P[1] < 5e-08) {
