@@ -113,7 +113,7 @@ PUFAsINT1 <- subset(GEMpheno6, (IID %in% phase1$IID)) # 36,391
 PUFAsINT2 <- subset(GEMpheno6, (IID %in% phase2$IID)) # 46,973
 PUFAsINTcomb <- subset(GEMpheno6, (IID %in% phasecomb$IID)) # 83,364
 
-#Raw
+# Raw
 suffix <- "combRAW"
 write.table(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
 write.csv(PUFAsINTcomb, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
@@ -125,6 +125,14 @@ write.csv(PUFAsINT1, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg"
 suffix <- "phase2RAW"
 write.table(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
 write.csv(PUFAsINT2, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
+
+# BMI
+BMI <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/BMI.txt", header = TRUE)) #For BMI
+colnames(BMI) <- c("IID", "BMI")
+PUFAsBMI <- left_join(PUFAsINTcomb, BMI, by = "IID")
+suffix <- "BMI"
+write.table(PUFAsBMI, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".txt", sep = ""), sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(PUFAsBMI, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 
 # INT
 for (i in 17:30) {
