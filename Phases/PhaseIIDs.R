@@ -12,7 +12,7 @@ setwd("/scratch/ahc87874/Phase/pheno/")
 withdrawn <-read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
 
 phase1 <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt", header = TRUE))
-phase1 <- phase1[!(phase1$IID %in% withdrawn$V1), ] 
+#phase1 <- phase1[!(phase1$IID %in% withdrawn$V1), ] 
 phase1 <- phase1 %>% filter(!is.na(w3FA_NMR)) %>% select(IID)
 
 setwd("/scratch/ahc87874/Fall2022/pheno/673621/")
