@@ -2,7 +2,8 @@
 library(tidyverse)
 library(rio)
 
-veg <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", header = TRUE, stringsAsFactors = FALSE))
+veg <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", header = TRUE, stringsAsFactors = FALSE)) # 211,018
+veg <- veg[!is.na(veg$SSRV), ] # 206,045 rows
 phenoQCgenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", header = TRUE, stringsAsFactors = FALSE))
 
 phase1 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv")) # 117,920 rows
@@ -11,7 +12,11 @@ phasecomb <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phasecombIIDs.csv")
 
 #Remove withdrawn participants from dataset
 withdrawn <- read.csv("/scratch/ahc87874/Fall2022/pheno/withdrawn.csv", header = FALSE)
-veg <- veg[!(veg$IID %in% withdrawn$V1), ] # 210,945 rows
+veg <- veg[!(veg$IID %in% withdrawn$V1), ] # 205,974 rows
+
+table(veg$SSRV)
+#NonVeg    Veg
+#202704   3270
 
 GEMpheno <- veg %>% select(FID, IID, 
                                sex_f31_0_0, age_when_attended_assessment_centre_f21003_0_0, agesex,
@@ -77,22 +82,22 @@ for (i in 1:ncol(GEMpheno2)) {
 CompCase <- TRUE
 
 if (CompCase) { 
+  # Remove if missing exposure data
+  #GEMpheno4 <- GEMpheno3 %>% filter(!is.na(Vegetarian))
+
+  #GEMpheno4 %>% filter(GEMpheno4$IID %in% phase1$IID) # 48,682 rows
+  #GEMpheno4 %>% filter(GEMpheno4$IID %in% phase2$IID) # 62,417 rows
+  #GEMpheno4 %>% filter(GEMpheno4$IID %in% phasecomb$IID) # 111,099 rows
+  
   # Remove if missing all phenotypes
-  GEMpheno3 <- GEMpheno2 %>% filter(!is.na(w3FA), !is.na(w3FA_TFAP), !is.na(w6FA), !is.na(w6FA_TFAP), 
+  GEMpheno4 <- GEMpheno2 %>% filter(!is.na(w3FA), !is.na(w3FA_TFAP), !is.na(w6FA), !is.na(w6FA_TFAP), 
                                     !is.na(w6_w3_ratio), !is.na(DHA), !is.na(DHA_TFAP), !is.na(LA), 
                                     !is.na(LA_TFAP), !is.na(PUFA), !is.na(PUFA_TFAP), !is.na(MUFA), 
                                     !is.na(MUFA_TFAP), !is.na(PUFA_MUFA_ratio))
 
-  GEMpheno3 %>% filter(GEMpheno3$IID %in% phase1$IID) # 49,820 rows
-  GEMpheno3 %>% filter(GEMpheno3$IID %in% phase2$IID) # 63,868 rows
-  GEMpheno3 %>% filter(GEMpheno3$IID %in% phasecomb$IID) # 113,688 rows
-
-  # Remove if missing exposure data
-  GEMpheno4 <- GEMpheno3 %>% filter(!is.na(Vegetarian))
-
-  GEMpheno4 %>% filter(GEMpheno4$IID %in% phase1$IID) # 48,682 rows
-  GEMpheno4 %>% filter(GEMpheno4$IID %in% phase2$IID) # 62,417 rows
-  GEMpheno4 %>% filter(GEMpheno4$IID %in% phasecomb$IID) # 111,099 rows
+  GEMpheno4 %>% filter(GEMpheno3$IID %in% phase1$IID) # 48,682 rows
+  GEMpheno4 %>% filter(GEMpheno3$IID %in% phase2$IID) # 62,417 rows
+  GEMpheno4 %>% filter(GEMpheno3$IID %in% phasecomb$IID) # 111,099 rows
 
   # Remove if missing covariate data
   GEMpheno5 <- GEMpheno4 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.na(PC1))
