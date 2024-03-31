@@ -96,7 +96,7 @@ if (FALSE) {
               row.names = FALSE, quote = FALSE)
 } else {
   #BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
-  PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.csv"))
+  PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt"))
   #LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
   #Statins <- as_tibble(read.table("Statins.txt", header = TRUE))
 }
