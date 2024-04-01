@@ -96,9 +96,9 @@ if (CompCase) {
                                     !is.na(LA_TFAP), !is.na(PUFA), !is.na(PUFA_TFAP), !is.na(MUFA), 
                                     !is.na(MUFA_TFAP), !is.na(PUFA_MUFA_ratio))
 
-  GEMpheno4 %>% filter(GEMpheno3$IID %in% phase1$IID) # 48,682 rows
-  GEMpheno4 %>% filter(GEMpheno3$IID %in% phase2$IID) # 62,417 rows
-  GEMpheno4 %>% filter(GEMpheno3$IID %in% phasecomb$IID) # 111,099 rows
+  GEMpheno4 %>% filter(GEMpheno4$IID %in% phase1$IID) # 48,682 rows
+  GEMpheno4 %>% filter(GEMpheno4$IID %in% phase2$IID) # 62,417 rows
+  GEMpheno4 %>% filter(GEMpheno4$IID %in% phasecomb$IID) # 111,099 rows
 
   # Remove if missing covariate data
   GEMpheno5 <- GEMpheno4 %>% filter(!is.na(Sex), !is.na(Age), !is.na(AgeSex), !is.na(PC1))
@@ -121,6 +121,16 @@ if (CompCase) {
 PUFAsINT1 <- subset(GEMpheno6, (IID %in% phase1$IID)) # 36,391
 PUFAsINT2 <- subset(GEMpheno6, (IID %in% phase2$IID)) # 46,973
 PUFAsINTcomb <- subset(GEMpheno6, (IID %in% phasecomb$IID)) # 83,364
+
+table(PUFAsINT1$Vegetarian, useNA="always")
+#    0     1  <NA>
+#35823   568     0
+table(PUFAsINT2$Vegetarian, useNA="always")
+#    0     1  <NA>
+#46252   721     0
+table(PUFAsINTcomb$Vegetarian, useNA="always")
+#    0     1  <NA>
+#82075  1289     0
 
 # Raw
 suffix <- "combRAW"
