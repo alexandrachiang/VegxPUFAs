@@ -100,7 +100,7 @@ bd_QC <- bd_QC %>% filter(!IID %in% max_unrelated) #356980
 
 QCkeepparticipants <- bd_QC %>% mutate(FID = IID) %>% select(FID, IID)
 
-write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/phenoQC_keep.txt",
+write.table(QCkeepparticipants, file = "/scratch/ahc87874/Fall2022/pheno/phenoQC_keep.txt",
             row.names = FALSE, quote = FALSE)
             
 #Start with 502527 participants
