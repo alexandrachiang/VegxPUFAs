@@ -141,8 +141,8 @@ ukb3 <- ukb3 %>% mutate(agesex = ifelse(sex_f31_0_0 == "Male", age_when_attended
 
 #Remove participants that never answered 20086/never did a dietary survey
 ukb4 <- ukb3[rowSums(is.na(ukb3[, paste("dayofweek_questionnaire_completed_f20080", 0:4, "0", sep = "_")])) != 5,]
-#nrow(ukb3)
-#210967 rows
+#nrow(ukb4)
+#211018 rows
 
 #Get first answered recall survey
 ukb5 <- ukb4 %>% mutate(first_instance_0 = !is.na(dayofweek_questionnaire_completed_f20080_0_0)) %>% 
@@ -251,8 +251,7 @@ for (i in 0:4) { #instance
 
 table(ukbCSRV$CSRV)
 #NonVeg    Veg
-#202724   8243 withdraw, vegetarian and vegan
-#Michael had 7788??
+#202772   8246
 
 #ukbCSRV %>% select(ethnic_background_f21000_0_0, CSRV) %>% table()
 #                            CSRV
@@ -299,7 +298,10 @@ for (i in 0:4) { #instance
 #sapply(ukbSSRV %>% select(contains("is_SSRV_vegetarian")), table)
 #ukbSSRV %>% mutate(TestSSRV = coalesce(is_SSRV_vegetarian_0, is_SSRV_vegetarian_1, is_SSRV_vegetarian_2, is_SSRV_vegetarian_3, is_SSRV_vegetarian_4)) %>% 
 #             select(TestSSRV, CSRV) %>% table()
-
+#        CSRV
+#TestSSRV NonVeg    Veg
+#  NonVeg 178792   1052
+#  Veg     23980   7194
 
 #Additional columns to filter for diet intake taken at first instance
 intake <- as.vector(names(ukbSSRV %>% select(contains("intake"))))
@@ -330,8 +332,9 @@ ukbSSRV[, "SSRV"][ukbSSRV[, "specific_intake_0"] == "NonVeg"] <- "NonVeg"
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
 #CSRV     NonVeg    Veg
-#  NonVeg 202534    190
-#  Veg      3751   4492
+#  NonVeg 202582    190
+#  Veg      3752   4494
+
 
 #Take CSRV into account for SSRV
 ukbSSRV[, "SSRV"][ukbSSRV[, "CSRV"] == "NonVeg"] <- "NonVeg" #Make CSRV NonVeg/SSRV Veg participants into SSRV NonVeg
@@ -340,12 +343,12 @@ ukbSSRV$SSRV[(ukbSSRV$CSRV == "Veg" & ukbSSRV$SSRV == "NonVeg")] <- NA #Remove C
 #ukbSSRV %>% select(CSRV, SSRV) %>% table()
 #        SSRV
 #CSRV     NonVeg    Veg
-#  NonVeg 202724      0
-#  Veg         0   4492
+#  NonVeg 202772      0
+#  Veg         0   4494
 
 table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg
-#202724   4492 with intake and removed participants who were CSRV veg/SSRV nonveg
+#202772   4494 with intake and removed participants who were CSRV veg/SSRV nonveg
 
 #NA if any major dietary changes in the last 5 years
 if (keepNonVeg) {
@@ -358,7 +361,7 @@ if (keepNonVeg) {
 
 #table(ukbSSRV$SSRV, useNA = "always")
 #NonVeg    Veg   <NA>
-#125456   3271  82240
+#125486   3273  82259
 
 #NA if not credible in first answered survey
 #ukbSSRV %>% select(SSRV, is_not_credible) %>% table(useNA = "always")
