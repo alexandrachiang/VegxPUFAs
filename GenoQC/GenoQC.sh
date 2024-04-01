@@ -15,7 +15,7 @@ i=$SLURM_ARRAY_TASK_ID
 
 cd /scratch/ahc87874/Fall2022
 
-ml PLINK/2.00-alpha2.3-x86_64-20210920-dev
+ml PLINK/PLINK/2.00a4-GCC-11.2.0
 
 ###-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ###STEP 1. GENOTYPE QC PLINK-=-=-=-=-=-=-=-=
