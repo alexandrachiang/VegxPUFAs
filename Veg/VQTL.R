@@ -51,5 +51,11 @@ colnames(ukb3)[7:16] <- paste("PCA", 1:10, sep="")
 colnames(ukb3)[17:31] <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", 
                            "LA_TFAP", "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio", "BMI")
 
-write.table(ukb3, file = "/scratch/ahc87874/Fall2022/pheno/VQTLPheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
-write.csv(ukb3, file = "/scratch/ahc87874/Fall2022/pheno/VQTLPheno.csv", row.names = FALSE, quote = FALSE)
+#Remove if missing phenotypes
+ukb4 <- ukb3
+for (i in 17:20) {
+  ukb4 <- ukb4[!is.na(ukb4[, i]), ]
+}
+
+write.table(ukb4, file = "/scratch/ahc87874/Fall2022/pheno/VQTLPheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+write.csv(ukb4, file = "/scratch/ahc87874/Fall2022/pheno/VQTLPheno.csv", row.names = FALSE, quote = FALSE)
