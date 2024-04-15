@@ -31,7 +31,10 @@ if (FALSE) {
 
 #Load auxillary datasets
 if (FALSE) {
-  NMR <- as_tibble(read.table("48364/ukb48364.tab", header = TRUE, sep = "\t")) #For phenotypes
+  setwd("/scratch/ahc87874/Fall2022/pheno/673621")
+  NMR <- ukb_df("673621")
+  
+  setwd("/scratch/ahc87874/Fall2022/pheno")
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
   Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
   Meds2 <- as_tibble(read.table("updated_42606/ukb42606.tab", header = TRUE, sep = "\t")) #For Statins
@@ -43,17 +46,17 @@ if (FALSE) {
                  
   PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
                           f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
-                          f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0, 
-                          f.23744.0.0, f.23751.0.0, f.23745.0.0, f.23752.0.0, f.23759.0.0, 
-                          f.23750.0.0, f.23757.0.0, f.23749.0.0, f.23756.0.0, f.23746.0.0, 
-                          f.23753.0.0, f.23747.0.0, f.23754.0.0, f.23758.0.0) %>% as_tibble() 
+                          f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0) %>% as_tibble() 
+                          #f.23744.0.0, f.23751.0.0, f.23745.0.0, f.23752.0.0, f.23759.0.0, 
+                          #f.23750.0.0, f.23757.0.0, f.23749.0.0, f.23756.0.0, f.23746.0.0, 
+                          #f.23753.0.0, f.23747.0.0, f.23754.0.0, f.23758.0.0)
 
   colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",	
                        "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", "LA_TFAP",
-                       "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio", 
-                       "w3FA_QCflag", "w3FA_TFAP_QCflag", "w6FA_QCflag", "w6FA_TFAP_QCflag", "w6_w3_ratio_QCflag",
-                       "DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
-                       "PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")
+                       "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio") 
+                       #"w3FA_QCflag", "w3FA_TFAP_QCflag", "w6FA_QCflag", "w6FA_TFAP_QCflag", "w6_w3_ratio_QCflag",
+                       #"DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
+                       #"PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")
   
   LipidMeds <- Meds %>% select(f.eid, f.6177.0.0, f.6177.0.1, f.6177.0.2, 
                                f.6153.0.0, f.6153.0.1, f.6153.0.2, f.6153.0.3) %>% as_tibble()
