@@ -53,7 +53,7 @@ colnames(ukb3)[17:31] <- c("w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP", "w6_w3_rati
 
 #Remove if missing phenotypes
 ukb4 <- ukb3
-for (i in 17:20) {
+for (i in 17:31) {
   ukb4 <- ukb4[!is.na(ukb4[, i]), ]
 }
 
