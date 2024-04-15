@@ -25,22 +25,25 @@ for (i in phenos) {
       
 	  if (i == "PUFA") {
 	      SNPs <- c("TRABD2A")
+      phe = i
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
         png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 100)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), #col = colors,
-                   main = paste("Manhattan Plot of", i, "Gene-Based Test by MAGMA", sep = " "), 
+                   main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                    annotatePval = 2.619e-4, ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
                    cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, highlightcol = "#ff0000", highlighttextcol = "#ff0000")
         dev.off() 
       } else {
        SNPs <- c("PXDNL")
         if (i == "w3per") {
-          i = "w3 %"
+          phe = "w3 %"
+        } else {
+          phe = i
         }
         outdirmagma = "/scratch/ahc87874/Fall2022/MAGMAplots/"
         png(filename = paste(outdirmagma, i, "MAGMA.png", sep = ""), type = "cairo", width = 1500, height = 750, res = 100)
         manhattancex(magma, suggestiveline = FALSE, genomewideline = -log10(2.619e-6), #col = colors,
-                   main = paste("Manhattan Plot of", i, "Gene-Based Test by MAGMA", sep = " "), 
+                   main = paste("Manhattan Plot of", phe, "Gene-Based Test by MAGMA", sep = " "), 
                    annotatePval = 2.619e-4, ylim = c(0, -log10(1e-08)), annofontsize = 1, cex.axis = 1.3, 
                    cex.lab = 1.3, cex.main = 1.7, highlight = SNPs, highlightcol = "#ff0000", highlighttextcol = "#ff0000")
         dev.off() 
