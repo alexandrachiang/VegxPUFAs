@@ -51,7 +51,7 @@ ukb <- ukb %>% mutate(FID = IID)
 
 #Subset columns
 ukb2 <- ukb %>% select(FID, IID, age_when_attended_assessment_centre_f21003_0_0, sex_f31_0_0, 
-                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""))
+                       paste("genetic_principal_components_f22009_0_", 1:20, sep = ""))
 
 #Join baskets to main data set
 ukb3 <- left_join(ukb2, PUFAs)
