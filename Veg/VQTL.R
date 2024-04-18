@@ -23,7 +23,31 @@ ukb <- ukb[!(ukb$eid %in% withdrawn$V1), ] #502413
 
 #Load auxillary datasets
 BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
-PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt"))
+
+setwd("/scratch/ahc87874/Fall2022/pheno/673621")
+NMR <- ukb_df("ukb673621")
+print(colnames(NMR))
+
+
+PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
+                          f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
+                          f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0) %>% as_tibble()
+
+colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",	
+                     "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", "LA_TFAP",
+                     "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio") 
+
+setwd("/scratch/ahc87874/Fall2022/pheno/48364")
+NMR2 <- ukb_df("ukb48364")
+PUFAs <- NMR %>% select(f.eid, f.23444.0.0, f.23451.0.0, f.23445.0.0, f.23452.0.0, 
+                          f.23459.0.0, f.23450.0.0, f.23457.0.0, f.23449.0.0, f.23456.0.0, 
+                          f.23446.0.0, f.23453.0.0, f.23447.0.0, f.23454.0.0, f.23458.0.0) %>% as_tibble()
+
+colnames(PUFAs) <- c("IID", "w3FA", "w3FA_TFAP", "w6FA", "w6FA_TFAP",	
+                     "w6_w3_ratio", "DHA", "DHA_TFAP", "LA", "LA_TFAP",
+                     "PUFA", "PUFA_TFAP", "MUFA", "MUFA_TFAP", "PUFA_MUFA_ratio") 
+
+setwd("/scratch/ahc87874/Fall2022/pheno")
 
 PUFAs <- PUFAs[, 1:15]
 
