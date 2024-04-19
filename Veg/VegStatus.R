@@ -95,7 +95,7 @@ if (TRUE) {
   write.table(Statins, file = "/scratch/ahc87874/Fall2022/pheno/Statins.txt",
               row.names = FALSE, quote = FALSE)
 } else {
-  #BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
+  BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
   PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt"))
   #LipidMeds <- as_tibble(read.table("LipidMeds.txt", header = TRUE))
   #Statins <- as_tibble(read.table("Statins.txt", header = TRUE))
@@ -424,9 +424,10 @@ if (TRUE) {
                        sex_chromosome_aneuploidy_f22019_0_0, genetic_kinship_to_other_participants_f22021_0_0,
                        genotype_measurement_batch_f22000_0_0, uk_biobank_assessment_centre_f54_0_0,
                        townsend_deprivation_index_at_recruitment_f189_0_0, used_in_genetic_principal_components_f22020_0_0,
-                       paste("genetic_principal_components_f22009_0_", 1:10, sep = ""), CSRV, SSRV)
+                       paste("genetic_principal_components_f22009_0_", 1:20, sep = ""), CSRV, SSRV)
 
   ukbNew2 <- left_join(ukbNew, PUFAs, by = "IID")
+  ukbNew2 <- left_join(ukbNew2, BMI, by = "IID")
   
   write.table(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", row.names = FALSE, quote = FALSE)
   write.csv(ukbNew2, file = "/scratch/ahc87874/Fall2022/pheno/VegPheno.csv", row.names = FALSE, quote = FALSE)
