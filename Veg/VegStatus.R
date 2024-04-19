@@ -30,7 +30,7 @@ if (FALSE) {
 }
 
 #Load auxillary datasets
-if (FALSE) {
+if (TRUE) {
   NMR <- as_tibble(read.table("673621/ukb673621.tab", header = TRUE, sep = "\t")) #For PUFAs
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
   Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
