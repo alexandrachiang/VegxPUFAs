@@ -33,8 +33,8 @@ if (FALSE) {
 if (TRUE) {
   NMR <- as_tibble(read.table("673621/ukb673621.tab", header = TRUE, sep = "\t")) #For PUFAs
   BSM <- as_tibble(read.table("44781/ukb44781.tab", header = TRUE, sep = "\t")) #For BMI
-  Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
-  Meds2 <- as_tibble(read.table("updated_42606/ukb42606.tab", header = TRUE, sep = "\t")) #For Statins
+  #Meds <- as_tibble(read.table("47434/ukb47434.tab", header = TRUE, sep = "\t")) #For Medications
+  #Meds2 <- as_tibble(read.table("updated_42606/ukb42606.tab", header = TRUE, sep = "\t")) #For Statins
   
   #Subset needed columns & rename
   BMI <- BSM %>% select(f.eid, f.21001.0.0) %>% as_tibble() #For BMI
@@ -55,45 +55,45 @@ if (TRUE) {
                        #"DHA_QCflag", "DHA_TFAP_QCflag",	"LA_QCflag", "LA_TFAP_QCflag", "PUFA_QCflag",
                        #"PUFA_TFAP_QCflag", "MUFA_QCflag", "MUFA_TFAP_QCflag", "PUFA_MUFA_ratio_QCflag")
   
-  LipidMeds <- Meds %>% select(f.eid, f.6177.0.0, f.6177.0.1, f.6177.0.2, 
-                               f.6153.0.0, f.6153.0.1, f.6153.0.2, f.6153.0.3) %>% as_tibble()
+  #LipidMeds <- Meds %>% select(f.eid, f.6177.0.0, f.6177.0.1, f.6177.0.2, 
+  #                             f.6153.0.0, f.6153.0.1, f.6153.0.2, f.6153.0.3) %>% as_tibble()
   
-  colnames(LipidMeds) <- c("IID", paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_", 0:2, sep = ""), 
-                           paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_", 0:3, sep = ""))
+  #colnames(LipidMeds) <- c("IID", paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0_", 0:2, sep = ""), 
+  #                         paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_", 0:3, sep = ""))
   
   
-  for (i in 0:2) {
-    combined <- paste("medication_combined_f6153_f6177_0", i, sep = "_")
-    f6153 <- paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0", i, sep = "_")
-    f6177 <- paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0", i, sep = "_")
-    LipidMeds[, combined] <- NA
+  #for (i in 0:2) {
+  #  combined <- paste("medication_combined_f6153_f6177_0", i, sep = "_")
+  #  f6153 <- paste("medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0", i, sep = "_")
+  #  f6177 <- paste("medication_for_cholesterol_blood_pressure_or_diabetes_f6177_0", i, sep = "_")
+  #  LipidMeds[, combined] <- NA
 
-    for (j in 1:nrow(LipidMeds)) {
-      if (!is.na(LipidMeds[j, f6153])) {
-        LipidMeds[j, combined] <- LipidMeds[j, f6153]
-      } else {
-        LipidMeds[j, combined] <- LipidMeds[j, f6177]
-      }
-    }
-  }
-  LipidMeds$medication_combined_f6153_f6177_0_3 <- LipidMeds$medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_3
+  #  for (j in 1:nrow(LipidMeds)) {
+  #    if (!is.na(LipidMeds[j, f6153])) {
+  #      LipidMeds[j, combined] <- LipidMeds[j, f6153]
+  #    } else {
+  #      LipidMeds[j, combined] <- LipidMeds[j, f6177]
+  #    }
+  #  }
+  #}
+  #LipidMeds$medication_combined_f6153_f6177_0_3 <- LipidMeds$medication_for_cholesterol_blood_pressure_diabetes_or_take_exogenous_hormones_f6153_0_3
   
-  Statins <- Meds2 %>% select(f.eid, contains("20003.0"))
-  StatinCodes <- c(1141146234,1141192414,1140910632,1140888594,1140864592, 1141146138,1140861970,1140888648,1141192410, 
-                   1141188146,1140861958,1140881748,1141200040)
+  #Statins <- Meds2 %>% select(f.eid, contains("20003.0"))
+  #StatinCodes <- c(1141146234,1141192414,1140910632,1140888594,1140864592, 1141146138,1140861970,1140888648,1141192410, 
+  #                 1141188146,1140861958,1140881748,1141200040)
   
-  Statins <- Statins %>% mutate(treatment_medication_code_f20003_0 = ifelse(apply(Statins, 1, function(r) any(r %in% StatinCodes)) == TRUE, 1, 0)) %>% select(f.eid, treatment_medication_code_f20003_0)
-  colnames(Statins) <- c("IID", "treatment_medication_code_f20003_0")
+  #Statins <- Statins %>% mutate(treatment_medication_code_f20003_0 = ifelse(apply(Statins, 1, function(r) any(r %in% StatinCodes)) == TRUE, 1, 0)) %>% select(f.eid, treatment_medication_code_f20003_0)
+  #colnames(Statins) <- c("IID", "treatment_medication_code_f20003_0")
   
   #Save datasets
   write.table(BMI, file = "/scratch/ahc87874/Fall2022/pheno/BMI.txt",
               row.names = FALSE, quote = FALSE)
   write.table(PUFAs, file = "/scratch/ahc87874/Fall2022/pheno/PUFAs.txt",
               row.names = FALSE, quote = FALSE)
-  write.table(LipidMeds, file = "/scratch/ahc87874/Fall2022/pheno/LipidMeds.txt",
-              row.names = FALSE, quote = FALSE)
-  write.table(Statins, file = "/scratch/ahc87874/Fall2022/pheno/Statins.txt",
-              row.names = FALSE, quote = FALSE)
+  #write.table(LipidMeds, file = "/scratch/ahc87874/Fall2022/pheno/LipidMeds.txt",
+  #            row.names = FALSE, quote = FALSE)
+  #write.table(Statins, file = "/scratch/ahc87874/Fall2022/pheno/Statins.txt",
+  #            row.names = FALSE, quote = FALSE)
 } else {
   BMI <- as_tibble(read.table("BMI.txt", header = TRUE))
   PUFAs <- as_tibble(import("/scratch/ahc87874/Fall2022/pheno/PUFAs.txt"))
