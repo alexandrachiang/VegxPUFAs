@@ -27,7 +27,8 @@ GEMpheno <- veg %>% select(FID, IID,
                                LA, LA_TFAP, PUFA, PUFA_TFAP, MUFA, MUFA_TFAP, PUFA_MUFA_ratio)
 
 #Rename columns and change order
-covars <- c("Sex", "Age", "AgeSex", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "Vegetarian")
+covars <- c("Sex", "Age", "AgeSex", "PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", 
+            "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20", "Vegetarian")
 names(GEMpheno)[3:(2 + length(covars))] <- covars
   
 #Change to numerical columns
@@ -154,7 +155,7 @@ write.table(PUFAsBMI, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg
 write.csv(PUFAsBMI, file = paste("/scratch/ahc87874/Fall2022/pheno/GEMphenoVeg", suffix, ".csv", sep = ""), row.names = FALSE, quote = FALSE)
 
 # INT
-for (i in 17:30) {
+for (i in 27:40) {
   print(names(PUFAsINTcomb)[i])
   PUFAsINTcomb[, i] <- qnorm((rank(PUFAsINTcomb[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINTcomb[, i])))
   PUFAsINT1[, i] <- qnorm((rank(PUFAsINT1[, i],na.last="keep")-0.5)/sum(!is.na(PUFAsINT1[, i])))
