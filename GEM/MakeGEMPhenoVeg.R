@@ -5,7 +5,7 @@ library(rio)
 veg <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/VegPheno.txt", sep = "\t", header = TRUE, stringsAsFactors = FALSE)) # 211,018
 veg <- veg[!is.na(veg$SSRV), ] # 206,045 rows
 phenoQCgenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/geno/chr22.sample", header = TRUE, stringsAsFactors = FALSE))
-phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/phenoQC_keep.txt", header = TRUE, stringsAsFactors = FALSE))
+phenoQC <- as_tibble(read.table("/scratch/ahc87874/Fall2022/pheno/phenoQC_keep.txt", header = TRUE, stringsAsFactors = FALSE))
 
 phase1 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase1IIDs.csv")) # 117,920 rows
 phase2 <- as_tibble(import("/scratch/ahc87874/Phase/pheno/phase2IIDs.csv")) # 156,205 rows
